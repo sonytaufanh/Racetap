@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-10-26",
+  "ocr_engine": "tesseract.js",
+  "events": [
+    {
+      "slug": "dahana-run-2026",
+      "name": "Dahana Run 2026",
+      "location": "Subang",
+      "event_date": "2026-03-15",
+      "cover": "assets/images/portfolio/dahana-run-2026.webp",
+      "description": "Dokumentasi resmi Dahana Run 2026 di Subang. Cari foto Anda dengan nomor dada (BIB).",
+      "photographer": "Racetap Media",
+      "photos": [
+        { "id": "dahana-1001", "file": "assets/images/photos/dahana-run-2026/bib-1001.jpg", "bib": "1001", "ocr_text": "1001", "ocr_confidence": 97.4, "captured_at": "06:13:19", "category": "10K" },
+        { "id": "dahana-1024", "file": "assets/images/photos/dahana-run-2026/bib-1024.jpg", "bib": "1024", "ocr_text": "1024", "ocr_confidence": 96.1, "captured_at": "06:16:26", "category": "10K" },
+        { "id": "dahana-1057", "file": "assets/images/photos/dahana-run-2026/bib-1057.jpg", "bib": "1057", "ocr_text": "1057", "ocr_confidence": 95.8, "captured_at": "06:19:33", "category": "10K" },
+        { "id": "dahana-1088", "file": "assets/images/photos/dahana-run-2026/bib-1088.jpg", "bib": "1088", "ocr_text": "1088", "ocr_confidence": 98.2, "captured_at": "06:22:40", "category": "10K" },
+        { "id": "dahana-1123", "file": "assets/images/photos/dahana-run-2026/bib-1123.jpg", "bib": "1123", "ocr_text": "1123", "ocr_confidence": 94.9, "captured_at": "06:25:47", "category": "5K" },
+        { "id": "dahana-1147", "file": "assets/images/photos/dahana-run-2026/bib-1147.jpg", "bib": "1147", "ocr_text": "1147", "ocr_confidence": 96.7, "captured_at": "06:28:54", "category": "5K" },
+        { "id": "dahana-1189", "file": "assets/images/photos/dahana-run-2026/bib-1189.jpg", "bib": "1189", "ocr_text": "1189", "ocr_confidence": 93.5, "captured_at": "06:31:01", "category": "5K" },
+        { "id": "dahana-1210", "file": "assets/images/photos/dahana-run-2026/bib-1210.jpg", "bib": "1210", "ocr_text": "1210", "ocr_confidence": 97.9, "captured_at": "06:34:08", "category": "10K" }
+      ]
+    },
+    {
+      "slug": "ahy-run-2026",
+      "name": "AHY Run 2026",
+      "location": "Semarang",
+      "event_date": "2026-04-19",
+      "cover": "assets/images/portfolio/ahy run 2026.webp",
+      "description": "Dokumentasi resmi AHY Run 2026 di Semarang. Cari foto Anda dengan nomor dada (BIB).",
+      "photographer": "Racetap Media",
+      "photos": [
+        { "id": "ahy-2005", "file": "assets/images/photos/ahy-run-2026/bib-2005.jpg", "bib": "2005", "ocr_text": "2005", "ocr_confidence": 96.8, "captured_at": "06:13:19", "category": "10K" },
+        { "id": "ahy-2017", "file": "assets/images/photos/ahy-run-2026/bib-2017.jpg", "bib": "2017", "ocr_text": "2017", "ocr_confidence": 95.2, "captured_at": "06:16:26", "category": "10K" },
+        { "id": "ahy-2043", "file": "assets/images/photos/ahy-run-2026/bib-2043.jpg", "bib": "2043", "ocr_text": "2043", "ocr_confidence": 97.1, "captured_at": "06:19:33", "category": "10K" },
+        { "id": "ahy-2066", "file": "assets/images/photos/ahy-run-2026/bib-2066.jpg", "bib": "2066", "ocr_text": "2066", "ocr_confidence": 94.4, "captured_at": "06:22:40", "category": "5K" },
+        { "id": "ahy-2091", "file": "assets/images/photos/ahy-run-2026/bib-2091.jpg", "bib": "2091", "ocr_text": "2091", "ocr_confidence": 98.6, "captured_at": "06:25:47", "category": "5K" },
+        { "id": "ahy-2118", "file": "assets/images/photos/ahy-run-2026/bib-2118.jpg", "bib": "2118", "ocr_text": "2118", "ocr_confidence": 93.9, "captured_at": "06:28:54", "category": "10K" },
+        { "id": "ahy-2134", "file": "assets/images/photos/ahy-run-2026/bib-2134.jpg", "bib": "2134", "ocr_text": "2134", "ocr_confidence": 96.3, "captured_at": "06:31:01", "category": "5K" },
+        { "id": "ahy-2160", "file": "assets/images/photos/ahy-run-2026/bib-2160.jpg", "bib": "2160", "ocr_text": "2160", "ocr_confidence": 97.7, "captured_at": "06:34:08", "category": "10K" }
+      ]
+    },
+    {
+      "slug": "monkey-forest-ubud-run-2026",
+      "name": "Monkey Forest Ubud Run 2026",
+      "location": "Bali",
+      "event_date": "2026-05-24",
+      "cover": "assets/images/portfolio/Monkey-Forest-Ubud-Run-2026.webp",
+      "description": "Dokumentasi resmi Monkey Forest Ubud Run 2026 di Bali. Cari foto Anda dengan nomor dada (BIB).",
+      "photographer": "Racetap Media",
+      "photos": [
+        { "id": "ubud-3002", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3002.jpg", "bib": "3002", "ocr_text": "3002", "ocr_confidence": 96.5, "captured_at": "06:13:19", "category": "10K" },
+        { "id": "ubud-3015", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3015.jpg", "bib": "3015", "ocr_text": "3015", "ocr_confidence": 94.7, "captured_at": "06:16:26", "category": "10K" },
+        { "id": "ubud-3036", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3036.jpg", "bib": "3036", "ocr_text": "3036", "ocr_confidence": 97.2, "captured_at": "06:19:33", "category": "5K" },
+        { "id": "ubud-3061", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3061.jpg", "bib": "3061", "ocr_text": "3061", "ocr_confidence": 95.9, "captured_at": "06:22:40", "category": "5K" },
+        { "id": "ubud-3082", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3082.jpg", "bib": "3082", "ocr_text": "3082", "ocr_confidence": 98.3, "captured_at": "06:25:47", "category": "10K" },
+        { "id": "ubud-3107", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3107.jpg", "bib": "3107", "ocr_text": "3107", "ocr_confidence": 93.6, "captured_at": "06:28:54", "category": "10K" },
+        { "id": "ubud-3129", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3129.jpg", "bib": "3129", "ocr_text": "3129", "ocr_confidence": 96.9, "captured_at": "06:31:01", "category": "5K" },
+        { "id": "ubud-3154", "file": "assets/images/photos/monkey-forest-ubud-run-2026/bib-3154.jpg", "bib": "3154", "ocr_text": "3154", "ocr_confidence": 97.8, "captured_at": "06:34:08", "category": "10K" }
+      ]
+    }
+  ]
+}

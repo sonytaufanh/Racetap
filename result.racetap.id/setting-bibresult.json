@@ -1,0 +1,168 @@
+{
+  "eventName": "RACETAP.ID - RESULT",
+  "background": "bg.png",
+
+"categoryBackground": {
+  "enabled": true,
+  "source": "Age Group",
+  "map": {
+    "UMUM": "10kumum.png",
+    "MASTER": "10kmaster.png",
+    "INTERNAL": "10kinternal.png"
+  }
+},
+
+  "dataSource": "api",
+  "localFile": "data.csv",
+  "apiUrl": "https://time.feibot.com/api/runner-scores/d3Gu867ltR",
+
+  "refreshInterval": 15000,
+  "resetTime": 40000,
+  "notFoundTime": 2500,
+
+  "enableFullscreen": true,
+  "enableWakeLock": true,
+  "uppercaseOnly": true,
+
+  "notFoundText": "DATA TIDAK DITEMUKAN",
+
+  "genderMapping": {
+    "enabled": true,
+    "map": {
+      "M": "MALE",
+      "F": "FEMALE",
+      "O": "OTHER"
+    }
+  },
+
+  "status": {
+    "top": "50%",
+    "left": "50%",
+    "width": "1000px",
+    "fontSize": "50px",
+    "color": "#ff0000",
+    "align": "center",
+    "wrap": false
+  },
+
+  "fields": {
+    "name": {
+      "source": "Name",
+      "enabled": true,
+      "top": "540px",
+      "left": "50%",
+      "width": "1300px",
+      "fontSize": "60px",
+      "color": "#0047AB",
+      "align": "center",
+      "wrap": true,
+      "fontFamily": "font"
+    },
+
+    "bib": {
+      "source": "Bib",
+      "enabled": true,
+      "top": "200px",
+      "left": "50%",
+      "width": "900px",
+      "fontSize": "160px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": "font"
+    },
+
+    "item": {
+      "source": "Item",
+      "enabled": true,
+      "top": "210px",
+      "left": "90px",
+      "width": "700px",
+      "fontSize": "70px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": "font"
+    },
+
+    "idCard": {
+      "source": "Id Card",
+      "enabled": false,
+      "top": "700px",
+      "left": "50%",
+      "width": "700px",
+      "fontSize": "100px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false
+    },
+
+    "gender": {
+      "source": "Gender",
+      "enabled": false,
+      "top": "650px",
+      "left": "420px",
+      "width": "700px",
+      "fontSize": "30px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": "HighSpeed"
+    },
+
+    "ageGroup": {
+      "source": "Age Group",
+      "enabled": false,
+      "top": "520px",
+      "left": "1130px",
+      "width": "900px",
+      "fontSize": "40px",
+      "color": "#000000",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": "font"
+    },
+
+    "gunTime": {
+      "source": "Gun Time",
+      "enabled": true,
+      "top": "370px",
+      "left": "50%",
+      "width": "900px",
+      "fontSize": "130px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": "HighSpeed",
+      "fontStyle": "italic"
+
+      },
+
+    "congratulation": {
+      "source": "",
+      "staticText": "KUDOS!",
+      "enabled": false,
+      "top": "40px",
+      "left": "50%",
+      "width": "3000px",
+      "fontSize": "80px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "textShadow": "3px 3px 0px #000, -3px -3px 0px #000, 3px -3px 0px #000, -3px 3px 0px #000",
+      "fontFamily": "HighSpeed"
+    }
+  },
+
+  "standbyText": {
+    "enabled": true,
+    "text": "RESULTS CHECKING",
+    "top": "50%",
+    "left": "50%",
+    "width": "5000px",
+    "fontSize": "50px",
+    "color": "#0047AB",
+    "align": "center",
+    "blinkSpeed": 1
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "eventName": "RACETAP.ID - RESULT",
+  "background": "bg.png",
+
+  "dataSource": "api",
+  "localFile": "data.csv",
+  "apiUrl": "https://time.feibot.com/api/scores-data/yXBbEVLQss",
+
+  "refreshInterval": 15000,
+  "resetTime": 40000,
+  "notFoundTime": 2500,
+
+  "enableFullscreen": true,
+  "enableWakeLock": true,
+  "uppercaseOnly": true,
+
+  "notFoundText": "DATA TIDAK DITEMUKAN",
+
+  "genderMapping": {
+    "enabled": true,
+    "map": {
+      "M": "MALE",
+      "F": "FEMALE",
+      "O": "OTHER"
+    }
+  },
+
+  "status": {
+    "top": "50%",
+    "left": "50%",
+    "width": "1000px",
+    "fontSize": "40px",
+    "color": "#ff0000",
+    "align": "center",
+    "wrap": false
+  },
+
+  "fields": {
+    "name": {
+      "source": "Name",
+      "enabled": true,
+      "top": "480px",
+      "left": "50%",
+      "width": "1300px",
+      "fontSize": "50px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": true,
+      "fontFamily": " "
+    },
+
+    "bib": {
+      "source": "Bib",
+      "enabled": true,
+      "top": "360px",
+      "left": "50%",
+      "width": "2000px",
+      "fontSize": "100px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": " "
+    },
+
+    "item": {
+      "source": "Item",
+      "enabled": true,
+      "top": "40px",
+      "left": "100px",
+      "width": "700px",
+      "fontSize": "55px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": " "
+    },
+
+    "idCard": {
+      "source": "Id Card",
+      "enabled": false,
+      "top": "700px",
+      "left": "50%",
+      "width": "700px",
+      "fontSize": "100px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false
+    },
+
+    "gender": {
+      "source": "Gender",
+      "enabled": true,
+      "top": "40px",
+      "left": "560px",
+      "width": "700px",
+      "fontSize": "55px",
+      "color": "#ffffff",
+      "align": "left",
+      "wrap": false,
+      "fontFamily": " "
+    },
+
+    "ageGroup": {
+      "source": "Age Group",
+      "enabled": true,
+      "top": "40px",
+      "left": "1000px",
+      "width": "700px",
+      "fontSize": "55px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": " "
+    },
+
+    "gunTime": {
+      "source": "Gun Time",
+      "enabled": true,
+      "top": "210px",
+      "left": "50%",
+      "width": "2000px",
+      "fontSize": "130px",
+      "color": "#ffffff",
+      "align": "center",
+      "wrap": false,
+      "fontFamily": " ",
+      "fontStyle": "italic"
+
+      },
+
+    "congratulation": {
+      "source": "",
+      "staticText": "CONGRATULATIONS!",
+      "enabled": true,
+      "top": "150px",
+      "left": "50%",
+      "width": "2000px",
+      "fontSize": "55px",
+      "color": "#ff0000",
+      "align": "center",
+      "wrap": false,
+      "textShadow": "3px 3px 0px #000, -3px -3px 0px #000, 3px -3px 0px #000, -3px 3px 0px #000"
+    }
+  },
+
+  "standbyText": {
+    "enabled": true,
+    "text": "RESULTS CHECKING",
+    "top": "50%",
+    "left": "50%",
+    "width": "5000px",
+    "fontSize": "80px",
+    "color": "#ffffff",
+    "align": "center",
+    "blinkSpeed": 1
+  }
+}

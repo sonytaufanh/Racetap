@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasil Lomba TNI RUN 2026 YOGYAKARTA | RaceTap </title>
+<meta name="description" content="Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event TNI RUN 2026 YOGYAKARTA. Temukan nama atau nomor BIB Anda di sini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary: #6c5ce7;
+    --primary-dark: #5a4bd1;
+    --primary-light: #a29bfe;
+    --accent: #fd79a8;
+    --accent-dark: #e84393;
+    --gold: #fdcb6e;
+    --green: #00b894;
+    --red: #ff7675;
+    --dark: #2d3436;
+    --dark-light: #636e72;
+    --gray: #dfe6e9;
+    --gray-light: #f5f6fa;
+    --white: #ffffff;
+    --shadow: 0 4px 24px rgba(108, 92, 231, 0.15);
+    --shadow-lg: 0 8px 40px rgba(108, 92, 231, 0.2);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--gray-light);
+    color: var(--dark);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.hidden { display: none !important; }
+
+.banner {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    background: #2d3436;
+}
+
+.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary) 0%, #a29bfe 50%, var(--accent) 100%);
+    padding: 60px 24px 80px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255,255,255,0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--gray-light);
+    clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    color: var(--white);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero h1 {
+    color: var(--white);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+.hero-date {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 32px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-sm);
+    padding: 16px 28px;
+    min-width: 140px;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    background: rgba(255,255,255,0.22);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.controls-bar {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-light);
+    font-size: 0.9rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border: 2px solid var(--gray);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    background: var(--gray-light);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-group select {
+    padding: 10px 14px;
+    border: 2px solid var(--gray);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: var(--gray-light);
+    color: var(--dark);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 160px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23636e72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 6px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow-x: auto;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--dark-light);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tab:hover { color: var(--dark); background: var(--gray-light); }
+
+.tab.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.table-wrapper {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+}
+
+#participantsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+#participantsTable thead {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+}
+
+#participantsTable th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    user-select: none;
+}
+
+#participantsTable th.sortable { cursor: pointer; }
+#participantsTable th.sortable:hover { background: rgba(255,255,255,0.1); }
+#participantsTable th i { margin-left: 4px; font-size: 0.7rem; opacity: 0.6; }
+
+#participantsTable td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--gray);
+    vertical-align: middle;
+}
+
+#participantsTable tbody tr { transition: var(--transition); }
+#participantsTable tbody tr:hover { background: rgba(108, 92, 231, 0.08); }
+#participantsTable tbody tr:last-child td { border-bottom: none; }
+
+.rank-cell { font-weight: 700; color: var(--dark); width: 45px; min-width: 40px; }
+
+#participantsTable th:nth-child(1),
+#participantsTable th:nth-child(2) { width: 55px; }
+.rank-1 { color: var(--gold); }
+.rank-2 { color: #b0b0b0; }
+.rank-3 { color: #cd7f32; }
+
+.bib-cell { font-weight: 600; color: var(--primary); font-size: 0.85rem; }
+.name-cell { font-weight: 600; }
+
+.category-tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.category-tag.female {
+    background: rgba(253, 121, 168, 0.12);
+    color: #d6336c;
+}
+
+.category-tag.male {
+    background: rgba(108, 92, 231, 0.12);
+    color: var(--primary-dark);
+}
+
+.category-tag.open {
+    background: rgba(0, 184, 148, 0.12);
+    color: #00b894;
+}
+
+.gender-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.gender-badge.female { color: #d6336c; }
+.gender-badge.male { color: var(--primary-dark); }
+
+.time-cell {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-family: 'Inter', monospace;
+}
+
+.pace-cell { color: var(--dark-light); font-size: 0.85rem; }
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge.finisher { background: rgba(0, 184, 148, 0.12); color: var(--green); }
+.status-badge.dnf { background: rgba(255, 118, 117, 0.12); color: var(--red); }
+.status-badge.dns { background: rgba(99, 110, 114, 0.12); color: var(--dark-light); }
+.status-badge.dsq { background: rgba(255, 118, 117, 0.12); color: var(--red); }
+
+.table-footer {
+    padding: 12px 16px;
+    background: var(--gray-light);
+    border-radius: 0 0 var(--radius) var(--radius);
+    font-size: 0.85rem;
+    color: var(--dark-light);
+    font-weight: 500;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+}
+
+.category-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.category-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+.category-card-header {
+    padding: 20px;
+    color: var(--white);
+}
+
+.category-card-header.female {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.category-card-header.male {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+.category-card-header h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+.category-card-header .cat-meta { font-size: 0.82rem; opacity: 0.85; }
+
+.category-card-body { padding: 16px 20px; }
+
+.category-participant {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray);
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.category-participant:hover {
+    background: var(--gray-light);
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.category-participant:last-child { border-bottom: none; }
+
+.cat-rank { font-weight: 700; color: var(--dark-light); width: 28px; }
+.cat-name { flex: 1; font-weight: 500; margin-left: 8px; }
+.cat-time { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.view-more {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border-top: 1px solid var(--gray);
+}
+
+.view-more:hover { background: var(--gray-light); }
+
+.leaderboard-content { display: grid; gap: 20px; }
+
+.leaderboard-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
+.leaderboard-section h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 24px 0 32px;
+}
+
+.podium-item {
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--radius);
+    background: var(--gray-light);
+    min-width: 140px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.podium-item:hover { transform: translateY(-4px); }
+
+.podium-item.gold {
+    background: linear-gradient(180deg, #fff9e6, #fff3cd);
+    border: 2px solid var(--gold);
+    padding: 28px 20px;
+    min-width: 160px;
+}
+
+.podium-item.silver {
+    background: linear-gradient(180deg, #f0f0f0, #e8e8e8);
+    border: 2px solid #b0b0b0;
+}
+
+.podium-item.bronze {
+    background: linear-gradient(180deg, #fdf0e0, #fce4cc);
+    border: 2px solid #cd7f32;
+}
+
+.podium-medal { font-size: 2rem; margin-bottom: 8px; }
+.podium-name { font-weight: 700; font-size: 0.95rem; }
+.podium-time { font-weight: 700; color: var(--primary); font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+
+.leaderboard-list { list-style: none; }
+
+.leaderboard-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--gray);
+    font-size: 0.88rem;
+    transition: var(--transition);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.leaderboard-list li:hover { background: var(--gray-light); }
+.leaderboard-list li:last-child { border-bottom: none; }
+
+.lb-rank { font-weight: 700; color: var(--dark-light); width: 32px; font-size: 0.82rem; }
+.lb-name { flex: 1; font-weight: 500; }
+.lb-time { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--dark-light);
+    font-size: 0.85rem;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+    background: var(--white);
+    border-radius: var(--radius);
+    max-width: 640px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    color: var(--white);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+.modal-close:hover { background: rgba(255,255,255,0.3); }
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    padding: 32px 28px 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+.modal-header-content { position: relative; z-index: 1; }
+
+.modal-rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    backdrop-filter: blur(4px);
+}
+
+.modal-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 2px; }
+
+.modal-body { padding: 24px 28px; }
+
+.modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-info-item {
+    background: var(--gray-light);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+}
+
+.modal-info-item.full { grid-column: 1 / -1; }
+
+.modal-info-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--dark-light);
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.modal-info-value { font-size: 0.95rem; font-weight: 600; color: var(--dark); }
+
+.modal-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    margin: 20px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-section-title:first-child { margin-top: 0; }
+
+.modal-section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--gray);
+    border-radius: 1px;
+}
+
+.modal-time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.modal-time-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--gray-light);
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+.modal-time-label { color: var(--dark-light); font-weight: 500; }
+.modal-time-value { font-weight: 700; font-variant-numeric: tabular-nums; font-family: 'Inter', monospace; }
+
+.modal::-webkit-scrollbar { width: 6px; }
+.modal::-webkit-scrollbar-track { background: transparent; }
+.modal::-webkit-scrollbar-thumb { background: var(--gray); border-radius: 3px; }
+
+.loading-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--dark-light);
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--gray);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--red);
+}
+
+.error-state i { font-size: 3rem; margin-bottom: 16px; }
+
+.btn-retry {
+    margin-top: 16px;
+    padding: 10px 28px;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-retry:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+.btn-cert {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--primary);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.btn-cert:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pagination {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 2px solid var(--gray);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 36px;
+}
+
+.pagination button:hover:not(:disabled):not(.active) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pagination button.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination .page-info {
+    font-size: 0.82rem;
+    color: var(--dark-light);
+    font-weight: 500;
+    margin: 0 4px;
+}
+
+@media (max-width: 768px) {
+    .hero { padding: 40px 16px 60px; }
+    .hero-stats { gap: 10px; }
+    .stat-card { min-width: calc(50% - 10px); padding: 12px 16px; }
+    .stat-number { font-size: 1.4rem; }
+    .main-content { margin-top: -30px; padding: 0 12px; }
+    .controls-bar { flex-direction: column; padding: 12px; }
+    .search-box { min-width: 100%; }
+    .filter-group { width: 100%; }
+    .filter-group select { flex: 1; min-width: 0; }
+    .tabs { gap: 2px; padding: 4px; }
+    .tab { padding: 10px 12px; font-size: 0.8rem; }
+    #participantsTable { font-size: 0.8rem; }
+    #participantsTable th, #participantsTable td { padding: 10px 10px; }
+    .podium { flex-direction: column; align-items: center; gap: 12px; }
+    .podium-item { min-width: 120px; width: 100%; max-width: 280px; }
+    .podium-item.gold { min-width: 120px; }
+    .categories-grid { grid-template-columns: 1fr; }
+    .modal { max-width: 100%; max-height: 90vh; margin: 10px; border-radius: var(--radius-sm); }
+    .modal-header { padding: 24px 20px 20px; }
+    .modal-body { padding: 20px; }
+    .modal-info-grid { grid-template-columns: 1fr; }
+    .modal-time-grid { grid-template-columns: 1fr; }
+    .modal-name { font-size: 1.3rem; }
+}
+
+.route-container {
+    animation: fadeIn 0.4s ease;
+}
+
+.route-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.route-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.route-header h2 i {
+    color: var(--primary);
+}
+
+.route-header p {
+    color: var(--dark-light);
+    font-size: 0.95rem;
+}
+
+.route-map-wrapper {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+    position: relative;
+    padding-top: 56.25%;
+}
+
+.route-map-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.route-info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.route-info-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.route-info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.route-info-card i {
+    font-size: 1.8rem;
+    color: var(--primary);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(108, 92, 231, 0.1);
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.route-info-card strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 2px;
+}
+
+.route-info-card span {
+    font-size: 0.84rem;
+    color: var(--dark-light);
+}
+
+.floating-scroll {
+    overflow-x: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 16px;
+    background: var(--gray-light);
+    border-top: 2px solid var(--gray);
+    box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
+    cursor: grab;
+}
+
+.floating-scroll::-webkit-scrollbar { height: 12px; }
+.floating-scroll::-webkit-scrollbar-track { background: var(--gray-light); border-radius: 6px; }
+.floating-scroll::-webkit-scrollbar-thumb { 
+    background: var(--dark-light); 
+    border-radius: 6px;
+    border: 2px solid var(--gray-light);
+}
+.floating-scroll::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+.floating-scroll div { height: 1px; pointer-events: none; }
+
+@media (max-width: 640px) {
+    #participantsTable th:nth-child(6),
+    #participantsTable td:nth-child(6),
+    #participantsTable th:nth-child(11),
+    #participantsTable td:nth-child(11) { display: none; }
+}
+@media (max-width: 480px) {
+    #participantsTable th:nth-child(4),
+    #participantsTable td:nth-child(4),
+    #participantsTable th:nth-child(9),
+    #participantsTable td:nth-child(9),
+    #participantsTable th:nth-child(10),
+    #participantsTable td:nth-child(10) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+    <div class="banner">
+        <img src="https://racetap.id/wp-content/uploads/2026/09/header-tni-run-2026-yogyakarta.webp" alt="Header Hasil Lomba TNI RUN 2026 YOGYAKARTA">
+    </div>
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">LIVE RESULTS</div>
+            <h1 id="raceTitle">TNI RUN 2026 YOGYAKARTA</h1>
+            <p id="raceDate" class="hero-date"></p>
+            <div class="hero-stats" id="heroStats">
+                <div class="stat-card"><span class="stat-number" id="totalParticipants">0</span><span class="stat-label">Participants</span></div>
+                <div class="stat-card"><span class="stat-number" id="totalCategories">0</span><span class="stat-label">Categories</span></div>
+                <div class="stat-card"><span class="stat-number" id="totalDistance">5K & 10K</span><span class="stat-label">Distance</span></div>
+                <div class="stat-card"><span class="stat-number" id="totalFinishers">0</span><span class="stat-label">Finishers</span></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="controls-bar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search name or bib..." autocomplete="off">
+            </div>
+            <div class="filter-group">
+                <select id="itemFilter">
+                    <option value="">All Distances</option>
+                    <option value="5K">5K</option>
+                    <option value="10K">10K</option>
+                </select>
+                <select id="genderFilter">
+                    <option value="">All Genders</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+                <select id="ageGroupFilter">
+                    <option value="">Age Group</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="tableLoading" class="loading-state">
+            <div class="loader"></div>
+            <p>Loading results...</p>
+        </div>
+        <div id="tableError" class="error-state hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Failed to load results.</p>
+            <button class="btn-retry" onclick="fetchData()">Retry</button>
+        </div>
+        <div id="tableContent" class="hidden">
+            <div class="table-wrapper" id="tableWrapper">
+                <table id="participantsTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="itemName" class="sortable">Dist <i class="fas fa-sort"></i></th>
+                            <th data-sort="bib" class="sortable">Bib <i class="fas fa-sort"></i></th>
+                            <th data-sort="name" class="sortable">Name <i class="fas fa-sort"></i></th>
+                            <th>Cert</th>
+                            <th data-sort="sex" class="sortable">Gender <i class="fas fa-sort"></i></th>
+                            <th data-sort="ageGroup" class="sortable">Age Grp <i class="fas fa-sort"></i></th>
+                            <th data-sort="totalScore" class="sortable">Gun Time <i class="fas fa-sort"></i></th>
+                            <th data-sort="nettime" class="sortable">Net Time <i class="fas fa-sort"></i></th>
+                            <th data-sort="itemNetRank" class="sortable">Overall Rank <i class="fas fa-sort"></i></th>
+                            <th data-sort="netRanking" class="sortable">Gender Rank <i class="fas fa-sort"></i></th>
+                            <th data-sort="ageNetRank" class="sortable">Age Rank <i class="fas fa-sort"></i></th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+            <div class="floating-scroll" id="floatingScroll"><div></div></div>
+            <div class="table-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                <span id="resultCount">Showing 0 of 0</span>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Powered by <strong>racetap.id</strong> &mdash; TNI RUN 2026 YOGYAKARTA</p>
+    </footer>
+</div>
+
+<div id="modalOverlay" class="modal-overlay hidden" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+const API_URL = 'data.json';
+
+let data = null;
+let participants = [];
+const PAGE_SIZE = 100;
+let currentPage = 1;
+
+function formatDate(ts) {
+    if (!ts) return '';
+    const d = new Date(ts * 1000);
+    const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return d.toLocaleDateString('en-US', opts);
+}
+
+function getGenderLabel(s) {
+    return s === 'F' ? 'Female' : 'Male';
+}
+
+function getStatus(finisher, startTime) {
+    const f = Number(finisher);
+    if (f === 1) return { label: 'Finisher', cls: 'finisher' };
+    if (f === -2) return { label: 'DQ', cls: 'dnf' };
+    if (f === -3) return { label: 'DNF', cls: 'dnf' };
+    if (f === -4) return { label: 'DNS', cls: 'dns' };
+    if (f === -5) return { label: 'Cut off', cls: 'dnf' };
+    if (f === -1 || startTime) return { label: 'Started', cls: 'dns' };
+    return { label: '', cls: 'dns' };
+}
+
+function formatTime(val) {
+    if (!val) return '-';
+    return val;
+}
+
+function parseTimeToSeconds(t) {
+    if (!t) return Infinity;
+    const parts = t.split(':');
+    if (parts.length === 3) {
+        return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+    }
+    if (parts.length === 2) {
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+    return Infinity;
+}
+
+function getItemName(s) {
+    if (s.item_name) return s.item_name;
+    if (s.item && s.item.title) return s.item.title;
+    return s.item_id === 9875 ? '5K' : '10K';
+}
+
+async function fetchData() {
+    const loadingEl = document.getElementById('tableLoading');
+    const errorEl = document.getElementById('tableError');
+    const contentEl = document.getElementById('tableContent');
+
+    loadingEl.classList.remove('hidden');
+    errorEl.classList.add('hidden');
+    contentEl.classList.add('hidden');
+
+    try {
+        const res = await fetch(API_URL);
+        const json = await res.json();
+        data = json;
+        processData();
+        loadingEl.classList.add('hidden');
+        contentEl.classList.remove('hidden');
+    } catch (e) {
+        loadingEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        console.error('Fetch error:', e);
+    }
+}
+
+function processData() {
+    const race = data.race;
+    const scores = data.scores;
+
+    document.getElementById('raceTitle').textContent = race.title || 'TNI RUN 2026 YOGYAKARTA';
+    document.getElementById('raceDate').textContent = formatDate(race.date_time);
+
+    participants = scores.map(s => {
+        const finisher = Number(s.finisher);
+        const netScore = s.net_score;
+        return {
+            id: s.id,
+            name: s.name,
+            bib: s.bib,
+            sex: s.sex,
+            genderLabel: getGenderLabel(s.sex),
+            itemName: getItemName(s),
+            ageGroup: s.age_group || 'OPEN',
+            age: s.age,
+            finisher: finisher,
+            status: getStatus(finisher, s.start_time),
+            overallRank: null,
+            netRanking: s.net_ranking,
+            itemNetRank: s.item_total_ranking,
+            ageNetRank: s.age_net_ranking,
+            itemTotalRank: s.item_total_ranking,
+            totalRanking: s.total_ranking,
+            ageTotalRank: s.age_total_ranking,
+            age2TotalRank: s.age_2_total_ranking,
+            netScore: netScore,
+            totalScore: s.total_score,
+            startTime: s.start_time,
+            pace: s.pace,
+            finishTime: s.finish_time,
+            city: s.city || '',
+            team: s.team || '',
+            diff: s.diff,
+            checkIn: s.check_in,
+            cp1: s.cp1,
+            cp2: s.cp2,
+            cp1_cp2: s.cp1_cp2
+        };
+    });
+
+    participants.sort((a, b) => {
+        if (a.itemNetRank === null && b.itemNetRank === null) return 0;
+        if (a.itemNetRank === null) return 1;
+        if (b.itemNetRank === null) return -1;
+        return a.itemNetRank - b.itemNetRank;
+    });
+
+    const totalFinishers = participants.filter(p => p.netScore && p.netScore !== '00:00:00').length;
+
+    document.getElementById('totalParticipants').textContent = participants.length;
+    document.getElementById('totalDistance').textContent = '5K & 10K';
+    document.getElementById('totalFinishers').textContent = totalFinishers;
+
+    const totalAG = [...new Set(participants.map(p => p.ageGroup))].length;
+    document.getElementById('totalCategories').textContent = totalAG;
+
+    const ageGroups = [...new Set(participants.filter(p => p.ageGroup).map(p => p.ageGroup))].sort();
+    const age2El = document.getElementById('ageGroupFilter');
+    age2El.innerHTML = '<option value="">Age Group</option>';
+    ageGroups.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        age2El.appendChild(opt);
+    });
+
+    renderTable();
+}
+
+function getFilteredData() {
+    const searchVal = document.getElementById('searchInput').value.toLowerCase().trim();
+    const itemVal = document.getElementById('itemFilter').value;
+    const genderVal = document.getElementById('genderFilter').value;
+    const ageVal = document.getElementById('ageGroupFilter').value;
+
+    let filtered = [...participants];
+
+    if (searchVal) {
+        filtered = filtered.filter(p =>
+            (p.name && p.name.toLowerCase().includes(searchVal)) ||
+            p.bib.toLowerCase().includes(searchVal)
+        );
+    }
+    if (itemVal) filtered = filtered.filter(p => p.itemName === itemVal);
+    if (genderVal) filtered = filtered.filter(p => p.sex === genderVal);
+    if (ageVal) filtered = filtered.filter(p => p.ageGroup === ageVal);
+
+    return filtered;
+}
+
+function renderTable() {
+    const filtered = getFilteredData();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageData = filtered.slice(start, start + PAGE_SIZE);
+
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+
+    pageData.forEach((p) => {
+        const tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.addEventListener('click', () => openModal(p.id));
+
+        const statusIcon = p.finisher === 1 ? 'check-circle' : 'times-circle';
+        const certLink = `https://time.feibot.com/live-wire/scores/detail/${p.id}`;
+
+        tr.innerHTML = `
+            <td class="rank-cell">${p.itemName}</td>
+            <td class="bib-cell">${p.bib}</td>
+            <td class="name-cell"><a href="${certLink}" target="_blank" style="color:inherit;text-decoration:none;" onclick="event.stopPropagation();">${p.name}</a></td>
+            <td><a href="${certLink}" target="_blank" onclick="event.stopPropagation();"><i class="fas fa-certificate" style="color:var(--primary);font-size:1.1rem;"></i></a></td>
+            <td><i class="fas fa-${p.sex === 'F' ? 'venus' : 'mars'}" style="color:${p.sex === 'F' ? '#d6336c' : 'var(--primary-dark)'};"></i> ${p.genderLabel}</td>
+            <td>${p.ageGroup}</td>
+            <td class="time-cell">${formatTime(p.totalScore)}</td>
+            <td class="time-cell">${formatTime(p.netScore)}</td>
+            <td class="rank-cell">${p.itemNetRank != null ? p.itemNetRank : '-'}</td>
+            <td class="rank-cell">${p.netRanking != null ? p.netRanking : '-'}</td>
+            <td class="rank-cell">${p.ageNetRank != null ? p.ageNetRank : '-'}</td>
+            <td><span class="status-badge ${p.status.cls}"><i class="fas fa-${statusIcon}"></i> ${p.status.label}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    const showingEnd = Math.min(start + PAGE_SIZE, filtered.length);
+    document.getElementById('resultCount').textContent =
+        filtered.length > 0
+            ? `Showing ${start + 1}-${showingEnd} of ${filtered.length}`
+            : `Showing 0 of 0`;
+
+    renderPagination(totalPages, filtered.length);
+    syncScroll();
+}
+
+function syncScroll() {
+    const wrapper = document.getElementById('tableWrapper');
+    const floatScroll = document.getElementById('floatingScroll');
+    if (!wrapper || !floatScroll) return;
+
+    const table = document.getElementById('participantsTable');
+    const child = floatScroll.firstChild;
+    if (!child) return;
+
+    child.style.width = table.offsetWidth + 'px';
+
+    wrapper.removeEventListener('scroll', syncFloating);
+    floatScroll.removeEventListener('scroll', syncWrapper);
+
+    function syncFloating() { floatScroll.scrollLeft = wrapper.scrollLeft; }
+    function syncWrapper() { wrapper.scrollLeft = floatScroll.scrollLeft; }
+
+    wrapper.addEventListener('scroll', syncFloating);
+    floatScroll.addEventListener('scroll', syncWrapper);
+}
+
+function renderPagination(totalPages, totalItems) {
+    const el = document.getElementById('pagination');
+    el.innerHTML = '';
+
+    if (totalItems === 0) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.innerHTML = '&laquo;';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
+    el.appendChild(prevBtn);
+
+    let startP = Math.max(1, currentPage - 2);
+    let endP = Math.min(totalPages, currentPage + 2);
+    if (endP - startP < 4) {
+        if (startP === 1) endP = Math.min(totalPages, startP + 4);
+        else startP = Math.max(1, endP - 4);
+    }
+
+    if (startP > 1) {
+        const first = document.createElement('button');
+        first.textContent = '1';
+        first.addEventListener('click', () => { currentPage = 1; renderTable(); });
+        el.appendChild(first);
+        if (startP > 2) {
+            const dots = document.createElement('span');
+            dots.className = 'page-info';
+            dots.textContent = '...';
+            el.appendChild(dots);
+        }
+    }
+
+    for (let i = startP; i <= endP; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        if (i === currentPage) btn.className = 'active';
+        btn.addEventListener('click', () => { currentPage = i; renderTable(); });
+        el.appendChild(btn);
+    }
+
+    if (endP < totalPages) {
+        if (endP < totalPages - 1) {
+            const dots = document.createElement('span');
+            dots.className = 'page-info';
+            dots.textContent = '...';
+            el.appendChild(dots);
+        }
+        const last = document.createElement('button');
+        last.textContent = totalPages;
+        last.addEventListener('click', () => { currentPage = totalPages; renderTable(); });
+        el.appendChild(last);
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.innerHTML = '&raquo;';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
+    el.appendChild(nextBtn);
+}
+
+function openModal(id) {
+    const p = participants.find(pp => pp.id === id);
+    if (!p) return;
+
+    const modalBody = document.getElementById('modalBody');
+    const overlay = document.getElementById('modalOverlay');
+
+    const rankDisplay = p.overallRank !== null ? `#${p.overallRank}` : '-';
+
+    modalBody.innerHTML = `
+        <div class="modal-header">
+            <div class="modal-header-content">
+                <div class="modal-rank-badge"><i class="fas fa-trophy"></i> ${rankDisplay} Overall</div>
+                <div class="modal-name">${p.name}</div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-info-grid">
+                <div class="modal-info-item">
+                    <div class="modal-info-label">Bib</div>
+                    <div class="modal-info-value">${p.bib}</div>
+                </div>
+                <div class="modal-info-item">
+                    <div class="modal-info-label">Gender</div>
+                    <div class="modal-info-value">${p.genderLabel}</div>
+                </div>
+                <div class="modal-info-item">
+                    <div class="modal-info-label">Distance</div>
+                    <div class="modal-info-value">${p.itemName}</div>
+                </div>
+                <div class="modal-info-item">
+                    <div class="modal-info-label">Status</div>
+                    <div class="modal-info-value"><span class="status-badge ${p.status.cls}">${p.status.label}</span></div>
+                </div>
+                <div class="modal-info-item">
+                    <div class="modal-info-label">Age Group</div>
+                    <div class="modal-info-value">${p.ageGroup}</div>
+                </div>
+
+                ${p.team ? `<div class="modal-info-item">
+                    <div class="modal-info-label">Team</div>
+                    <div class="modal-info-value">${p.team}</div>
+                </div>` : ''}
+                ${p.city ? `<div class="modal-info-item">
+                    <div class="modal-info-label">City</div>
+                    <div class="modal-info-value">${p.city}</div>
+                </div>` : ''}
+            </div>
+
+            <div class="modal-section-title">Timing</div>
+            <div class="modal-time-grid">
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Net Time</span>
+                    <span class="modal-time-value">${formatTime(p.netScore)}</span>
+                </div>
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Gun Time</span>
+                    <span class="modal-time-value">${formatTime(p.totalScore)}</span>
+                </div>
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Start Time</span>
+                    <span class="modal-time-value">${formatTime(p.startTime)}</span>
+                </div>
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Pace</span>
+                    <span class="modal-time-value">${p.pace || '-'}</span>
+                </div>
+                ${p.cp1 ? `<div class="modal-time-item">
+                    <span class="modal-time-label">CP1</span>
+                    <span class="modal-time-value">${p.cp1}</span>
+                </div>` : ''}
+                ${p.cp2 ? `<div class="modal-time-item">
+                    <span class="modal-time-label">CP2</span>
+                    <span class="modal-time-value">${p.cp2}</span>
+                </div>` : ''}
+                ${p.cp1_cp2 ? `<div class="modal-time-item">
+                    <span class="modal-time-label">CP1→CP2</span>
+                    <span class="modal-time-value">${p.cp1_cp2}</span>
+                </div>` : ''}
+            </div>
+
+            <div class="modal-section-title">Rankings</div>
+            <div class="modal-time-grid">
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Overall Rank</span>
+                    <span class="modal-time-value">${p.itemNetRank != null ? `#${p.itemNetRank}` : '-'}</span>
+                </div>
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Gender Rank</span>
+                    <span class="modal-time-value">${p.netRanking != null ? `#${p.netRanking}` : '-'}</span>
+                </div>
+                <div class="modal-time-item">
+                    <span class="modal-time-label">Age Group Rank</span>
+                    <span class="modal-time-value">${p.ageNetRank != null ? `#${p.ageNetRank}` : '-'}</span>
+                </div>
+            </div>
+
+            <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--gray)">
+                <p style="font-size:0.85rem;font-weight:600;color:var(--dark);margin-bottom:10px;">Certificate</p>
+                <button class="btn-cert" onclick="window.open('https://time.feibot.com/live-wire/scores/detail/${p.id}','_blank','noopener,noreferrer')">
+                    <i class="fas fa-certificate"></i> Download Certificate
+                </button>
+                <p style="font-size:0.78rem;color:var(--dark-light);text-align:center;margin-top:8px;">
+                    Klik tombol untuk melihat & mengunduh certificate</p>
+            </div>
+        </div>
+    `;
+
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+    if (e && e.target !== document.getElementById('modalOverlay')) {
+        return;
+    }
+    document.getElementById('modalOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        document.getElementById('modalOverlay').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+});
+
+document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; renderTable(); });
+document.getElementById('itemFilter').addEventListener('change', () => { currentPage = 1; renderTable(); });
+document.getElementById('genderFilter').addEventListener('change', () => { currentPage = 1; renderTable(); });
+document.getElementById('ageGroupFilter').addEventListener('change', () => { currentPage = 1; renderTable(); });
+
+document.querySelectorAll('#participantsTable th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+        const key = th.dataset.sort;
+        const tbody = document.getElementById('tableBody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        const currentDir = th.dataset.dir || 'asc';
+        const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+
+        document.querySelectorAll('#participantsTable th.sortable').forEach(h => {
+            delete h.dataset.dir;
+            h.querySelector('i').className = 'fas fa-sort';
+        });
+
+        th.dataset.dir = newDir;
+        th.querySelector('i').className = `fas fa-sort-${newDir === 'asc' ? 'up' : 'down'}`;
+
+        rows.sort((a, b) => {
+            let va, vb;
+            const ca = a.cells[th.cellIndex].textContent.trim();
+            const cb = b.cells[th.cellIndex].textContent.trim();
+
+            if (key === 'bib' || key === 'netRanking' || key === 'itemNetRank' || key === 'ageNetRank') {
+                va = parseInt(ca) || 0;
+                vb = parseInt(cb) || 0;
+            } else if (key === 'nettime' || key === 'totalScore') {
+                va = parseTimeToSeconds(ca);
+                vb = parseTimeToSeconds(cb);
+            } else {
+                va = ca.toLowerCase();
+                vb = cb.toLowerCase();
+            }
+
+            if (va < vb) return newDir === 'asc' ? -1 : 1;
+            if (va > vb) return newDir === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        rows.forEach(row => tbody.appendChild(row));
+    });
+});
+
+fetchData();
+
+window.addEventListener('resize', syncScroll);
+</script>
+</body>
+</html>

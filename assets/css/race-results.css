@@ -1,0 +1,189 @@
+
+/* =========================================
+   RACETAP — RACE RESULTS
+   Mengikuti desain Nexora
+   ========================================= */
+
+body {
+    background: var(--n-bg, #f7f9fc);
+    font-family: var(--n-font-body, 'Inter', sans-serif);
+    color: var(--n-navy, #0b1437);
+}
+
+/* Header */
+.results-header {
+    background: var(--n-gradient-primary,
+        linear-gradient(135deg, #0575a5 0%, #0b4e6b 100%));
+    color: #fff;
+    padding: 45px 0;
+}
+
+.results-header h1 {
+    color: #fff;
+    font-family: var(--n-font-display, 'Sora', sans-serif);
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.results-header p {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, .75);
+}
+
+/* Main card */
+.results-card {
+    background: var(--n-white, #fff);
+    border: 1px solid var(--n-border, #e4e7ec);
+    border-radius: var(--n-radius-md, 14px);
+    padding: 24px;
+    box-shadow: var(--n-shadow-md, 0 8px 24px rgba(11,20,55,.08));
+    margin-top: -25px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Toolbar */
+.results-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.results-toolbar h5 {
+    font-family: var(--n-font-display, 'Sora', sans-serif);
+    font-weight: 700;
+    color: var(--n-navy, #0b1437);
+}
+
+.results-count {
+    color: var(--n-slate, #667085);
+    font-size: 14px;
+}
+
+/* Table */
+.table-responsive {
+    border: 1px solid var(--n-border, #e4e7ec);
+    border-radius: var(--n-radius-sm, 8px);
+    overflow-x: auto;
+}
+
+#resultsTable {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+#resultsTable thead th {
+    background: var(--n-bg, #f7f9fc);
+    color: var(--n-navy, #0b1437);
+    font-family: var(--n-font-display, 'Sora', sans-serif);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: 14px;
+    border-bottom: 1px solid var(--n-border, #e4e7ec);
+}
+
+#resultsTable tbody td {
+    padding: 13px 14px;
+    font-size: 14px;
+    color: var(--n-slate, #667085);
+    vertical-align: middle;
+}
+
+#resultsTable tbody tr:hover > * {
+    background: #f7f9fc;
+    color: var(--n-navy, #0b1437);
+}
+
+/* Search */
+.search-input {
+    max-width: 320px;
+    min-width: 220px;
+}
+
+.search-input:focus {
+    border-color: var(--n-primary, #0b4e6b);
+    box-shadow: 0 0 0 4px rgba(11, 78, 107, .10);
+}
+
+/* Messages */
+.error-message {
+    background: #fff1f0;
+    color: #b42318;
+    border: 1px solid #fecdca;
+    border-radius: var(--n-radius-sm, 8px);
+    padding: 16px;
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--n-slate, #667085);
+    padding: 35px 15px;
+}
+
+/* Footer */
+.results-footer {
+    color: var(--n-slate, #667085);
+    font-size: 12px;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .results-header {
+        padding: 35px 0;
+    }
+
+    .results-header h1 {
+        font-size: 24px;
+    }
+
+    .results-card {
+        padding: 16px;
+    }
+
+    .results-toolbar {
+        align-items: stretch;
+    }
+
+    .search-input {
+        max-width: 100%;
+        min-width: 0;
+        width: 100%;
+    }
+
+    #resultsTable thead th,
+    #resultsTable tbody td {
+        padding: 11px 12px;
+    }
+}
+
+
+/* Pagination */
+.pagination {
+    gap: 4px;
+}
+
+.pagination .page-link {
+    border: 1px solid var(--n-border, #e4e7ec);
+    border-radius: 8px;
+    color: var(--n-primary, #0b4e6b);
+    font-size: 14px;
+    min-width: 38px;
+    text-align: center;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--n-gradient-primary);
+    border-color: transparent;
+    color: #fff;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #98a2b3;
+    background: #f7f9fc;
+}

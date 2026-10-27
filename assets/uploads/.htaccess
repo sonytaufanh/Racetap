@@ -1,0 +1,7 @@
+# Prevent any PHP execution inside the upload directory.
+<FilesMatch "\.(php|phtml|phar|cgi|pl|py|sh|htaccess)$">
+  Require all denied
+</FilesMatch>
+RemoveHandler .php .phtml .phar
+RemoveType .php .phtml .phar
+php_flag engine off
