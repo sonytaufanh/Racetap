@@ -1,0 +1,546 @@
+{
+  "events": [
+    {
+      "slug": "Dogathlon-3.0-Dog-Obstacle-Run",
+      "metaTitle": "Hasil Lomba Dogathlon 3.0 Dog Obstacle Run | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event Dogathlon 3.0 Dog Obstacle Run. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/10/header-uksw-salatiga-10k.webp",
+      "bannerAlt": "Header Hasil Lomba Dogathlon 3.0 Dog Obstacle Run",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "Monkey-Forest-Ubud-Run-2026",
+      "metaTitle": "Hasil Lomba MONKEY FOREST UBUD RUN 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event MONKEY FOREST UBUD RUN 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "banner.png",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "ahy-run-2026",
+      "metaTitle": "Hasil Lomba AHY RUN 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event AHY RUN 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "banner ahy run 2026.webp",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "chick-n-run-2026",
+      "metaTitle": "Hasil Lomba CHICK AND RUN 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event CHICK AND RUN 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/10/header-uksw-salatiga-10k.webp",
+      "bannerAlt": "Header Hasil Lomba CHICK AND RUN 2026",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "dahana-run-2026",
+      "metaTitle": "Hasil Lomba DAHANA RUN 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event DAHANA RUN 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "banner-dahana-run-2026.webp",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "jember-10k",
+      "metaTitle": "Hasil Lomba JEMBER 10K | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event JEMBER 10K. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/08/jember-10k.webp",
+      "maintenance": true,
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "ageGroup2",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "age2Rank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup",
+        "ageGroup2"
+      ],
+      "hiddenBelow640": [
+        "ageGroup2",
+        "ageRank",
+        "age2Rank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "ageGroup",
+        "genderRank",
+        "ageRank",
+        "age2Rank"
+      ]
+    },
+    {
+      "slug": "road-to-jogja10k",
+      "metaTitle": "Hasil Lomba Road To Jogja10K | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event Road To Jogja10K. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": null,
+      "bannerAlt": "Header Hasil Lomba Road To Jogja10K",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "rupiah-borobudur-playon-2026",
+      "metaTitle": "Hasil Lomba Rupiah Borobudur Playon 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event Rupiah Borobudur Playon 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/07/header-rupiah-borobudur-playon-2026.webp",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "ageGroup2",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "age2Rank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup",
+        "ageGroup2"
+      ],
+      "hiddenBelow640": [
+        "ageGroup2",
+        "ageRank",
+        "age2Rank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "ageGroup",
+        "genderRank",
+        "ageRank",
+        "age2Rank"
+      ]
+    },
+    {
+      "slug": "sarkororun-v2",
+      "metaTitle": "Hasil Lomba Sarkororun V2 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event Sarkororun V2. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/09/header-sarkororun-vol2.webp",
+      "distanceOverride": "5K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "gender"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "tni-run-2026-jakarta",
+      "metaTitle": "Hasil Lomba TNI RUN 2026 JAKARTA | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event TNI RUN 2026 JAKARTA. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/09/header-tni-run-2026-jakarta.webp",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "tni-run-2026-yogyakarta",
+      "metaTitle": "Hasil Lomba TNI RUN 2026 YOGYAKARTA | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event TNI RUN 2026 YOGYAKARTA. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/09/header-tni-run-2026-yogyakarta.webp",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "uksw-salatiga-10k",
+      "metaTitle": "Hasil Lomba UKSW SALATIGA 10K | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event UKSW SALATIGA 10K. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/10/header-uksw-salatiga-10k.webp",
+      "bannerAlt": "Header Hasil Lomba UKSW SALATIGA 10K",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "ungarun-10k-2026",
+      "metaTitle": "Hasil Lomba UNGARUN10K 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event UNGARUN10K 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/10/header-uksw-salatiga-10k.webp",
+      "bannerAlt": "Header Hasil Lomba UNGARUN10K 2026",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "unnes-run-2026",
+      "metaTitle": "Hasil Lomba UNNES RUN 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event UNNES RUN 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": null,
+      "bannerAlt": "Header Hasil Lomba UNNES RUN 2026",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    },
+    {
+      "slug": "yia-grow-run-2026",
+      "metaTitle": "Hasil Lomba YIA Grow Run 2026 | RaceTap",
+      "description": "Cek hasil resmi, waktu tempuh, dan peringkat pelari untuk event YIA Grow Run 2026. Temukan nama atau nomor BIB Anda di sini.",
+      "banner": "https://racetap.id/wp-content/uploads/2026/10/header-uksw-salatiga-10k.webp",
+      "bannerAlt": "Header Hasil Lomba YIA Grow Run 2026",
+      "distanceOverride": "5K & 10K",
+      "columns": [
+        "item",
+        "bib",
+        "name",
+        "cert",
+        "gender",
+        "ageGroup",
+        "gunTime",
+        "netTime",
+        "overallRank",
+        "genderRank",
+        "ageRank",
+        "status"
+      ],
+      "filters": [
+        "item",
+        "gender",
+        "ageGroup"
+      ],
+      "hiddenBelow640": [
+        "ageGroup",
+        "ageRank"
+      ],
+      "hiddenBelow480": [
+        "cert",
+        "genderRank",
+        "ageRank"
+      ]
+    }
+  ]
+}
