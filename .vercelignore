@@ -1,0 +1,26 @@
+# Local runtime / deps
+node_modules
+web/node_modules
+vendor
+
+# Heavy local-only services (Python venvs, ~1.1 GB) — not needed for the Vercel build
+ocr_service
+ocr_service_paddle
+
+# Legacy kiosk document roots (separately hosted subdomains)
+bibcheck.racetap.id
+bibcheck2.racetap.id
+bibcheck3.racetap.id
+bibchecklocal.racetap.id
+checklocal.racetap.id
+local.racetap.id
+local2.racetap.id
+result.racetap.id
+result2.racetap.id
+
+# Local env / secrets
+.env
+application/config/.env
+application/logs/*
+application/cache/*
+*.log

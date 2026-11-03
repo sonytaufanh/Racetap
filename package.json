@@ -3,6 +3,8 @@
   "private": true,
   "description": "Delegates npm scripts to the web/ workspace (Vite + React + TypeScript).",
   "scripts": {
+    "postinstall": "npm --prefix web install",
+    "vercel-build": "npm --prefix web run build",
     "dev": "npm --prefix web run dev",
     "dev:php": "php -S 127.0.0.1:8180 -t . router.php",
     "build": "npm --prefix web run build",
@@ -13,6 +15,6 @@
     "install:web": "npm --prefix web install"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "typescript": "^5.0.0"
   }
 }
