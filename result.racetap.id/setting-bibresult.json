@@ -6,7 +6,7 @@
   "enabled": true,
   "source": "Age Group",
   "map": {
-    "UMUM": "10kumum.png",
+    "UMUM": "bg.png",
     "MASTER": "10kmaster.png",
     "INTERNAL": "10kinternal.png"
   }

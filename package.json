@@ -1,0 +1,15 @@
+{
+  "name": "racetap",
+  "private": true,
+  "description": "Delegates npm scripts to the web/ workspace (Vite + React + TypeScript).",
+  "scripts": {
+    "dev": "npm --prefix web run dev",
+    "dev:php": "php -S 127.0.0.1:8180 -t . router.php",
+    "build": "npm --prefix web run build",
+    "test": "npm --prefix web run test",
+    "typecheck": "npm --prefix web run typecheck",
+    "gen": "npm --prefix web run gen",
+    "gen:check": "npm --prefix web run gen:check",
+    "install:web": "npm --prefix web install"
+  }
+}

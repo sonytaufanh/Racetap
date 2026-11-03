@@ -1,0 +1,380 @@
+@import './fonts.css';
+
+/* Certificate modal + admin editor. Imported by the public results bundle and
+   by the admin bundle, so it must not depend on either entry's own styles. */
+
+/* ---------- Participant-facing modal ---------- */
+
+/* The certificate cells become buttons once an event hosts its own template. */
+.rt-cert-link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.rt-cert-link:hover {
+  text-decoration: underline;
+}
+
+.rt-cert-cell {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.rt-cert-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(6, 12, 30, 0.78);
+}
+
+.rt-cert-dialog {
+  width: min(1180px, 100%);
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 26px 70px rgba(4, 10, 28, 0.45);
+}
+
+.rt-cert-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.15rem;
+  border-bottom: 1px solid #e4e7ec;
+  background: #fff;
+}
+
+.rt-cert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  color: #0b1437;
+  min-width: 0;
+}
+
+.rt-cert-who {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #667085;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rt-cert-close {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e4e7ec;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0b1437;
+  cursor: pointer;
+}
+
+.rt-cert-close:hover {
+  background: #eef2f7;
+}
+
+.rt-cert-body {
+  flex: 1 1 auto;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: auto;
+  background: #0b1437;
+}
+
+.rt-cert-stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.rt-cert-canvas {
+  max-width: 100%;
+  max-height: 68vh;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.rt-cert-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 3rem 1rem;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.rt-cert-state.is-error {
+  color: #fca5a5;
+}
+
+.rt-cert-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.85rem 1.15rem;
+  border-top: 1px solid #e4e7ec;
+  background: #fff;
+}
+
+.rt-cert-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: #0b4e6b;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rt-cert-btn:hover:not(:disabled) {
+  background: #083a50;
+}
+
+.rt-cert-btn.is-secondary {
+  background: #b54708;
+}
+
+.rt-cert-btn.is-secondary:hover:not(:disabled) {
+  background: #8f3706;
+}
+
+.rt-cert-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- Admin editor ---------- */
+
+.rt-cert-admin {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .rt-cert-admin {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.rt-cert-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #e4e7ec;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  background: #f8fafc;
+}
+
+.rt-cert-toolbar .form-select,
+.rt-cert-toolbar .form-control {
+  max-width: 220px;
+}
+
+.rt-cert-stage-wrap {
+  position: relative;
+  border: 1px solid #e4e7ec;
+  border-radius: 0 0 12px 12px;
+  background: repeating-conic-gradient(#f1f3f7 0% 25%, #e7ebf1 0% 50%) 50% / 22px 22px;
+  overflow: auto;
+  max-height: 74vh;
+  padding: 0.75rem;
+}
+
+.rt-cert-board {
+  position: relative;
+  margin: 0 auto;
+  line-height: 0;
+  touch-action: none;
+}
+
+.rt-cert-canvas-host {
+  position: absolute;
+  inset: 0;
+}
+
+.rt-cert-canvas-host canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rt-cert-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rt-cert-box {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  border: 1px dashed rgba(11, 78, 107, 0.55);
+  background: rgba(11, 78, 107, 0.05);
+  border-radius: 4px;
+  cursor: move;
+  white-space: pre;
+  line-height: 1;
+  overflow: visible;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.rt-cert-box.is-selected {
+  border-style: solid;
+  border-color: #b54708;
+  background: rgba(247, 144, 9, 0.12);
+  box-shadow: 0 0 0 2px rgba(247, 144, 9, 0.25);
+  z-index: 2;
+}
+
+.rt-cert-box.is-static {
+  border-color: rgba(102, 112, 133, 0.55);
+  background: rgba(102, 112, 133, 0.05);
+}
+
+.rt-cert-box.is-placeholder {
+  border-style: dotted;
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.rt-cert-box-tag {
+  position: absolute;
+  top: -1.2rem;
+  left: 0;
+  padding: 0 0.35rem;
+  border-radius: 4px;
+  background: #0b4e6b;
+  color: #fff;
+  font-size: 0.65rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.rt-cert-emptyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 320px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #fff;
+  color: #667085;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.rt-cert-panel {
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  background: #fff;
+  padding: 0.9rem;
+}
+
+.rt-cert-panel + .rt-cert-panel {
+  margin-top: 1rem;
+}
+
+.rt-cert-panel h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0b1437;
+}
+
+.rt-cert-fieldlist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 200px;
+  overflow: auto;
+  margin-bottom: 0.6rem;
+}
+
+.rt-cert-fielditem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.82rem;
+  color: #334155;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rt-cert-fielditem.is-active {
+  border-color: #b54708;
+  background: #fff7ed;
+  font-weight: 600;
+}
+
+.rt-cert-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.rt-cert-hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.76rem;
+  color: #667085;
+}
+
+.rt-cert-swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rt-cert-swatch input[type='color'] {
+  width: 42px;
+  height: 34px;
+  padding: 2px;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  background: #fff;
+}

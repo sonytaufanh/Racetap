@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
   username VARCHAR(80) NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   display_name VARCHAR(120) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'admin',
   is_active TINYINT(1) NOT NULL DEFAULT 1,
   last_login_at DATETIME NULL,
   created_at DATETIME NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE IF NOT EXISTS photo_events (
   cover VARCHAR(255) NOT NULL DEFAULT '',
   description TEXT NULL,
   photographer VARCHAR(190) NULL,
+  ocr_rule LONGTEXT NULL,
   is_active TINYINT(1) NOT NULL DEFAULT 1,
   created_at DATETIME NOT NULL,
   updated_at DATETIME NOT NULL,
@@ -98,6 +100,19 @@ CREATE TABLE IF NOT EXISTS photos (
   CONSTRAINT photos_event_fk FOREIGN KEY (event_id) REFERENCES photo_events (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS photo_bibs (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  photo_id INT UNSIGNED NOT NULL,
+  bib VARCHAR(32) NOT NULL,
+  confidence DECIMAL(5,2) NOT NULL DEFAULT 0,
+  source VARCHAR(20) NOT NULL DEFAULT 'ocr',
+  created_at DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY photo_bibs_unique (photo_id, bib),
+  KEY photo_bibs_bib (bib),
+  CONSTRAINT photo_bibs_photo_fk FOREIGN KEY (photo_id) REFERENCES photos (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS photo_ocr_logs (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   photo_id INT UNSIGNED NULL,
@@ -112,4 +127,43 @@ CREATE TABLE IF NOT EXISTS photo_ocr_logs (
   PRIMARY KEY (id),
   KEY photo_ocr_logs_photo (photo_id),
   KEY photo_ocr_logs_event (event_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS app_settings (
+  setting_key VARCHAR(120) NOT NULL,
+  setting_value TEXT NULL,
+  updated_at DATETIME NOT NULL,
+  PRIMARY KEY (setting_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS leads (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(160) NOT NULL,
+  email VARCHAR(190) NOT NULL,
+  phone VARCHAR(40) NULL,
+  event_name VARCHAR(190) NULL,
+  message TEXT NULL,
+  source VARCHAR(40) NOT NULL DEFAULT 'contact',
+  ip VARCHAR(64) NULL,
+  user_agent VARCHAR(255) NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'new',
+  created_at DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  KEY leads_created (created_at),
+  KEY leads_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS audit_log (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  admin_id INT UNSIGNED NULL,
+  admin_username VARCHAR(80) NULL,
+  action VARCHAR(60) NOT NULL,
+  entity VARCHAR(40) NOT NULL,
+  entity_id VARCHAR(64) NULL,
+  detail TEXT NULL,
+  ip VARCHAR(64) NULL,
+  created_at DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  KEY audit_created (created_at),
+  KEY audit_entity (entity, entity_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

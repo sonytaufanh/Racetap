@@ -117,7 +117,7 @@ class Photo_model extends CI_Model
     public function search_photos($event, $query)
     {
         $photos = isset($event['photos']) ? $event['photos'] : array();
-        $digits = preg_replace('/[^0-9]/', '', (string) $query);
+        $digits = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $query));
 
         if ($digits === '') {
             return $photos;
@@ -136,14 +136,14 @@ class Photo_model extends CI_Model
 
     public function photo_matches($photo, $query)
     {
-        $digits = preg_replace('/[^0-9]/', '', (string) $query);
+        $digits = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $query));
 
         if ($digits === '') {
             return TRUE;
         }
 
-        $bib = isset($photo['bib']) ? preg_replace('/[^0-9]/', '', (string) $photo['bib']) : '';
-        $ocr = isset($photo['ocr_text']) ? preg_replace('/[^0-9]/', '', (string) $photo['ocr_text']) : '';
+        $bib = isset($photo['bib']) ? strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $photo['bib'])) : '';
+        $ocr = isset($photo['ocr_text']) ? strtoupper(preg_replace('/[^A-Za-z0-9]/', '', (string) $photo['ocr_text'])) : '';
 
         return strpos($bib, $digits) !== FALSE || strpos($ocr, $digits) !== FALSE;
     }

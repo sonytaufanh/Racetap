@@ -98,10 +98,13 @@ class Api_controller extends CI_Controller
             return NULL;
         }
 
+        $role = (string) $this->session->userdata('admin_role');
+
         return array(
             'id' => (int) $id,
             'username' => (string) $this->session->userdata('admin_username'),
-            'display_name' => (string) $this->session->userdata('admin_display_name')
+            'display_name' => (string) $this->session->userdata('admin_display_name'),
+            'role' => $role !== '' ? $role : 'admin'
         );
     }
 
@@ -115,6 +118,54 @@ class Api_controller extends CI_Controller
         }
 
         return $user;
+    }
+
+    /**
+     * User management is restricted to the superadmin role. Existing installs
+     * keep working because admin_users.role defaults to 'admin', and the first
+     * account is promoted to superadmin by Tools::migrate.
+     */
+    protected function require_superadmin()
+    {
+        $user = $this->require_admin();
+
+        if ($user === NULL) {
+            return NULL;
+        }
+
+        $row = $this->db->select('role')->get_where('admin_users', array('id' => (int) $user['id']))->row();
+
+        if (!$row || $row->role !== 'superadmin') {
+            $this->fail('Hanya superadmin yang dapat melakukan aksi ini.', 403);
+            return NULL;
+        }
+
+        return $user;
+    }
+
+    /** Best-effort audit trail; never blocks the actual operation. */
+    protected function audit($action, $entity, $entity_id = NULL, $detail = NULL)
+    {
+        if (!$this->db->table_exists('audit_log')) {
+            return;
+        }
+
+        $user = $this->admin_user();
+
+        try {
+            $this->db->insert('audit_log', array(
+                'admin_id' => $user ? $user['id'] : NULL,
+                'admin_username' => $user ? $user['username'] : NULL,
+                'action' => (string) $action,
+                'entity' => (string) $entity,
+                'entity_id' => $entity_id === NULL ? NULL : (string) $entity_id,
+                'detail' => $detail === NULL ? NULL : (is_string($detail) ? $detail : json_encode($detail, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)),
+                'ip' => (string) $this->input->ip_address(),
+                'created_at' => date('Y-m-d H:i:s')
+            ));
+        } catch (Exception $error) {
+            log_message('error', 'audit failed: ' . $error->getMessage());
+        }
     }
 
     protected function csrf_token($regenerate = FALSE)

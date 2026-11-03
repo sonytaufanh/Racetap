@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ImgHTMLAttributes, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 interface Crumb {
@@ -6,30 +6,51 @@ interface Crumb {
   to?: string;
 }
 
-export function PageHeader({ title, crumbs, children }: { title: string; crumbs?: Crumb[]; children?: ReactNode }) {
+export function PageHeader({
+  title,
+  subtitle,
+  eyebrow,
+  crumbs,
+  actions,
+  children
+}: {
+  title: string;
+  subtitle?: ReactNode;
+  eyebrow?: string;
+  crumbs?: Crumb[];
+  actions?: ReactNode;
+  children?: ReactNode;
+}) {
   return (
     <header className="page-header">
       <div className="container">
-        <h1 className="mb-3">{title}</h1>
-        {crumbs && crumbs.length > 0 && (
-          <div className="breadcrumb-custom">
-            {crumbs.map((crumb, index) => (
-              <span key={`${crumb.label}-${index}`}>
-                {index > 0 && <span> / </span>}
-                {crumb.to ? (
-                  crumb.to.startsWith('/') ? (
-                    <Link to={crumb.to}>{crumb.label}</Link>
-                  ) : (
-                    <a href={crumb.to}>{crumb.label}</a>
-                  )
-                ) : (
-                  <span className="active">{crumb.label}</span>
-                )}
-              </span>
-            ))}
+        <div className="page-header-row">
+          <div className="page-header-copy">
+            {crumbs && crumbs.length > 0 && (
+              <div className="breadcrumb-custom">
+                {crumbs.map((crumb, index) => (
+                  <span key={`${crumb.label}-${index}`}>
+                    {index > 0 && <span> / </span>}
+                    {crumb.to ? (
+                      crumb.to.startsWith('/') ? (
+                        <Link to={crumb.to}>{crumb.label}</Link>
+                      ) : (
+                        <a href={crumb.to}>{crumb.label}</a>
+                      )
+                    ) : (
+                      <span className="active">{crumb.label}</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            )}
+            {eyebrow ? <span className="page-header-eyebrow">{eyebrow}</span> : null}
+            <h1>{title}</h1>
+            {subtitle ? <p className="page-header-subtitle">{subtitle}</p> : null}
           </div>
-        )}
-        {children}
+          {actions ? <div className="page-header-actions">{actions}</div> : null}
+        </div>
+        {children ? <div className="page-header-extra">{children}</div> : null}
       </div>
     </header>
   );
@@ -89,4 +110,74 @@ export function EmptyBox({ icon = 'bi-images', title, description }: { icon?: st
       <p className="mb-0">{description}</p>
     </div>
   );
+}
+
+export function Badge({
+  children,
+  tone = 'neutral'
+}: {
+  children: ReactNode;
+  tone?: 'neutral' | 'success' | 'warning' | 'danger' | 'primary';
+}) {
+  return <span className={`rt-chip rt-chip-${tone}`}>{children}</span>;
+}
+
+export function StatCard({
+  label,
+  value,
+  hint,
+  icon,
+  tone = 'primary',
+  progress
+}: {
+  label: string;
+  value: ReactNode;
+  hint?: ReactNode;
+  icon?: string;
+  tone?: 'primary' | 'success' | 'warning' | 'info';
+  progress?: number;
+}) {
+  return (
+    <div className={`rt-stat-card rt-stat-card-${tone}`}>
+      {icon ? (
+        <span className="rt-stat-icon">
+          <i className={`bi ${icon}`} />
+        </span>
+      ) : null}
+      <div className="rt-stat-body">
+        <div className="rt-stat-value">{value}</div>
+        <div className="rt-stat-label">{label}</div>
+        {hint ? <div className="rt-stat-hint">{hint}</div> : null}
+        {typeof progress === 'number' ? (
+          <div
+            className="rt-stat-meter"
+            role="progressbar"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
+            <span style={{ width: `${Math.min(100, Math.max(0, progress))}%` }} />
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * <img> with a graceful placeholder: if the file is missing (or blocked), the
+ * card keeps its layout instead of showing a broken image icon.
+ */
+export function SafeImage({ src, alt, className, ...rest }: ImgHTMLAttributes<HTMLImageElement>) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <span className={`img-fallback ${className || ''}`.trim()} role="img" aria-label={alt || 'image'}>
+        <i className="bi bi-image" />
+      </span>
+    );
+  }
+
+  return <img src={src} alt={alt} className={className} loading={rest.loading} onError={() => setFailed(true)} {...rest} />;
 }

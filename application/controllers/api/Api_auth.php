@@ -49,11 +49,14 @@ class Api_auth extends Api_controller
             return;
         }
 
+        $role = isset($user->role) && $user->role !== '' ? $user->role : 'admin';
+
         $this->session->sess_regenerate(TRUE);
         $this->session->set_userdata(array(
             'admin_user_id' => (int) $user->id,
             'admin_username' => $user->username,
-            'admin_display_name' => $user->display_name
+            'admin_display_name' => $user->display_name,
+            'admin_role' => $role
         ));
 
         $this->db->where('id', (int) $user->id)->update('admin_users', array(
@@ -80,7 +83,8 @@ class Api_auth extends Api_controller
         $this->session->unset_userdata(array(
             'admin_user_id',
             'admin_username',
-            'admin_display_name'
+            'admin_display_name',
+            'admin_role'
         ));
         $this->session->sess_regenerate(TRUE);
 
@@ -113,8 +117,8 @@ class Api_auth extends Api_controller
             $errors['username'] = 'Username 4-80 karakter, hanya huruf, angka, garis bawah, atau strip.';
         }
 
-        if (strlen($password) < 12) {
-            $errors['password'] = 'Password minimal 12 karakter.';
+        if (strlen($password) < 8) {
+            $errors['password'] = 'Password minimal 8 karakter.';
         }
 
         if ($password !== $confirm) {
@@ -133,14 +137,20 @@ class Api_auth extends Api_controller
 
         $now = date('Y-m-d H:i:s');
 
-        $this->db->insert('admin_users', array(
+        $data = array(
             'username' => $username,
             'password_hash' => password_hash($password, PASSWORD_DEFAULT),
             'display_name' => $display_name,
             'is_active' => 1,
             'created_at' => $now,
             'updated_at' => $now
-        ));
+        );
+
+        if ($this->db->field_exists('role', 'admin_users')) {
+            $data['role'] = 'superadmin';
+        }
+
+        $this->db->insert('admin_users', $data);
 
         $this->respond(array('created' => TRUE), 201);
     }

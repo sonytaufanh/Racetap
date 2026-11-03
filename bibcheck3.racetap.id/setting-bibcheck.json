@@ -6,7 +6,7 @@
   "enabled": true,
   "source": "Item",
   "map": {
-    "5K": "bg5k.png"
+    "5K": "bg.png"
   }
 },
 

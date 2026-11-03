@@ -1,0 +1,37 @@
+{
+  "slug": "ahy-run-2026",
+  "name": "AHY RUN 2026",
+  "title": "AHY RUN 2026",
+  "date": "2026-10-17",
+  "participants": 1614,
+  "finishers": 1426,
+  "categories": [
+    "10K"
+  ],
+  "distance": "10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "NURSHODIQ",
+          "bib": "10171",
+          "netTime": "00:30:52",
+          "gunTime": "00:32:11"
+        },
+        {
+          "name": "EDO SURYA SHAPUTRA",
+          "bib": "10724",
+          "netTime": "00:31:21",
+          "gunTime": "00:32:40"
+        },
+        {
+          "name": "BERMAN.S SIAHAAN",
+          "bib": "10319",
+          "netTime": "00:31:27",
+          "gunTime": "00:32:46"
+        }
+      ]
+    }
+  ]
+}

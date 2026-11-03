@@ -1,0 +1,37 @@
+{
+  "slug": "unnes-run-2026",
+  "name": "Unnes Run 2026",
+  "title": "UNNES RUN 2026",
+  "date": "2026-06-20",
+  "participants": 642,
+  "finishers": 550,
+  "categories": [
+    "6.1K OPEN"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "6.1K OPEN",
+      "athletes": [
+        {
+          "name": "ALVIN ADHY PRADANA",
+          "bib": "6427",
+          "netTime": "00:20:03",
+          "gunTime": "00:20:05"
+        },
+        {
+          "name": "BHAYU PRATAMA CIPTA",
+          "bib": "6525",
+          "netTime": "00:20:15",
+          "gunTime": "00:20:16"
+        },
+        {
+          "name": "MUHAMMAD NUR HAFIDZ",
+          "bib": "6476",
+          "netTime": "00:21:09",
+          "gunTime": "00:21:10"
+        }
+      ]
+    }
+  ]
+}

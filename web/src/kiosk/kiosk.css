@@ -1,0 +1,56 @@
+/* Kiosk BIB-check display. Visual parity with the legacy per-instance pages. */
+
+.rt-kiosk,
+.rt-kiosk * {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.rt-kiosk {
+  position: fixed;
+  inset: 0;
+  background: #000 no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial Black', Arial, sans-serif;
+  overflow: hidden;
+}
+
+.rt-kiosk .overlay {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.rt-kiosk .text-layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  line-height: 1.05;
+}
+
+.rt-kiosk .allow-wrap {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+@keyframes rt-kiosk-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.rt-kiosk .blink {
+  animation: rt-kiosk-blink 1s step-start infinite;
+}

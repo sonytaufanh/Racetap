@@ -5,68 +5,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | -------------------------------------------------------------------------
 | URI ROUTING
 | -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
-|
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
-|
-|	example.com/class/method/id/
-|
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
-|
-| Please see the user guide for complete details:
-|
-|	https://codeigniter.com/userguide3/general/routing.html
-|
+| The public site is a React SPA served by Spa::index for every non-API path.
+| The JSON API keeps its explicit routes and must stay above the catch-alls.
+| Legacy prefixes get permanent redirects so old links keep working.
 | -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
-$route['about'] = 'welcome/about';
-$route['services'] = 'welcome/services';
-$route['results'] = 'welcome/results';
-$route['photos'] = 'photos/index';
-$route['photos/(:any)'] = 'photos/event/$1';
-$route['hasil'] = 'results';
+
+$route['default_controller'] = 'spa';
 
 // ---------------------------------------------------------------------------
 // JSON API (v1)
 // ---------------------------------------------------------------------------
 $route['api/v1/photos/events'] = 'api/api_photos/events';
+$route['api/v1/photos/events/(:any)/download'] = 'api/api_photos/download/$1';
 $route['api/v1/photos/events/(:any)'] = 'api/api_photos/event/$1';
 
-$route['api/v1/races'] = 'api/api_races/index';
-$route['api/v1/races/(:any)'] = 'api/api_races/show/$1';
+$route['api/v1/health'] = 'api/api_health/index';
+$route['api/v1/content'] = 'api/api_content/index';
 
-$route['api/v1/live-results'] = 'api/api_live_results/index';
+$route['api/v1/admin/content'] = 'api/api_admin_content/index';
+$route['api/v1/admin/content/(:any)'] = 'api/api_admin_content/reset/$1';
+
+$route['api/v1/admin/events'] = 'api/api_admin_events/index';
+$route['api/v1/admin/events/(:num)/data'] = 'api/api_admin_events/data/$1';
+$route['api/v1/admin/events/(:num)/banner'] = 'api/api_admin_events/banner/$1';
+$route['api/v1/admin/events/(:num)/publish'] = 'api/api_admin_events/publish/$1';
+$route['api/v1/admin/events/(:num)'] = 'api/api_admin_events/event/$1';
+
+$route['api/v1/admin/certificates'] = 'api/api_admin_certificates/index';
+$route['api/v1/admin/certificates/(:any)/template'] = 'api/api_admin_certificates/template/$1';
+$route['api/v1/admin/certificates/(:any)/sample'] = 'api/api_admin_certificates/sample/$1';
+$route['api/v1/admin/certificates/(:any)'] = 'api/api_admin_certificates/event/$1';
+
+$route['api/v1/admin/media'] = 'api/api_admin_media/index';
+$route['api/v1/admin/media/(:num)'] = 'api/api_admin_media/item/$1';
+
+$route['api/v1/admin/kiosk'] = 'api/api_admin_kiosk/index';
+$route['api/v1/admin/seo'] = 'api/api_admin_seo/index';
+
+$route['api/v1/settings'] = 'api/api_settings/index';
+$route['api/v1/search'] = 'api/api_search/index';
+$route['api/v1/leads'] = 'api/api_leads/index';
+
+$route['api/v1/admin/stats'] = 'api/api_admin_stats/index';
+$route['api/v1/admin/media/check'] = 'api/api_admin_media/check';
+$route['api/v1/admin/settings'] = 'api/api_admin_settings/index';
+$route['api/v1/admin/audit'] = 'api/api_admin_audit/index';
+$route['api/v1/admin/users'] = 'api/api_admin_users/index';
+$route['api/v1/admin/users/create'] = 'api/api_admin_users/store';
+$route['api/v1/admin/users/(:num)'] = 'api/api_admin_users/user/$1';
+$route['api/v1/admin/leads'] = 'api/api_admin_leads/index';
+$route['api/v1/admin/leads/(:num)'] = 'api/api_admin_leads/lead/$1';
 
 $route['api/v1/auth/session'] = 'api/api_auth/session';
 $route['api/v1/auth/login'] = 'api/api_auth/login';
@@ -78,35 +67,51 @@ $route['api/v1/admin/photos/events/(:num)/photos'] = 'api/api_admin_photos/uploa
 $route['api/v1/admin/photos/events/(:num)/cover'] = 'api/api_admin_photos/cover/$1';
 $route['api/v1/admin/photos/events/(:num)/ocr'] = 'api/api_admin_photos/ocr_event/$1';
 $route['api/v1/admin/photos/events/(:num)'] = 'api/api_admin_photos/event/$1';
+$route['api/v1/admin/photos/photos/(:num)/ocr-result'] = 'api/api_admin_photos/ocr_result/$1';
 $route['api/v1/admin/photos/photos/(:num)/ocr'] = 'api/api_admin_photos/ocr_photo/$1';
 $route['api/v1/admin/photos/photos/(:num)'] = 'api/api_admin_photos/photo/$1';
 
+$route['api/v1/admin/races/(:num)/results'] = 'api/api_admin_races/results/$1';
 $route['api/v1/admin/races/(:num)/sync'] = 'api/api_admin_races/sync/$1';
 $route['api/v1/admin/races/(:num)/toggle'] = 'api/api_admin_races/toggle/$1';
 $route['api/v1/admin/races/(:num)'] = 'api/api_admin_races/race/$1';
 $route['api/v1/admin/races'] = 'api/api_admin_races/index';
 
+// CLI utilities (they are guarded by is_cli() in the controllers).
+$route['tools/(:any)/(:any)'] = 'tools/$1/$2';
+$route['tools/(:any)'] = 'tools/$1';
+$route['cron_race_sync/(:any)'] = 'cron_race_sync/$1';
+
+// Unknown API paths must answer JSON 404, never the HTML SPA shell.
+$route['api/v1/(:any)'] = 'api/api_not_found/index';
+$route['api/v1/(:any)/(:any)'] = 'api/api_not_found/index';
+$route['api/v1/(:any)/(:any)/(:any)'] = 'api/api_not_found/index';
+$route['api/v1/(:any)/(:any)/(:any)/(:any)'] = 'api/api_not_found/index';
+
 // ---------------------------------------------------------------------------
-// React SPA (preview at /v2, ready to take over the root routes after review)
+// Legacy redirects (301)
 // ---------------------------------------------------------------------------
-$route['v2'] = 'spa/index';
-$route['v2/(:any)'] = 'spa/index';
-$route['v2/(:any)/(:any)'] = 'spa/index';
-$route['v2/(:any)/(:any)/(:any)'] = 'spa/index';
-$route['v2/(:any)/(:any)/(:any)/(:any)'] = 'spa/index';
-$route['v2/(:any)/(:any)/(:any)/(:any)/(:any)'] = 'spa/index';
+$route['v2'] = 'spa/legacy';
+$route['v2/(:any)'] = 'spa/legacy/$1';
+$route['v2/(:any)/(:any)'] = 'spa/legacy/$1/$2';
+$route['v2/(:any)/(:any)/(:any)'] = 'spa/legacy/$1/$2/$3';
+
+$route['welcome'] = 'spa/legacy/welcome';
+$route['welcome/(:any)'] = 'spa/legacy/$1';
+
+// ---------------------------------------------------------------------------
+// React SPA (public site + admin)
+// ---------------------------------------------------------------------------
+$route['admin'] = 'spa/index';
+$route['admin/(:any)'] = 'spa/index';
+$route['admin/(:any)/(:any)'] = 'spa/index';
+$route['admin/(:any)/(:any)/(:any)'] = 'spa/index';
+$route['admin/(:any)/(:any)/(:any)/(:any)'] = 'spa/index';
+
+$route['(:any)'] = 'spa/index';
+$route['(:any)/(:any)'] = 'spa/index';
+$route['(:any)/(:any)/(:any)'] = 'spa/index';
+$route['(:any)/(:any)/(:any)/(:any)'] = 'spa/index';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-$route['admin/races'] = 'admin_races/index';
-$route['admin/races/create'] = 'admin_races/create';
-$route['admin/races/edit/(:num)'] = 'admin_races/edit/$1';
-$route['admin/races/sync/(:num)'] = 'admin_races/sync/$1';
-$route['admin/races/toggle/(:num)'] = 'admin_races/toggle/$1';
-$route['race/(:any)'] = 'race_results/index/$1';
-
-$route['admin/login'] = 'admin_auth/login';
-$route['admin/setup'] = 'admin_auth/setup';
-$route['admin/logout'] = 'admin_auth/logout';
-$route['admin'] = 'admin_auth/index';

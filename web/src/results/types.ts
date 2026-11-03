@@ -41,6 +41,10 @@ export interface FeibotScore {
   team?: string | null;
   cp1?: string | null;
   cp2?: string | null;
+  cp3?: string | null;
+  cp4?: string | null;
+  cp5?: string | null;
+  cp6?: string | null;
   cp1_cp2?: string | null;
   [key: string]: unknown;
 }
@@ -79,6 +83,10 @@ export interface Participant {
   diff: string;
   cp1: string;
   cp2: string;
+  cp3?: string;
+  cp4?: string;
+  cp5?: string;
+  cp6?: string;
   cp1Cp2: string;
   netRanking: number | null;
   itemNetRank: number | null;

@@ -1,0 +1,37 @@
+{
+  "slug": "road-to-jogja10k",
+  "name": "Road to Yogyakarta 10K",
+  "title": "Road To Jogja10K",
+  "date": "2026-01-24",
+  "participants": 56,
+  "finishers": 47,
+  "categories": [
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "HUDA ABDUL ROZAK MUFID",
+          "bib": "017",
+          "netTime": "00:36:24",
+          "gunTime": "00:36:40"
+        },
+        {
+          "name": "ROYYAN",
+          "bib": "029",
+          "netTime": "00:36:26",
+          "gunTime": "00:36:50"
+        },
+        {
+          "name": "JENDAR FAUZI",
+          "bib": "008",
+          "netTime": "00:36:28",
+          "gunTime": "00:36:53"
+        }
+      ]
+    }
+  ]
+}

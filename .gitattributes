@@ -1,0 +1,19 @@
+# Normalise line endings: LF in the repository and in the working tree.
+* text=auto eol=lf
+
+# Shell scripts must stay LF so they keep running on the shared host.
+*.sh text eol=lf
+
+# Binaries: never convert or diff as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.zip binary
+*.rar binary
+*.traineddata binary

@@ -1,6 +1,9 @@
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+const MONTHS: Record<'id' | 'en', string[]> = {
+  id: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+};
 
-export function formatDate(value: string | null | undefined): string {
+export function formatDate(value: string | null | undefined, locale: 'id' | 'en' = 'id'): string {
   if (!value) {
     return '';
   }
@@ -11,11 +14,44 @@ export function formatDate(value: string | null | undefined): string {
     return value;
   }
 
-  return `${String(date.getDate()).padStart(2, '0')} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+  const month = MONTHS[locale][date.getMonth()];
+
+  return locale === 'en'
+    ? `${month} ${date.getDate()}, ${date.getFullYear()}`
+    : `${String(date.getDate()).padStart(2, '0')} ${month} ${date.getFullYear()}`;
 }
 
-export function formatNumber(value: number | null | undefined): string {
-  return new Intl.NumberFormat('id-ID').format(Number(value || 0));
+export function timeAgo(value: string | null | undefined): string {
+  if (!value) {
+    return 'belum pernah';
+  }
+
+  const normalized = value.includes('T') ? value : value.replace(' ', 'T');
+  const date = new Date(normalized);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  const diff = Date.now() - date.getTime();
+  const minutes = Math.round(diff / 60000);
+
+  if (minutes < 1) return 'baru saja';
+  if (minutes < 60) return `${minutes} menit lalu`;
+
+  const hours = Math.round(minutes / 60);
+
+  if (hours < 24) return `${hours} jam lalu`;
+
+  const days = Math.round(hours / 24);
+
+  if (days < 30) return `${days} hari lalu`;
+
+  return formatDate(value.slice(0, 10));
+}
+
+export function formatNumber(value: number | null | undefined, locale: 'id' | 'en' = 'id'): string {
+  return new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'id-ID').format(Number(value || 0));
 }
 
 export function formatDecimal(value: number, digits = 1): string {
@@ -26,24 +62,15 @@ export function digitsOnly(value: string | null | undefined): string {
   return String(value || '').replace(/[^0-9]/g, '');
 }
 
-export function labelFromKey(key: string): string {
-  return key
-    .replace(/[._]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+/**
+ * BIB numbers are not always numeric (e.g. "MH2001"), so searches keep letters
+ * and digits, drop separators, and normalise the case.
+ */
+export function normalizeBib(value: string | null | undefined, maxLength = 12): string {
+  return String(value || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '')
+    .slice(0, maxLength);
 }
 
-export function buildQuery(params: Record<string, string | number | null | undefined>): string {
-  const search = new URLSearchParams();
 
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== null && value !== undefined && value !== '') {
-      search.set(key, String(value));
-    }
-  });
-
-  const query = search.toString();
-
-  return query ? `?${query}` : '';
-}

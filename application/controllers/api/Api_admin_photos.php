@@ -12,6 +12,7 @@ class Api_admin_photos extends Api_controller
         parent::__construct();
         $this->load->model('Photo_repository');
         $this->load->library('vision_ocr');
+        $this->load->library('ocr_service');
     }
 
     public function events()
@@ -23,7 +24,11 @@ class Api_admin_photos extends Api_controller
         $method = $this->method();
 
         if ($method === 'GET') {
-            $this->respond(array('events' => $this->Photo_repository->events(TRUE)));
+            $this->respond(array(
+                'events' => $this->Photo_repository->events(TRUE),
+                'vision_enabled' => $this->vision_ocr->enabled(),
+                'ocr' => $this->ocr_service->mode()
+            ));
             return;
         }
 
@@ -63,7 +68,13 @@ class Api_admin_photos extends Api_controller
         $method = $this->method();
 
         if ($method === 'GET') {
-            $this->respond($event);
+            $this->respond(array_merge($event, array(
+                'vision_enabled' => $this->vision_ocr->enabled(),
+                'ocr' => $this->ocr_service->mode(),
+                // Lets the browser worker pre-pick the same bibs the server will
+                // confirm (glued reads such as "14127" -> bib 1412 need it).
+                'known_bibs' => $this->Photo_repository->known_bibs((int) $id)
+            )));
             return;
         }
 
@@ -184,6 +195,7 @@ class Api_admin_photos extends Api_controller
         $files = $this->normalize_files($_FILES['files']);
         $created = array();
         $errors = array();
+        $ocr_indexed = 0;
 
         foreach ($files as $file) {
             $stored = $this->store_upload($file, $dir, $event['slug'], $bib);
@@ -208,14 +220,21 @@ class Api_admin_photos extends Api_controller
             ));
 
             if (!empty($result['ok'])) {
-                $created[] = $this->Photo_repository->find_photo((int) $result['id']);
+                $photo_id = (int) $result['id'];
+                $photo = $this->Photo_repository->find_photo($photo_id);
+
+                // OCR runs on demand through the Index OCR action (with progress).
+                $created[] = $photo;
             }
         }
 
         $this->respond(array(
             'created' => count($created),
             'photos' => $created,
-            'errors' => $errors
+            'errors' => $errors,
+            'vision_enabled' => $this->vision_ocr->enabled(),
+            'ocr' => $this->ocr_service->mode(),
+            'ocr_indexed' => $ocr_indexed
         ), empty($created) ? 422 : 201);
     }
 
@@ -244,7 +263,10 @@ class Api_admin_photos extends Api_controller
             if (array_key_exists('bib', $payload)) {
                 $payload['bib'] = preg_replace('/[^0-9A-Za-z]/', '', (string) $payload['bib']);
                 $payload['ocr_text'] = $payload['bib'];
-                $payload['ocr_source'] = 'manual';
+
+                if (!array_key_exists('ocr_source', $payload)) {
+                    $payload['ocr_source'] = 'manual';
+                }
             }
 
             $this->Photo_repository->update_photo((int) $id, $payload);
@@ -280,8 +302,14 @@ class Api_admin_photos extends Api_controller
             return;
         }
 
-        if (!$this->vision_ocr->enabled()) {
-            $this->fail('Google Vision belum dikonfigurasi. Isi GOOGLE_VISION_API_KEY di environment server.', 503);
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(120);
+        }
+
+        $mode = $this->ocr_service->mode();
+
+        if ($mode['mode'] !== 'server') {
+            $this->fail('Server OCR tidak tersedia. Scan berjalan di browser admin.', 409);
             return;
         }
 
@@ -295,29 +323,59 @@ class Api_admin_photos extends Api_controller
         $force = (bool) $this->input_value('force', FALSE);
         $queue = array();
 
+        // In force mode the rows are re-read every call, so the batch is a
+        // sliding window rather than a drainable queue. Report progress against
+        // the page the client asked for (or the previous batch) instead of
+        // always claiming the whole event is still ahead.
+        $seen = (int) $this->input_value('seen', 0);
+        $seen = $seen < 0 ? 0 : $seen;
+
         foreach ($event['photos'] as $photo) {
-            if (!$force && $photo['ocr_source'] === 'google_vision' && $photo['ocr_text'] !== '') {
+            if (!$force && $photo['ocr_indexed_at'] !== '') {
                 continue;
             }
 
             $queue[] = $photo;
         }
 
-        $batch = array_splice($queue, 0, 16);
+        $batch_size = isset($this->config->item('ocr')['ocr_batch']) ? (int) $this->config->item('ocr')['ocr_batch'] : 16;
+
+        if ($force) {
+            $begin = min($seen, count($queue));
+            $batch = array_slice($queue, $begin, $batch_size);
+            $processed_from = $begin;
+        } else {
+            $batch = array_splice($queue, 0, $batch_size);
+            $processed_from = 0;
+        }
+
         $indexed = 0;
+        $multi = 0;
         $errors = array();
+        $known = $this->Photo_repository->known_bibs((int) $event['id']);
+        $rule = $this->Photo_repository->ocr_rule((int) $event['id']);
 
         foreach ($batch as $photo) {
-            $result = $this->vision_ocr->scan_file($this->absolute_path($photo['file']));
+            $result = $this->ocr_service->scan_file($this->absolute_path($photo['file']), $known, $rule);
+
+            $bibs = array();
+
+            if (!empty($result['bibs'])) {
+                foreach ($result['bibs'] as $entry) {
+                    $bibs[] = $entry['bib'];
+                }
+            }
+
+            $primary = $result['primary'];
 
             $this->Photo_repository->log_ocr(
                 (int) $photo['id'],
                 (int) $event['id'],
-                'google_vision',
+                $result['engine'] !== '' ? $result['engine'] : 'server',
                 $result['ok'] ? 'success' : 'error',
-                $result['bib'],
+                $primary,
                 $result['confidence'],
-                $result['text'] !== '' ? $result['text'] : $this->vision_ocr->last_raw(),
+                $result['text'],
                 $result['error']
             );
 
@@ -326,22 +384,37 @@ class Api_admin_photos extends Api_controller
                 continue;
             }
 
-            if ($result['bib'] !== '') {
-                $this->Photo_repository->save_ocr(
-                    (int) $photo['id'],
-                    $result['bib'],
-                    $result['text'],
-                    $result['confidence'],
-                    'google_vision'
-                );
-                $indexed++;
+            $this->Photo_repository->save_ocr(
+                (int) $photo['id'],
+                $primary,
+                $result['text'],
+                $result['confidence'],
+                $result['engine'] !== '' ? $result['engine'] : 'server',
+                $bibs
+            );
+
+            $indexed++;
+
+            if (count($bibs) > 1) {
+                $multi++;
             }
         }
 
         $this->respond(array(
+            'engine' => $mode['engine'],
+            'label' => $mode['label'],
             'processed' => count($batch),
             'indexed' => $indexed,
-            'remaining' => count($queue),
+            'multi' => $multi,
+            'remaining' => $force
+                ? max(0, count($queue) - ($processed_from + count($batch)))
+                : count($queue),
+            // How many rows the client has already walked past, so it can ask
+            // for the next slice in force mode.
+            'seen' => $force ? $processed_from + count($batch) : 0,
+            'total' => count($queue),
+            'batch_size' => $batch_size,
+            'ocr_rule' => $rule,
             'errors' => $errors
         ));
     }
@@ -360,8 +433,14 @@ class Api_admin_photos extends Api_controller
             return;
         }
 
-        if (!$this->vision_ocr->enabled()) {
-            $this->fail('Google Vision belum dikonfigurasi. Isi GOOGLE_VISION_API_KEY di environment server.', 503);
+        if (function_exists('set_time_limit')) {
+            @set_time_limit(90);
+        }
+
+        $mode = $this->ocr_service->mode();
+
+        if ($mode['mode'] !== 'server') {
+            $this->fail('Server OCR tidak tersedia. Scan berjalan di browser admin.', 409);
             return;
         }
 
@@ -372,16 +451,28 @@ class Api_admin_photos extends Api_controller
             return;
         }
 
-        $result = $this->vision_ocr->scan_file($this->absolute_path($photo['file']));
+        $event_id = $this->db->select('event_id')->where('id', (int) $id)->get('photos')->row_array();
+        $known = !empty($event_id['event_id']) ? $this->Photo_repository->known_bibs((int) $event_id['event_id']) : array();
+        $rule = !empty($event_id['event_id']) ? $this->Photo_repository->ocr_rule((int) $event_id['event_id']) : $this->Photo_repository->normalize_ocr_rule(array());
+
+        $result = $this->ocr_service->scan_file($this->absolute_path($photo['file']), $known, $rule);
+
+        $bibs = array();
+
+        if (!empty($result['bibs'])) {
+            foreach ($result['bibs'] as $entry) {
+                $bibs[] = $entry['bib'];
+            }
+        }
 
         $this->Photo_repository->log_ocr(
             (int) $photo['id'],
             NULL,
-            'google_vision',
+            $result['engine'] !== '' ? $result['engine'] : 'server',
             $result['ok'] ? 'success' : 'error',
-            $result['bib'],
+            $result['primary'],
             $result['confidence'],
-            $result['text'] !== '' ? $result['text'] : $this->vision_ocr->last_raw(),
+            $result['text'],
             $result['error']
         );
 
@@ -390,19 +481,105 @@ class Api_admin_photos extends Api_controller
             return;
         }
 
-        if ($result['bib'] !== '') {
-            $this->Photo_repository->save_ocr(
-                (int) $photo['id'],
-                $result['bib'],
-                $result['text'],
-                $result['confidence'],
-                'google_vision'
-            );
-        }
+        $this->Photo_repository->save_ocr(
+            (int) $photo['id'],
+            $result['primary'],
+            $result['text'],
+            $result['confidence'],
+            $result['engine'] !== '' ? $result['engine'] : 'server',
+            $bibs
+        );
 
         $this->respond(array(
             'photo' => $this->Photo_repository->find_photo((int) $photo['id']),
-            'result' => $result
+            'result' => array(
+                'ok' => TRUE,
+                'engine' => $result['engine'],
+                'text' => $result['text'],
+                'confidence' => $result['confidence'],
+                'bibs' => $bibs,
+                'primary' => $result['primary'],
+                'ocr_rule' => $rule
+            )
+        ));
+    }
+
+    /**
+     * Browser Tesseract worker posts its raw words/text here; the server
+     * resolves them against the event's known bib whitelist and stores the
+     * result so multi-BIB detection is consistent across engines.
+     */
+    public function ocr_result($id = 0)
+    {
+        if ($this->require_admin() === NULL) {
+            return;
+        }
+
+        if (!$this->only_methods(array('POST'))) {
+            return;
+        }
+
+        if (!$this->require_csrf()) {
+            return;
+        }
+
+        $photo = $this->Photo_repository->find_photo((int) $id);
+
+        if (!$photo) {
+            $this->fail('Foto tidak ditemukan.', 404);
+            return;
+        }
+
+        $payload = $this->payload();
+        $text = isset($payload['text']) ? trim((string) $payload['text']) : '';
+        $confidence = isset($payload['confidence']) ? (float) $payload['confidence'] : 0.0;
+        $words = isset($payload['words']) && is_array($payload['words']) ? $payload['words'] : array();
+
+        $event_id = $this->db->select('event_id')->where('id', (int) $id)->get('photos')->row_array();
+        $known = !empty($event_id['event_id']) ? $this->Photo_repository->known_bibs((int) $event_id['event_id']) : array();
+        $rule = !empty($event_id['event_id']) ? $this->Photo_repository->ocr_rule((int) $event_id['event_id']) : $this->Photo_repository->normalize_ocr_rule(array());
+
+        $resolved = $this->ocr_service->resolve_words($words, $text, $known, $rule);
+
+        $bibs = array();
+
+        if (!empty($resolved['bibs'])) {
+            foreach ($resolved['bibs'] as $entry) {
+                $bibs[] = $entry['bib'];
+            }
+        }
+
+        $this->Photo_repository->log_ocr(
+            (int) $photo['id'],
+            NULL,
+            'tesseract',
+            'success',
+            $resolved['primary'],
+            $confidence,
+            $text,
+            ''
+        );
+
+        $this->Photo_repository->save_ocr(
+            (int) $photo['id'],
+            $resolved['primary'],
+            $text,
+            $confidence,
+            'tesseract',
+            $bibs
+        );
+
+        $this->respond(array(
+            'photo' => $this->Photo_repository->find_photo((int) $photo['id']),
+            'result' => array(
+                'ok' => TRUE,
+                'engine' => 'tesseract',
+                'text' => $text,
+                'confidence' => $confidence,
+                'bibs' => $bibs,
+                'primary' => $resolved['primary'],
+                'ocr_rule' => $rule
+            )
         ));
     }
 

@@ -1,0 +1,88 @@
+{
+  "instances": [
+    {
+      "path": "bibcheck.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "bibcheck2.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "bibcheck3.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "bibchecklocal.racetap.id",
+      "configUrl": "setting-bibresult.json",
+      "title": "RACETAP.ID - RESULT",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"HighSpeed\"; src: url(\"High Speed.otf\") format(\"opentype\"); font-weight: bold; }",
+        "@font-face { font-family: \"Figtree\"; src: url(\"Figtree-ExtraBold.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "checklocal.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "local",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "local.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "local",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "local2.racetap.id",
+      "configUrl": "setting-bibcheck.json",
+      "title": "RACETAP.ID - CHECK",
+      "dataSource": "local",
+      "fonts": [
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "result.racetap.id",
+      "configUrl": "setting-bibresult.json",
+      "title": "RACETAP.ID - RESULT",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"HighSpeed\"; src: url(\"High Speed.otf\") format(\"opentype\"); font-weight: bold; }",
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    },
+    {
+      "path": "result2.racetap.id",
+      "configUrl": "setting-bibresult.json",
+      "title": "RACETAP.ID - RESULT",
+      "dataSource": "api",
+      "fonts": [
+        "@font-face { font-family: \"HighSpeed\"; src: url(\"High Speed.otf\") format(\"opentype\"); font-weight: bold; }",
+        "@font-face { font-family: \"font\"; src: url(\"eurosteal.big-caps-regular.ttf\") format(\"truetype\"); font-weight: bold; }"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "slug": "rupiah-borobudur-playon-2026",
+  "name": "Rupiah Borobudur Playon 2026",
+  "title": "RUPIAH BOROBUDUR PLAYON 2026",
+  "date": "2026-07-04",
+  "participants": 4029,
+  "finishers": 3678,
+  "categories": [
+    "10K",
+    "5K",
+    "PACER 10K",
+    "PACER 5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "NURSHODIQ",
+          "bib": "M1179",
+          "netTime": "00:32:45",
+          "gunTime": "00:33:38"
+        },
+        {
+          "name": "FAIZIN",
+          "bib": "M2133",
+          "netTime": "00:35:31",
+          "gunTime": "00:36:23"
+        },
+        {
+          "name": "HADI FIRMANSYAH",
+          "bib": "M1700",
+          "netTime": "00:35:46",
+          "gunTime": "00:36:40"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ACHMAD BADRIYANTO",
+          "bib": "M5798",
+          "netTime": "00:17:27",
+          "gunTime": "00:17:31"
+        },
+        {
+          "name": "RIFQI AJI HIMAWAN",
+          "bib": "M5434",
+          "netTime": "00:18:26",
+          "gunTime": "00:18:36"
+        },
+        {
+          "name": "JOKO PRIYONO",
+          "bib": "M6015",
+          "netTime": "00:18:55",
+          "gunTime": "00:19:06"
+        }
+      ]
+    },
+    {
+      "item": "PACER 10K",
+      "athletes": [
+        {
+          "name": "ARYA RADITYA",
+          "bib": "PACER60A",
+          "netTime": "00:58:54",
+          "gunTime": "00:59:48"
+        },
+        {
+          "name": "CHAERUL MANSUR",
+          "bib": "PACER60C",
+          "netTime": "00:58:54",
+          "gunTime": "00:59:49"
+        },
+        {
+          "name": "IRMA AYU",
+          "bib": "PACER60B",
+          "netTime": "00:58:56",
+          "gunTime": "00:59:50"
+        }
+      ]
+    },
+    {
+      "item": "PACER 5K",
+      "athletes": [
+        {
+          "name": "NOVI SAGITA",
+          "bib": "PACER30B",
+          "netTime": "00:29:14",
+          "gunTime": "00:29:27"
+        },
+        {
+          "name": "ANANTA EKA",
+          "bib": "PACER30A",
+          "netTime": "00:29:17",
+          "gunTime": "00:29:29"
+        },
+        {
+          "name": "RIVAN DWIAS",
+          "bib": "PACER30C",
+          "netTime": "00:29:19",
+          "gunTime": "00:29:31"
+        }
+      ]
+    }
+  ]
+}

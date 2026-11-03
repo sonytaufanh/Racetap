@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { api, errorMessage } from '../lib/http';
 import type { AdminUser } from '../types';
+import { PasswordField } from './AdminUI';
 import { useAdmin } from './AdminContext';
 
 export default function Login() {
@@ -13,7 +14,7 @@ export default function Login() {
   const [busy, setBusy] = useState(false);
 
   if (!loading && session?.admin) {
-    return <Navigate to="/admin/races" replace />;
+    return <Navigate to="/admin" replace />;
   }
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -28,7 +29,7 @@ export default function Login() {
       });
 
       setSession({ admin: data.admin, has_admin: true, csrf_token: data.csrf_token });
-      navigate('/admin/races', { replace: true });
+      navigate('/admin', { replace: true });
     } catch (loginError) {
       setError(errorMessage(loginError));
     } finally {
@@ -38,56 +39,86 @@ export default function Login() {
 
   return (
     <div className="rt-auth">
-      <div className="rt-auth-card">
-        <h1 className="h4 mb-1">Login Admin</h1>
-        <p className="text-slate mb-4">Masuk untuk mengelola race dan foto.</p>
-
-        {session && !session.has_admin && (
-          <div className="alert alert-info py-2 small">
-            Belum ada akun admin. <Link to="/admin/setup">Buat akun pertama</Link>.
+      <div className="rt-auth-shell">
+        <aside className="rt-auth-aside">
+          <Link to="/admin" className="rt-adm-brand">
+            <span className="rt-adm-brand-mark" aria-hidden="true">
+              RT
+            </span>
+            <span className="rt-adm-brand-text">
+              <strong>RaceTap</strong>
+              <small>Admin CMS</small>
+            </span>
+          </Link>
+          <div>
+            <h2>Kelola race, foto &amp; hasil dalam satu dasbor.</h2>
+            <p>Sinkronisasi Feibot, galeri foto dengan OCR BIB otomatis, dan publikasi hasil per event.</p>
+            <ul className="rt-auth-points">
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> Sinkronisasi hasil otomatis
+              </li>
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> OCR nomor dada (Vision / Tesseract)
+              </li>
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> Audit log lengkap
+              </li>
+            </ul>
           </div>
-        )}
+          <div className="rt-auth-aside-foot">RaceTap · Event Technology</div>
+        </aside>
 
-        {error && <div className="alert alert-danger py-2 small">{error}</div>}
+        <div className="rt-auth-card">
+          <h1>Login Admin</h1>
+          <p className="rt-adm-sub">Masuk untuk mengelola race dan foto.</p>
 
-        <form onSubmit={onSubmit}>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="username">
-              Username
-            </label>
-            <input
-              id="username"
-              className="form-control"
-              autoComplete="username"
-              maxLength={80}
-              required
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="password">
-              Password
-            </label>
-            <input
+          {session && !session.has_admin ? (
+            <div className="alert alert-info py-2 small" role="alert">
+              Belum ada akun admin. <Link to="/admin/setup">Buat akun pertama</Link>.
+            </div>
+          ) : null}
+
+          {error ? (
+            <div className="alert alert-danger py-2 small" role="alert">
+              {error}
+            </div>
+          ) : null}
+
+          <form onSubmit={onSubmit}>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="username">
+                Username
+              </label>
+              <input
+                id="username"
+                className="form-control"
+                autoComplete="username"
+                maxLength={80}
+                required
+                autoFocus
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </div>
+            <PasswordField
               id="password"
-              type="password"
-              className="form-control"
-              autoComplete="current-password"
-              maxLength={200}
-              required
+              label="Password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={setPassword}
+              autoComplete="current-password"
+              required
+              minLength={undefined}
             />
-          </div>
-          <button className="btn btn-primary w-100" type="submit" disabled={busy}>
-            {busy ? 'Memproses...' : 'Masuk'}
-          </button>
-        </form>
+            <button className="btn btn-primary w-100" type="submit" disabled={busy}>
+              {busy ? 'Memproses...' : 'Masuk'}
+            </button>
+          </form>
 
-        <p className="mt-3 mb-0 small text-slate">
-          <Link to="/">Kembali ke situs</Link>
-        </p>
+          <div className="rt-auth-links">
+            <Link to="/">Kembali ke situs</Link>
+            {session && !session.has_admin ? <Link to="/admin/setup">Setup akun</Link> : null}
+          </div>
+        </div>
       </div>
     </div>
   );

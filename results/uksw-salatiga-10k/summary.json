@@ -1,0 +1,61 @@
+{
+  "slug": "uksw-salatiga-10k",
+  "name": "UKSW Salatiga 10K",
+  "title": "UKSW SALATIGA 10K",
+  "date": "2026-10-10",
+  "participants": 1026,
+  "finishers": 912,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "ANSELMUS TAEK",
+          "bib": "M10257",
+          "netTime": "00:34:49",
+          "gunTime": "00:34:50"
+        },
+        {
+          "name": "STEPHEN GROVES",
+          "bib": "M10152",
+          "netTime": "00:37:37",
+          "gunTime": "00:37:38"
+        },
+        {
+          "name": "TEGAR IRAWAN",
+          "bib": "M10297",
+          "netTime": "00:37:37",
+          "gunTime": "00:37:38"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ALVIN ADHY PRADANA",
+          "bib": "M50155",
+          "netTime": "00:18:24",
+          "gunTime": "00:18:25"
+        },
+        {
+          "name": "KHUNALA SATRIA AMIN",
+          "bib": "M50515",
+          "netTime": "00:18:48",
+          "gunTime": "00:18:49"
+        },
+        {
+          "name": "NICOLAS CARACCIOLO",
+          "bib": "M50149",
+          "netTime": "00:19:23",
+          "gunTime": "00:19:24"
+        }
+      ]
+    }
+  ]
+}

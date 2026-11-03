@@ -1,85 +1,107 @@
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CTASection } from '../components/PublicLayout';
 import { Reveal } from '../components/Reveal';
-import { EmptyBox, ErrorBox, Loading, PageHeader } from '../components/ui';
+import { EmptyBox, ErrorBox, Loading, PageHeader, SafeImage } from '../components/ui';
 import { useApi } from '../hooks/useApi';
 import { formatDate, formatNumber } from '../lib/format';
 import { asset } from '../payload';
+import { useI18n } from '../i18n/I18nProvider';
 import type { PhotoListPayload } from '../types';
 
+type SortKey = 'latest' | 'name';
+
 export default function Photos() {
+  const { t, lang } = useI18n();
   const { data, loading, error, reload } = useApi<PhotoListPayload>('/photos/events');
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<SortKey>('latest');
+
+  const events = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    const list = (data?.events ?? []).filter(
+      (event) =>
+        term === '' ||
+        event.name.toLowerCase().includes(term) ||
+        event.location.toLowerCase().includes(term) ||
+        event.slug.toLowerCase().includes(term)
+    );
+
+    if (sort === 'name') {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name, lang));
+    }
+
+    return [...list].sort((a, b) => (b.event_date || '').localeCompare(a.event_date || ''));
+  }, [data, query, sort, lang]);
 
   return (
     <>
-      <PageHeader title="Race Photos" crumbs={[{ label: 'Home', to: '/' }, { label: 'Photos' }]} />
-
-      <section className="section pb-0">
-        <div className="container">
-          <div className="row align-items-center gy-4">
-            <div className="col-lg-7">
-              <span className="eyebrow">Race Documentation</span>
-              <h2 className="section-title">Temukan foto Anda dari nomor dada</h2>
-              <p className="section-subtitle mb-0">
-                Pilih event, lalu cari foto menggunakan nomor dada (BIB). Setiap foto sudah melalui proses OCR sehingga
-                nomor dada dapat dikenali dan dicari secara otomatis.
-              </p>
-            </div>
-            <div className="col-lg-5">
-              <div className="photo-stats">
-                <div className="photo-stat">
-                  <span className="photo-stat-value">{formatNumber(data?.stats.events)}</span>
-                  <span className="photo-stat-label">Event</span>
-                </div>
-                <div className="photo-stat">
-                  <span className="photo-stat-value">{formatNumber(data?.stats.photos)}</span>
-                  <span className="photo-stat-label">Foto</span>
-                </div>
-                <div className="photo-stat">
-                  <span className="photo-stat-value">{formatNumber(data?.stats.bibs)}</span>
-                  <span className="photo-stat-label">BIB terindeks</span>
-                </div>
-                <div className="photo-stat">
-                  <span className="photo-stat-value">{formatNumber(data?.stats.ocr_indexed)}</span>
-                  <span className="photo-stat-label">OCR ready</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        title={t('photos.title')}
+        subtitle={t('photos.intro')}
+        crumbs={[{ label: 'Home', to: '/' }, { label: t('photos.title') }]}
+      />
 
       <section className="section pt-4">
         <div className="container">
-          {loading && <Loading label="Memuat album foto..." />}
+          <div className="list-toolbar">
+            <input
+              className="form-control"
+              type="search"
+              value={query}
+              placeholder={t('photos.searchPlaceholder')}
+              aria-label={t('photos.searchPlaceholder')}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+            <div className="d-flex align-items-center gap-2 flex-wrap">
+              <select
+                className="form-select"
+                value={sort}
+                aria-label={t('photos.sortLabel')}
+                onChange={(event) => setSort(event.target.value as SortKey)}
+              >
+                <option value="latest">{t('photos.sortLatest')}</option>
+                <option value="name">{t('photos.sortName')}</option>
+              </select>
+              <span className="list-toolbar-count">
+                {t('results.count', { count: events.length })}
+              </span>
+            </div>
+          </div>
+
+          {loading && <Loading label={t('common.loading')} />}
 
           {!loading && error && <ErrorBox message={error} onRetry={reload} />}
 
           {!loading && !error && data && data.events.length === 0 && (
-            <EmptyBox title="Belum ada album foto" description="Data event foto belum tersedia." />
+            <EmptyBox title={t('photos.emptyTitle')} description={t('photos.emptyText')} />
           )}
 
-          {!loading && !error && data && data.events.length > 0 && (
+          {!loading && !error && data && data.events.length > 0 && events.length === 0 && (
+            <EmptyBox icon="bi-search" title={t('common.notFound')} description={t('photos.emptyFilter')} />
+          )}
+
+          {!loading && !error && events.length > 0 && (
             <div className="row g-4">
-              {data.events.map((event, index) => (
+              {events.map((event, index) => (
                 <div className="col-md-6 col-lg-4" key={event.slug}>
                   <Reveal delay={(index % 4) * 0.08}>
                     <Link to={`/photos/${event.slug}`} className="portfolio-card photo-event-card d-block">
-                      <img src={asset(event.cover)} alt={event.name} loading="lazy" />
+                      <SafeImage src={asset(event.cover)} alt={event.name} loading="lazy" />
                       <div className="photo-event-chip">
-                        <i className="bi bi-images" /> {formatNumber(event.photo_count)} Foto
+                        <i className="bi bi-images" /> {t('photos.count', { count: formatNumber(event.photo_count, lang) })}
                       </div>
                       <div className="portfolio-overlay">
                         <span>
-                          {event.location} &middot; {formatDate(event.event_date)}
+                          {event.location} &middot; {formatDate(event.event_date, lang)}
                         </span>
                         <h5>{event.name}</h5>
                         <div className="photo-event-meta">
                           <span className="photo-event-meta-item">
-                            <i className="bi bi-upc-scan" /> {formatNumber(event.bib_count)} BIB
+                            <i className="bi bi-upc-scan" /> {t('photos.bibCount', { count: formatNumber(event.bib_count, lang) })}
                           </span>
                           <span className="photo-event-meta-item">
-                            <i className="bi bi-cpu" /> OCR ready
+                            <i className="bi bi-cpu" /> {t('photos.ocr')}
                           </span>
                         </div>
                       </div>

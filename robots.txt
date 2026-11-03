@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /web/
+
+Sitemap: https://racetap.id/sitemap.xml

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ApiError, api, errorMessage } from '../lib/http';
+import { PasswordField } from './AdminUI';
 import { useAdmin } from './AdminContext';
 
 export default function Setup() {
@@ -49,83 +50,103 @@ export default function Setup() {
 
   return (
     <div className="rt-auth">
-      <div className="rt-auth-card">
-        <h1 className="h4 mb-1">Setup Akun Admin</h1>
-        <p className="text-slate mb-4">Halaman ini hanya tersedia sebelum akun admin pertama dibuat.</p>
-
-        {error && <div className="alert alert-danger py-2 small">{error}</div>}
-
-        <form onSubmit={onSubmit}>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="displayName">
-              Nama admin
-            </label>
-            <input
-              id="displayName"
-              className={`form-control${fields.display_name ? ' is-invalid' : ''}`}
-              maxLength={120}
-              required
-              value={displayName}
-              onChange={(event) => setDisplayName(event.target.value)}
-            />
-            {fields.display_name && <div className="invalid-feedback d-block">{fields.display_name}</div>}
+      <div className="rt-auth-shell">
+        <aside className="rt-auth-aside">
+          <Link to="/admin" className="rt-adm-brand">
+            <span className="rt-adm-brand-mark" aria-hidden="true">
+              RT
+            </span>
+            <span className="rt-adm-brand-text">
+              <strong>RaceTap</strong>
+              <small>Admin CMS</small>
+            </span>
+          </Link>
+          <div>
+            <h2>Buat akun superadmin pertama.</h2>
+            <p>Halaman ini hanya tersedia sebelum akun admin pertama dibuat. Setelah itu akses tertutup otomatis.</p>
+            <ul className="rt-auth-points">
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> Akses penuh ke seluruh CMS
+              </li>
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> Bisa menambah admin &amp; operator
+              </li>
+              <li>
+                <i className="bi bi-check-circle-fill" aria-hidden="true" /> Password minimal 8 karakter
+              </li>
+            </ul>
           </div>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="username">
-              Username
-            </label>
-            <input
-              id="username"
-              className={`form-control${fields.username ? ' is-invalid' : ''}`}
-              minLength={4}
-              maxLength={80}
-              pattern="[A-Za-z0-9_-]+"
-              required
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-            />
-            {fields.username && <div className="invalid-feedback d-block">{fields.username}</div>}
-          </div>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="password">
-              Password (minimal 12 karakter)
-            </label>
-            <input
+          <div className="rt-auth-aside-foot">RaceTap · Event Technology</div>
+        </aside>
+
+        <div className="rt-auth-card">
+          <h1>Setup Akun Admin</h1>
+          <p className="rt-adm-sub">Akun pertama otomatis menjadi superadmin.</p>
+
+          {error ? (
+            <div className="alert alert-danger py-2 small" role="alert">
+              {error}
+            </div>
+          ) : null}
+
+          <form onSubmit={onSubmit}>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="displayName">
+                Nama admin
+              </label>
+              <input
+                id="displayName"
+                className={`form-control${fields.display_name ? ' is-invalid' : ''}`}
+                maxLength={120}
+                required
+                autoFocus
+                value={displayName}
+                onChange={(event) => setDisplayName(event.target.value)}
+              />
+              {fields.display_name ? <div className="invalid-feedback d-block">{fields.display_name}</div> : null}
+            </div>
+            <div className="mb-3">
+              <label className="form-label" htmlFor="username">
+                Username
+              </label>
+              <input
+                id="username"
+                className={`form-control${fields.username ? ' is-invalid' : ''}`}
+                minLength={4}
+                maxLength={80}
+                pattern="[A-Za-z0-9_-]+"
+                required
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+              />
+              {fields.username ? <div className="invalid-feedback d-block">{fields.username}</div> : null}
+            </div>
+            <PasswordField
               id="password"
-              type="password"
-              className={`form-control${fields.password ? ' is-invalid' : ''}`}
-              minLength={12}
-              maxLength={200}
-              required
+              label="Password (minimal 8 karakter)"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={setPassword}
+              minLength={8}
+              invalidFeedback={fields.password}
             />
-            {fields.password && <div className="invalid-feedback d-block">{fields.password}</div>}
-          </div>
-          <div className="mb-4">
-            <label className="form-label" htmlFor="confirm">
-              Konfirmasi password
-            </label>
-            <input
+            <PasswordField
               id="confirm"
-              type="password"
-              className={`form-control${fields.password_confirm ? ' is-invalid' : ''}`}
-              minLength={12}
-              maxLength={200}
-              required
+              label="Konfirmasi password"
               value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
+              onChange={setConfirm}
+              minLength={8}
+              invalidFeedback={fields.password_confirm}
             />
-            {fields.password_confirm && <div className="invalid-feedback d-block">{fields.password_confirm}</div>}
-          </div>
-          <button className="btn btn-primary w-100" type="submit" disabled={busy}>
-            {busy ? 'Membuat akun...' : 'Buat Akun Admin'}
-          </button>
-        </form>
+            <button className="btn btn-primary w-100" type="submit" disabled={busy}>
+              {busy ? 'Membuat akun...' : 'Buat Akun Admin'}
+            </button>
+          </form>
 
-        <p className="mt-3 mb-0 small text-slate">
-          Sudah punya akun? <Link to="/admin/login">Login</Link>
-        </p>
+          <div className="rt-auth-links">
+            <Link to="/admin/login">Sudah punya akun? Login</Link>
+            <Link to="/">Kembali ke situs</Link>
+          </div>
+        </div>
       </div>
     </div>
   );

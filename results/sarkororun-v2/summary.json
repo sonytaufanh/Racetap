@@ -1,0 +1,37 @@
+{
+  "slug": "sarkororun-v2",
+  "name": "Sarkororun V2",
+  "title": "SARKORO RUN VOL. 2",
+  "date": "2026-09-05",
+  "participants": 888,
+  "finishers": 814,
+  "categories": [
+    "5K"
+  ],
+  "distance": "5K",
+  "podiums": [
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ANSELMUS",
+          "bib": "M7127",
+          "netTime": "00:18:55",
+          "gunTime": "00:20:59"
+        },
+        {
+          "name": "BAYU PRATAMA",
+          "bib": "M7193",
+          "netTime": "00:19:00",
+          "gunTime": "00:20:53"
+        },
+        {
+          "name": "TRI ANGGORO",
+          "bib": "M7831",
+          "netTime": "00:19:56",
+          "gunTime": "00:21:56"
+        }
+      ]
+    }
+  ]
+}

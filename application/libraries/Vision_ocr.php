@@ -142,18 +142,22 @@ class Vision_ocr
         if ($picked === '') {
             return array(
                 'ok' => TRUE,
+                'engine' => 'google_vision',
                 'bib' => '',
                 'text' => $text,
                 'confidence' => $confidence,
+                'words' => $this->extract_words($annotation),
                 'error' => ''
             );
         }
 
         return array(
             'ok' => TRUE,
+            'engine' => 'google_vision',
             'bib' => $picked,
             'text' => $text !== '' ? $text : $picked,
             'confidence' => $confidence,
+            'words' => $this->extract_words($annotation),
             'error' => ''
         );
     }
@@ -169,6 +173,78 @@ class Vision_ocr
             'confidence' => 0.0,
             'error' => $message
         );
+    }
+
+    /**
+     * Flattens the Vision fullTextAnnotation tree into unified word entries
+     * (text, confidence 0-100 and box [x0,y0,x1,y1]) for the Bib_resolver.
+     */
+    private function extract_words($annotation)
+    {
+        $out = array();
+
+        if (!isset($annotation['pages']) || !is_array($annotation['pages'])) {
+            return $out;
+        }
+
+        foreach ($annotation['pages'] as $page) {
+            if (empty($page['blocks'])) {
+                continue;
+            }
+
+            foreach ((array) $page['blocks'] as $block) {
+                if (empty($block['paragraphs'])) {
+                    continue;
+                }
+
+                foreach ((array) $block['paragraphs'] as $paragraph) {
+                    if (empty($paragraph['words'])) {
+                        continue;
+                    }
+
+                    foreach ((array) $paragraph['words'] as $word) {
+                        $word_text = $this->word_text($word);
+
+                        if ($word_text === '') {
+                            continue;
+                        }
+
+                        $confidence = isset($word['confidence'])
+                            ? round(((float) $word['confidence']) * 100, 2)
+                            : (isset($word['symbols'][0]['confidence']) ? round(((float) $word['symbols'][0]['confidence']) * 100, 2) : 0.0);
+
+                        $out[] = array(
+                            'text' => $word_text,
+                            'confidence' => $confidence,
+                            'box' => $this->box_vertices(isset($word['boundingBox']) ? $word['boundingBox'] : array())
+                        );
+                    }
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    private function box_vertices($bounding_box)
+    {
+        if (empty($bounding_box['vertices']) || !is_array($bounding_box['vertices'])) {
+            return NULL;
+        }
+
+        $xs = array();
+        $ys = array();
+
+        foreach ($bounding_box['vertices'] as $vertex) {
+            $xs[] = isset($vertex['x']) ? (float) $vertex['x'] : 0.0;
+            $ys[] = isset($vertex['y']) ? (float) $vertex['y'] : 0.0;
+        }
+
+        if (empty($xs)) {
+            return NULL;
+        }
+
+        return array(min($xs), min($ys), max($xs), max($ys));
     }
 
     /**

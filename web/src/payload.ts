@@ -34,5 +34,7 @@ export function asset(path: string | null | undefined): string {
     return path;
   }
 
-  return `${APP.baseUrl}${path.replace(/^\/+/, '')}`;
+  // encodeURI keeps slashes but escapes spaces/unicode, so filenames such as
+  // "ahy run 2026.webp" stay reachable on every server.
+  return `${APP.baseUrl}${encodeURI(path.replace(/^\/+/, ''))}`;
 }

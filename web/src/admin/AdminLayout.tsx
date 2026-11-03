@@ -1,14 +1,79 @@
-import { useState } from 'react';
-import { Link, NavLink, Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { api, errorMessage } from '../lib/http';
 import { Loading } from '../components/ui';
+import { useConfirm } from './AdminUI';
 import { useAdmin } from './AdminContext';
+
+interface NavItem {
+  to: string;
+  label: string;
+  icon: string;
+  end?: boolean;
+  superadmin?: boolean;
+}
+
+const NAV_GROUPS: Array<{ label: string; items: NavItem[] }> = [
+  {
+    label: 'Operasional',
+    items: [
+      { to: '/admin', label: 'Dashboard', icon: 'bi-speedometer2', end: true },
+      { to: '/admin/races', label: 'Races', icon: 'bi-stopwatch' },
+      { to: '/admin/sertifikat', label: 'Sertifikat', icon: 'bi-award' },
+      { to: '/admin/photos', label: 'Photos', icon: 'bi-images' },
+      { to: '/admin/leads', label: 'Pesan', icon: 'bi-envelope-paper' }
+    ]
+  },
+  {
+    label: 'Sistem',
+    items: [
+      { to: '/admin/audit', label: 'Audit Log', icon: 'bi-clock-history' },
+      { to: '/admin/settings', label: 'Pengaturan', icon: 'bi-sliders' },
+      { to: '/admin/users', label: 'Pengguna', icon: 'bi-people', superadmin: true }
+    ]
+  }
+];
+
+function currentTitle(pathname: string): string {
+  const items = NAV_GROUPS.flatMap((group) => group.items)
+    .filter((item) => (item.end ? pathname === item.to : pathname.startsWith(item.to)))
+    .sort((a, b) => b.to.length - a.to.length);
+
+  return items[0]?.label || 'Admin';
+}
 
 export default function AdminLayout() {
   const { session, loading, setSession, refresh } = useAdmin();
   const navigate = useNavigate();
-  const [loggingOut, setLoggingOut] = useState(false);
+  const location = useLocation();
   const [error, setError] = useState('');
+  const [navOpen, setNavOpen] = useState(false);
+  const { confirm, dialog } = useConfirm();
+
+  useEffect(() => {
+    setNavOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!navOpen) {
+      return;
+    }
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setNavOpen(false);
+      }
+    };
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [navOpen]);
 
   if (loading && !session) {
     return <Loading label="Memeriksa sesi admin..." />;
@@ -19,7 +84,6 @@ export default function AdminLayout() {
   }
 
   const logout = async () => {
-    setLoggingOut(true);
     setError('');
 
     try {
@@ -29,37 +93,122 @@ export default function AdminLayout() {
       navigate('/admin/login', { replace: true });
     } catch (logoutError) {
       setError(errorMessage(logoutError));
-    } finally {
-      setLoggingOut(false);
     }
   };
 
+  const askLogout = () =>
+    confirm({
+      title: 'Logout',
+      message: 'Keluar dari sesi admin sekarang?',
+      confirmLabel: 'Logout',
+      tone: 'primary',
+      onConfirm: logout
+    });
+
+  const isSuperadmin = (session.admin.role || 'admin') === 'superadmin';
+  const initial = (session.admin.display_name || session.admin.username || '?').trim().charAt(0);
+
   return (
-    <div className="rt-admin">
-      <aside className="rt-admin-sidebar">
-        <Link to="/admin/races" className="fw-bold fs-5 mb-4 text-white text-decoration-none">
-          RaceTap<span style={{ color: 'var(--n-primary)' }}>.</span> Admin
+    <div className={`rt-admin${navOpen ? ' is-nav-open' : ''}`}>
+      <a className="rt-adm-skip" href="#admin-main">
+        Lewati ke konten
+      </a>
+
+      <aside className="rt-admin-sidebar" id="admin-nav" aria-label="Navigasi admin">
+        <Link to="/admin" className="rt-adm-brand" aria-label="RaceTap Admin — dashboard">
+          <span className="rt-adm-brand-mark" aria-hidden="true">
+            RT
+          </span>
+          <span className="rt-adm-brand-text">
+            <strong>RaceTap</strong>
+            <small>Admin CMS</small>
+          </span>
         </Link>
-        <NavLink to="/admin/races" className={({ isActive }) => (isActive ? 'active' : '')}>
-          <i className="bi bi-stopwatch" /> Races
-        </NavLink>
-        <NavLink to="/admin/photos" className={({ isActive }) => (isActive ? 'active' : '')}>
-          <i className="bi bi-images" /> Photos
-        </NavLink>
-        <a href="/v2" target="_blank" rel="noopener noreferrer">
-          <i className="bi bi-box-arrow-up-right" /> Lihat situs
-        </a>
-        <div className="mt-auto pt-4 small" style={{ color: 'rgba(255,255,255,0.6)' }}>
-          <div className="mb-2">{session.admin.display_name}</div>
-          <button className="btn btn-sm btn-outline-light w-100" type="button" onClick={logout} disabled={loggingOut}>
-            {loggingOut ? 'Keluar...' : 'Logout'}
-          </button>
+
+        {NAV_GROUPS.map((group) => {
+          const items = group.items.filter((item) => !item.superadmin || isSuperadmin);
+
+          if (items.length === 0) {
+            return null;
+          }
+
+          return (
+            <nav className="rt-adm-nav" key={group.label} aria-label={group.label}>
+              <span className="rt-adm-nav-label">{group.label}</span>
+              {items.map((item) => (
+                <NavLink key={item.to} to={item.to} end={item.end}>
+                  <i className={`bi ${item.icon}`} aria-hidden="true" />
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+            </nav>
+          );
+        })}
+
+        <nav className="rt-adm-nav" aria-label="Situs">
+          <a href="/" target="_blank" rel="noopener noreferrer">
+            <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
+            <span>Lihat situs</span>
+          </a>
+        </nav>
+
+        <div className="rt-adm-user">
+          <div className="rt-adm-user-card">
+            <div className="rt-adm-user-id">
+              <span className="rt-adm-avatar" aria-hidden="true">
+                {initial}
+              </span>
+              <span className="rt-adm-user-name">
+                <strong title={session.admin.display_name}>{session.admin.display_name}</strong>
+                <small>{session.admin.role || 'admin'}</small>
+              </span>
+            </div>
+            <div className="rt-adm-user-actions">
+              <button className="btn btn-sm btn-outline-light" type="button" onClick={askLogout}>
+                <i className="bi bi-box-arrow-right me-1" aria-hidden="true" />
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </aside>
-      <main className="rt-admin-main">
-        {error && <div className="alert alert-danger py-2">{error}</div>}
-        <Outlet />
-      </main>
+
+      <button
+        type="button"
+        className="rt-adm-nav-backdrop"
+        aria-label="Tutup navigasi"
+        tabIndex={navOpen ? 0 : -1}
+        onClick={() => setNavOpen(false)}
+      />
+
+      <div className="rt-adm-shell">
+        <header className="rt-adm-topbar">
+          <button
+            type="button"
+            className="rt-adm-nav-toggle"
+            aria-label={navOpen ? 'Tutup menu' : 'Buka menu'}
+            aria-expanded={navOpen}
+            aria-controls="admin-nav"
+            onClick={() => setNavOpen((previous) => !previous)}
+          >
+            <i className={`bi ${navOpen ? 'bi-x-lg' : 'bi-list'}`} aria-hidden="true" />
+          </button>
+          <span className="rt-adm-topbar-title">{currentTitle(location.pathname)}</span>
+        </header>
+
+        <main className="rt-admin-main" id="admin-main">
+          <div className="rt-adm-main-inner">
+            {error ? (
+              <div className="alert alert-danger py-2" role="alert">
+                {error}
+              </div>
+            ) : null}
+            <Outlet />
+          </div>
+        </main>
+      </div>
+
+      {dialog}
     </div>
   );
 }

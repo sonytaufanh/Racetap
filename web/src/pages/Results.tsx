@@ -1,87 +1,88 @@
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CTASection } from '../components/PublicLayout';
 import { Reveal } from '../components/Reveal';
-import { PageHeader } from '../components/ui';
+import { EmptyBox, PageHeader, SafeImage } from '../components/ui';
 import { asset } from '../payload';
+import { useI18n } from '../i18n/I18nProvider';
 
-const EVENTS = [
-  { slug: 'dahana-run-2026', name: 'Dahana Run 2026', location: 'Subang', cover: 'assets/images/portfolio/dahana-run-2026.webp' },
-  { slug: 'ahy-run-2026', name: 'AHY RUN 2026', location: 'Semarang', cover: 'assets/images/portfolio/ahy run 2026.webp' },
-  {
-    slug: 'monkey-forest-ubud-run-2026',
-    name: 'Monkey Forest Ubud Run 2026',
-    location: 'Bali',
-    cover: 'assets/images/portfolio/Monkey-Forest-Ubud-Run-2026.webp'
-  },
-  { slug: 'uksw-salatiga-10k', name: 'UKSW Salatiga 10K', location: 'Salatiga', cover: 'assets/images/portfolio/uksw-salatiga-10k.jpg' },
-  { slug: 'jember-10k', name: 'Jember 10K', location: 'Jember', cover: 'assets/images/portfolio/Jember-10K.jpg' },
-  {
-    slug: 'tni-run-2026-jakarta',
-    name: 'TNI Run 2026 Jakarta',
-    location: 'Jakarta',
-    cover: 'assets/images/portfolio/tni-run-2026-jakarta.jpg'
-  },
-  {
-    slug: 'tni-run-2026-yogyakarta',
-    name: 'TNI Run 2026 Yogyakarta',
-    location: 'Yogyakarta',
-    cover: 'assets/images/portfolio/tni-run-2026-yogyakarta.jpg'
-  },
-  { slug: 'sarkororun-v2', name: 'Sarkororun V2', location: 'Purworejo', cover: 'assets/images/portfolio/Sarkororun-v2.jpg' },
-  {
-    slug: 'rupiah-borobudur-playon-2026',
-    name: 'Rupiah Borobudur Playon 2026',
-    location: 'Magelang',
-    cover: 'assets/images/portfolio/Rupiah-borobudur-playon-2026.jpeg'
-  },
-  { slug: 'unnes-run-2026', name: 'Unnes Run 2026', location: 'Semarang', cover: 'assets/images/portfolio/unnes-run-2026.jpeg' },
-  {
-    slug: 'Dogathlon-3.0-Dog-Obstacle-Run',
-    name: 'Dogathlon 3.0',
-    location: 'Bandung',
-    cover: 'assets/images/portfolio/DOGATHLON-3.0-DOG-OBSTACLE-RUN.jpeg'
-  },
-  { slug: 'ungarun-10k-2026', name: 'Ungarun 10K 2026', location: 'Semarang', cover: 'assets/images/portfolio/Ungarun10k-2026.jpg' },
-  { slug: 'chick-n-run-2026', name: 'Chick n Run 2026', location: 'Kebumen', cover: 'assets/images/portfolio/chick-n-run-2026-1116.jpg' },
-  { slug: 'yia-grow-run-2026', name: 'YIA Grow Run 2026', location: 'Yogyakarta', cover: 'assets/images/portfolio/YIA-Grow-Run-2026.jpeg' },
-  {
-    slug: 'road-to-jogja10k',
-    name: 'Road to Yogyakarta 10K',
-    location: 'Yogyakarta',
-    cover: 'assets/images/portfolio/Road-to-Jogja10K.jpeg'
-  }
-];
+type SortKey = 'latest' | 'name';
 
 export default function Results() {
+  const { t, events: siteEvents } = useI18n();
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<SortKey>('latest');
+
+  const events = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    const list = siteEvents.filter(
+      (event) => term === '' || event.name.toLowerCase().includes(term) || event.location.toLowerCase().includes(term)
+    );
+
+    if (sort === 'name') {
+      return [...list].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    return list;
+  }, [query, sort, siteEvents]);
+
   return (
     <>
-      <PageHeader title="Race Results" crumbs={[{ label: 'Home', to: '/' }, { label: 'Results' }]} />
-
-      <section className="section pb-0">
-        <div className="container">
-          <p className="section-subtitle mb-0">
-            Kumpulan hasil resmi event lari yang telah ditangani Racetap. Pilih event untuk melihat hasil lengkap, waktu
-            tempuh, dan peringkat pelari.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        title={t('results.title')}
+        subtitle={t('results.intro')}
+        crumbs={[{ label: 'Home', to: '/' }, { label: t('results.title') }]}
+      />
 
       <section className="section pt-4">
         <div className="container">
-          <div className="row g-4">
-            {EVENTS.map((event, index) => (
-              <div className="col-md-6 col-lg-4" key={event.slug}>
-                <Reveal delay={(index % 4) * 0.08}>
-                  <a href={`https://racetap.id/results/${event.slug}/`} className="portfolio-card d-block">
-                    <img src={asset(event.cover)} alt={event.name} loading="lazy" />
-                    <div className="portfolio-overlay">
-                      <span>{event.location}</span>
-                      <h5>{event.name}</h5>
-                    </div>
-                  </a>
-                </Reveal>
-              </div>
-            ))}
+          <div className="list-toolbar">
+            <input
+              className="form-control"
+              type="search"
+              value={query}
+              placeholder={t('results.searchPlaceholder')}
+              aria-label={t('results.searchPlaceholder')}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+            <div className="d-flex align-items-center gap-2 flex-wrap">
+              <select
+                className="form-select"
+                value={sort}
+                aria-label={t('results.sortLatest')}
+                onChange={(event) => setSort(event.target.value as SortKey)}
+              >
+                <option value="latest">{t('results.sortLatest')}</option>
+                <option value="name">{t('results.sortName')}</option>
+              </select>
+              <span className="list-toolbar-count">{t('results.count', { count: events.length })}</span>
+            </div>
           </div>
+
+          {events.length === 0 ? (
+            <EmptyBox icon="bi-search" title={t('common.notFound')} description={t('results.empty')} />
+          ) : (
+            <div className="row g-4">
+              {events.map((event, index) => (
+                <div className="col-md-6 col-lg-4" key={event.slug}>
+                  <Reveal delay={(index % 4) * 0.08}>
+                    <div className="portfolio-card d-block">
+                      <a href={`/results/${event.slug}/`} className="d-block text-reset text-decoration-none">
+                        <SafeImage src={asset(event.cover)} alt={event.name} loading="lazy" />
+                        <div className="portfolio-overlay">
+                          <span>{event.location}</span>
+                          <h5>{event.name}</h5>
+                        </div>
+                      </a>
+                      <Link className="portfolio-info-link" to={`/events/${event.slug}`}>
+                        <i className="bi bi-info-circle" /> {t('results.info')}
+                      </Link>
+                    </div>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

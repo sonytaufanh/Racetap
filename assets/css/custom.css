@@ -1,5 +1,5 @@
-/* =====================================================
-   NEXORA — Premium Bootstrap 5 Business Theme
+﻿/* =====================================================
+   NEXORA â€” Premium Bootstrap 5 Business Theme
    Custom Design System (overrides + extensions)
    ===================================================== */
 
@@ -421,7 +421,7 @@ a { text-decoration: none; }
 }
 
 /* =====================================================
-   CARDS — premium card system
+   CARDS â€” premium card system
    ===================================================== */
 .card-premium {
   background: #fff;
@@ -456,76 +456,6 @@ a { text-decoration: none; }
 }
 
 .card-link-arrow:hover { gap: 0.7rem; color: var(--n-primary-dark); }
-
-/* Pricing card */
-.pricing-card {
-  background: #fff;
-  border: 1px solid var(--n-border);
-  border-radius: var(--n-radius-lg);
-  padding: var(--n-space-lg);
-  box-shadow: var(--n-shadow-sm);
-  transition: all 0.3s ease;
-  height: 100%;
-  position: relative;
-}
-
-.pricing-card:hover { box-shadow: var(--n-shadow-md); transform: translateY(-6px); }
-
-.pricing-card.featured {
-  background: var(--n-gradient-dark);
-  border: none;
-  color: #fff;
-  box-shadow: var(--n-shadow-lg);
-  transform: scale(1.03);
-}
-
-.pricing-card.featured .price, .pricing-card.featured h3 { color: #fff; }
-.pricing-card.featured .text-slate { color: rgba(255,255,255,0.65) !important; }
-.pricing-card.featured ul li { color: rgba(255,255,255,0.85); }
-.pricing-card.featured .pricing-divider { border-color: rgba(255,255,255,0.12); }
-
-@media (max-width: 991.98px) {
-  .pricing-card.featured { transform: none; }
-}
-
-.pricing-badge {
-  position: absolute;
-  top: -14px;
-  right: 2rem;
-  background: var(--n-gradient-primary);
-  color: #fff;
-  font-family: var(--n-font-display);
-  font-weight: 700;
-  font-size: 0.75rem;
-  padding: 0.4rem 1rem;
-  border-radius: var(--n-radius-pill);
-  letter-spacing: 0.05em;
-}
-
-.price {
-  font-family: var(--n-font-display);
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--n-navy);
-}
-
-.price-period { font-size: 1rem; font-weight: 500; color: var(--n-slate); }
-
-.pricing-divider { border-color: var(--n-border); margin: var(--n-space-md) 0; }
-
-.feature-list { list-style: none; padding: 0; margin: 0; }
-.feature-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem;
-  color: var(--n-slate);
-}
-
-.feature-list li i { color: var(--n-success); margin-top: 0.2rem; flex-shrink: 0; }
-.feature-list li.disabled { opacity: 0.45; }
-.feature-list li.disabled i { color: var(--n-slate-light); }
 
 /* Blog cards */
 .blog-card-img {
@@ -619,7 +549,7 @@ a { text-decoration: none; }
 .testimonial-author .name { font-family: var(--n-font-display); font-weight: 700; color: var(--n-navy); font-size: 0.95rem; }
 .testimonial-author .role { font-size: 0.8rem; color: var(--n-slate-light); }
 
-/* Process steps (numbered — real sequence) */
+/* Process steps (numbered â€” real sequence) */
 .process-step {
   position: relative;
   padding-left: 0;
@@ -809,7 +739,7 @@ a { text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .card-premium:hover, .pricing-card:hover, .btn:hover, .portfolio-card img { transform: none; }
+  .card-premium:hover, .btn:hover, .portfolio-card img { transform: none; }
 }
 
 /* =====================================================

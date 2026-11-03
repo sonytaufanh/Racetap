@@ -1,0 +1,133 @@
+{
+  "slug": "Dogathlon-3.0-Dog-Obstacle-Run",
+  "name": "Dogathlon 3.0",
+  "title": "Dogathlon 3.0 Dog Obstacle Run",
+  "date": "2026-06-06",
+  "participants": 46,
+  "finishers": 46,
+  "categories": [
+    "FEMALE LARGE DOG",
+    "FEMALE SMALL DOG",
+    "FUN DOGATHLON",
+    "MALE LARGE DOG",
+    "MALE SMALL DOG"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "FEMALE LARGE DOG",
+      "athletes": [
+        {
+          "name": "DEBBY",
+          "bib": "303",
+          "netTime": "00:18:39",
+          "gunTime": "00:18:44"
+        },
+        {
+          "name": "HANI",
+          "bib": "304",
+          "netTime": "00:20:47",
+          "gunTime": "00:20:59"
+        },
+        {
+          "name": "TANTY",
+          "bib": "308",
+          "netTime": "00:21:50",
+          "gunTime": "00:21:58"
+        }
+      ]
+    },
+    {
+      "item": "FEMALE SMALL DOG",
+      "athletes": [
+        {
+          "name": "VIOLET N A",
+          "bib": "208",
+          "netTime": "00:13:39",
+          "gunTime": "00:13:53"
+        },
+        {
+          "name": "FRANSISKA K L",
+          "bib": "201",
+          "netTime": "00:14:35",
+          "gunTime": "00:14:44"
+        },
+        {
+          "name": "VINCENTIA H",
+          "bib": "203",
+          "netTime": "00:16:19",
+          "gunTime": "00:16:29"
+        }
+      ]
+    },
+    {
+      "item": "FUN DOGATHLON",
+      "athletes": [
+        {
+          "name": "HANUN",
+          "bib": "F001",
+          "netTime": "00:20:05",
+          "gunTime": "00:21:49"
+        },
+        {
+          "name": "LINDA GUN",
+          "bib": "F008",
+          "netTime": "00:21:21",
+          "gunTime": "00:21:55"
+        },
+        {
+          "name": "SONNY",
+          "bib": "F011",
+          "netTime": "00:24:44",
+          "gunTime": "00:24:56"
+        }
+      ]
+    },
+    {
+      "item": "MALE LARGE DOG",
+      "athletes": [
+        {
+          "name": "M YUSUF B",
+          "bib": "106",
+          "netTime": "00:13:51",
+          "gunTime": "00:14:00"
+        },
+        {
+          "name": "JUNED",
+          "bib": "109",
+          "netTime": "00:14:04",
+          "gunTime": "00:14:12"
+        },
+        {
+          "name": "CHANDRA",
+          "bib": "102",
+          "netTime": "00:14:51",
+          "gunTime": "00:15:00"
+        }
+      ]
+    },
+    {
+      "item": "MALE SMALL DOG",
+      "athletes": [
+        {
+          "name": "KEVIN HUDIANA",
+          "bib": "001",
+          "netTime": "00:16:57",
+          "gunTime": "00:17:10"
+        },
+        {
+          "name": "YOSE",
+          "bib": "004",
+          "netTime": "00:18:20",
+          "gunTime": "00:18:27"
+        },
+        {
+          "name": "ARIEMATEA",
+          "bib": "005",
+          "netTime": "00:18:20",
+          "gunTime": "00:18:26"
+        }
+      ]
+    }
+  ]
+}

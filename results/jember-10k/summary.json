@@ -1,0 +1,61 @@
+{
+  "slug": "jember-10k",
+  "name": "Jember 10K",
+  "title": "JEMBER 10K",
+  "date": "2026-07-18",
+  "participants": 497,
+  "finishers": 443,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "JIMNAH KURIA KARIUKI",
+          "bib": "OP3079",
+          "netTime": "00:31:08",
+          "gunTime": "00:32:42"
+        },
+        {
+          "name": "EDO SURYA SHAPUTRA",
+          "bib": "OP3033",
+          "netTime": "00:31:47",
+          "gunTime": "00:33:20"
+        },
+        {
+          "name": "OKRIS HALLA",
+          "bib": "OP3052",
+          "netTime": "00:31:57",
+          "gunTime": "00:33:31"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "MARTINUS NGONGO",
+          "bib": "WJ8043",
+          "netTime": "00:16:42",
+          "gunTime": "00:17:08"
+        },
+        {
+          "name": "ADETHIA JOHAN FERDIYANTO",
+          "bib": "WJ8062",
+          "netTime": "00:18:03",
+          "gunTime": "00:18:30"
+        },
+        {
+          "name": "BONDAN SATRIYA PRAKUSYA",
+          "bib": "MH6013",
+          "netTime": "00:19:14",
+          "gunTime": "00:19:41"
+        }
+      ]
+    }
+  ]
+}

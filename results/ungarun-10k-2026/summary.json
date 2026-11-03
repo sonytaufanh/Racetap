@@ -1,0 +1,61 @@
+{
+  "slug": "ungarun-10k-2026",
+  "name": "Ungarun 10K 2026",
+  "title": "UNGARUN10K 2026",
+  "date": "2026-05-16",
+  "participants": 1218,
+  "finishers": 1076,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "AMIRUDIN",
+          "bib": "M10366",
+          "netTime": "00:33:43",
+          "gunTime": "00:33:44"
+        },
+        {
+          "name": "SAMSON KAREGA KAMAU",
+          "bib": "M10371",
+          "netTime": "00:33:51",
+          "gunTime": "00:33:52"
+        },
+        {
+          "name": "EVANS KIPTOO BOMER",
+          "bib": "M10385",
+          "netTime": "00:33:58",
+          "gunTime": "00:34:00"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ALVIN ADHY PRADANA",
+          "bib": "M50139",
+          "netTime": "00:14:35",
+          "gunTime": "00:14:40"
+        },
+        {
+          "name": "EDO SURYA SHAPUTRA",
+          "bib": "M50165",
+          "netTime": "00:14:42",
+          "gunTime": "00:14:44"
+        },
+        {
+          "name": "SODIMO GURNING",
+          "bib": "M50213",
+          "netTime": "00:15:03",
+          "gunTime": "00:15:06"
+        }
+      ]
+    }
+  ]
+}

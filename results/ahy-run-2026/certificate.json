@@ -1,0 +1,42 @@
+{
+    "version": 1,
+    "slug": "ahy-run-2026",
+    "enabled": true,
+    "onlyFinishers": true,
+    "template": "certificate.jpg",
+    "width": 1127,
+    "height": 1600,
+    "background": null,
+    "eventName": "AHY RUN 2026",
+    "eventDate": "Sunday, October 18, 2026",
+    "pdf": {
+        "size": "template"
+    },
+    "fields": [
+        {
+            "id": "f12pbn",
+            "type": "token",
+            "token": "name",
+            "text": null,
+            "prefix": "",
+            "suffix": "",
+            "x": 560,
+            "y": 820,
+            "align": "center",
+            "style": {
+                "font": "inter",
+                "size": 45,
+                "weight": 600,
+                "italic": false,
+                "color": "#111827",
+                "letterSpacing": 0,
+                "lineHeight": 1.2,
+                "uppercase": false,
+                "rotation": 0,
+                "maxWidth": 902,
+                "autoShrink": true
+            }
+        }
+    ],
+    "updatedAt": "2026-11-03 06:34:31"
+}

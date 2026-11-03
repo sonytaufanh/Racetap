@@ -24,28 +24,31 @@ class Race_api_model extends CI_Model
         return $this->db->get_where('race_events', array('id' => (int) $id))->row();
     }
 
-    public function get_event_by_slug($slug, $active_only = FALSE)
-    {
-        $this->db->where('slug', $slug);
-        if ($active_only) $this->db->where('is_active', 1);
-        return $this->db->get('race_events')->row();
-    }
-
     public function save_event($payload, $id = NULL)
     {
         $now = date('Y-m-d H:i:s');
-        $slug = $this->unique_slug($payload['name'], $id);
         $data = array(
             'name' => $payload['name'],
-            'slug' => $slug,
             'api_url' => $payload['api_url'],
             'updated_at' => $now
         );
+
         if ($id) {
+            // Never regenerate the slug: it is the public results URL
+            // (/results/<slug>/) and the key used by the results manifest.
+            $existing = $this->get_event($id);
+
+            if ($existing) {
+                $data['slug'] = $existing->slug;
+            }
+
             return $this->db->where('id', (int) $id)->update('race_events', $data);
         }
+
+        $data['slug'] = $this->unique_slug($payload['name']);
         $data['is_active'] = 1;
         $data['created_at'] = $now;
+
         return $this->db->insert('race_events', $data);
     }
 
@@ -93,6 +96,10 @@ class Race_api_model extends CI_Model
     {
         $race = $this->get_event($id);
         if (!$race) return array('ok' => FALSE, 'message' => 'Race tidak ditemukan.');
+
+        if (trim((string) $race->api_url) === '') {
+            return array('ok' => FALSE, 'message' => 'Race ini belum punya URL API. Hasilnya dikelola dari results/<slug>/data.json.');
+        }
 
         $validation = $this->validate_api_url($race->api_url);
         if ($validation !== TRUE) return $this->record_sync_failure($race->id, $validation);
@@ -293,40 +300,5 @@ class Race_api_model extends CI_Model
             $out[] = array('id' => $event->id, 'message' => $result['message']);
         }
         return $out;
-    }
-
-    public function count_results($race_id, $q = '', $category = '')
-    {
-        $this->apply_result_filters($race_id, $q, $category);
-        return $this->db->count_all_results();
-    }
-
-    public function get_results($race_id, $limit, $offset, $q = '', $category = '')
-    {
-        $this->apply_result_filters($race_id, $q, $category);
-
-        return $this->db
-            ->order_by('overall_rank IS NULL', '', FALSE)
-            ->order_by('overall_rank', 'ASC')
-            ->order_by('name', 'ASC')
-            ->limit((int) $limit, (int) $offset)
-            ->get()
-            ->result();
-    }
-
-    private function apply_result_filters($race_id, $q, $category)
-    {
-        $this->db->from('race_results')->where('race_id', (int) $race_id);
-        if ($q !== '') {
-            $this->db->group_start()->like('name', $q)->or_like('bib', $q)->group_end();
-        }
-        if ($category !== '') $this->db->where('category', $category);
-    }
-
-    public function categories_for_race($race_id)
-    {
-        return $this->db->distinct()->select('category')->where('race_id', (int) $race_id)
-            ->where('category IS NOT NULL', NULL, FALSE)->where('category !=', '')
-            ->order_by('category', 'ASC')->get('race_results')->result();
     }
 }

@@ -1,0 +1,12 @@
+services:
+  ocr:
+    build: .
+    container_name: racetap-ocr
+    ports:
+      - "8010:8010"
+    restart: unless-stopped
+    volumes:
+      - rapidocr-models:/root/.cache
+
+volumes:
+  rapidocr-models:

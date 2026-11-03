@@ -1,0 +1,85 @@
+{
+  "slug": "Monkey-Forest-Ubud-Run-2026",
+  "name": "Monkey Forest Ubud Run 2026",
+  "title": "MONKEY FOREST UBUD RUN 2026",
+  "date": "2026-10-17",
+  "participants": 2036,
+  "finishers": 1457,
+  "categories": [
+    "10K",
+    "5K",
+    "Ubud"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "I NYOMAN KARMAYASA",
+          "bib": "10141",
+          "netTime": "00:37:28",
+          "gunTime": "00:37:30"
+        },
+        {
+          "name": "DEWA BAGUS ALIT ADNYANA PUTRA",
+          "bib": "10423",
+          "netTime": "00:37:42",
+          "gunTime": "00:37:44"
+        },
+        {
+          "name": "THIBAUT FOULQUIER",
+          "bib": "10082",
+          "netTime": "00:43:57",
+          "gunTime": "00:44:00"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "PUTU ANDIKA ANDRYAWAN",
+          "bib": "50325",
+          "netTime": "00:19:21",
+          "gunTime": "00:19:25"
+        },
+        {
+          "name": "AGUSKIRUN",
+          "bib": "50186",
+          "netTime": "00:19:26",
+          "gunTime": "00:19:27"
+        },
+        {
+          "name": "MARSELINUS MANJUR",
+          "bib": "50777",
+          "netTime": "00:19:41",
+          "gunTime": "00:19:43"
+        }
+      ]
+    },
+    {
+      "item": "Ubud",
+      "athletes": [
+        {
+          "name": "KRIS",
+          "bib": "30233",
+          "netTime": "00:10:02",
+          "gunTime": "00:25:01"
+        },
+        {
+          "name": "A. A. GDE KRISNA ARI PUTRA",
+          "bib": "30174",
+          "netTime": "00:10:14",
+          "gunTime": "00:25:00"
+        },
+        {
+          "name": "I WAYAN SUMADI",
+          "bib": "30173",
+          "netTime": "00:11:04",
+          "gunTime": "00:25:46"
+        }
+      ]
+    }
+  ]
+}

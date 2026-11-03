@@ -1,0 +1,61 @@
+{
+  "slug": "tni-run-2026-jakarta",
+  "name": "TNI Run 2026 Jakarta",
+  "title": "TNI RUN JAKARTA 2026",
+  "date": "2026-09-19",
+  "participants": 12901,
+  "finishers": 11184,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "FERRY",
+          "bib": "18195",
+          "netTime": "00:21:01",
+          "gunTime": "00:45:31"
+        },
+        {
+          "name": "FADHURROSI",
+          "bib": "11655",
+          "netTime": "00:27:49",
+          "gunTime": "00:44:46"
+        },
+        {
+          "name": "HENDRIK NAINGGOLAN",
+          "bib": "10734",
+          "netTime": "00:31:45",
+          "gunTime": "00:31:47"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ANDRE PRATAMA",
+          "bib": "50542",
+          "netTime": "00:00:01",
+          "gunTime": "00:14:02"
+        },
+        {
+          "name": "TNI RUN",
+          "bib": "59703",
+          "netTime": "00:00:50",
+          "gunTime": "00:14:44"
+        },
+        {
+          "name": "ALI IMRON ZUKHRI",
+          "bib": "55726",
+          "netTime": "00:15:08",
+          "gunTime": "00:27:46"
+        }
+      ]
+    }
+  ]
+}

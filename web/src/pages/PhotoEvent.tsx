@@ -1,85 +1,29 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { EmptyBox, ErrorBox, Loading } from '../components/ui';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { EmptyBox, ErrorBox, Loading, SafeImage } from '../components/ui';
 import { useApi } from '../hooks/useApi';
-import { digitsOnly, formatDate, formatDecimal, formatNumber } from '../lib/format';
-import { extractWords, photoMatches, pickBibFromText, pickBibFromWords } from '../lib/bib';
-import { asset } from '../payload';
+import { formatDate, formatDecimal, formatNumber, normalizeBib } from '../lib/format';
+import { photoMatches } from '../lib/bib';
+import { APP, asset } from '../payload';
+import { useI18n } from '../i18n/I18nProvider';
 import type { Photo, PhotoEventPayload } from '../types';
-
-interface OcrCacheEntry {
-  bib: string;
-  text: string;
-  confidence: number;
-  scanned_at: number;
-}
-
-type StatusTone = '' | 'is-busy' | 'is-success' | 'is-error';
-
-interface WorkerLike {
-  recognize: (source: string | File) => Promise<{ data: any }>;
-  setParameters: (params: Record<string, string>) => Promise<unknown>;
-  terminate: () => Promise<unknown>;
-}
-
-function readCache(slug: string): Record<string, OcrCacheEntry> {
-  try {
-    return JSON.parse(window.localStorage.getItem(`racetap-photos-ocr:v1:${slug}`) || '{}') || {};
-  } catch {
-    return {};
-  }
-}
-
-function writeCache(slug: string, cache: Record<string, OcrCacheEntry>): void {
-  try {
-    window.localStorage.setItem(`racetap-photos-ocr:v1:${slug}`, JSON.stringify(cache));
-  } catch {
-    // Storage can be full or blocked; search still works in this session.
-  }
-}
-
-async function createOcrWorker(logger?: (message: any) => void): Promise<WorkerLike> {
-  const module = await import('tesseract.js');
-  const factory = module.createWorker as unknown as (
-    lang: string,
-    oem: number,
-    options?: { logger?: (message: any) => void }
-  ) => Promise<WorkerLike>;
-
-  const worker = await factory('eng', 1, logger ? { logger } : undefined);
-
-  try {
-    await worker.setParameters({ tessedit_char_whitelist: '0123456789' });
-  } catch {
-    // Parameter is optional; continue without the whitelist.
-  }
-
-  return worker;
-}
 
 export default function PhotoEvent() {
   const { slug = '' } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const { data, loading, error, reload } = useApi<PhotoEventPayload>(slug ? `/photos/events/${encodeURIComponent(slug)}` : null);
+  const { t, lang } = useI18n();
 
-  const [query, setQuery] = useState(() => digitsOnly(searchParams.get('bib')));
-  const [cache, setCache] = useState<Record<string, OcrCacheEntry>>({});
-  const [scanning, setScanning] = useState(false);
-  const [progress, setProgress] = useState<{ percent: number; label: string } | null>(null);
-  const [status, setStatus] = useState<{ text: string; tone: StatusTone }>({ text: '', tone: '' });
+  const [query, setQuery] = useState(() => normalizeBib(searchParams.get('bib')));
+  const [selected, setSelected] = useState<Record<number, true>>({});
   const [activePhoto, setActivePhoto] = useState<Photo | null>(null);
-  const fileInput = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    setCache(readCache(slug));
-  }, [slug]);
 
   useEffect(() => {
     const next = new URLSearchParams(searchParams);
-    const digits = digitsOnly(query);
+    const needle = normalizeBib(query);
 
-    if (digits) {
-      next.set('bib', digits);
+    if (needle) {
+      next.set('bib', needle);
     } else {
       next.delete('bib');
     }
@@ -87,6 +31,10 @@ export default function PhotoEvent() {
     const serialized = next.toString();
     window.history.replaceState({}, '', `${window.location.pathname}${serialized ? `?${serialized}` : ''}`);
   }, [query, searchParams]);
+
+  useEffect(() => {
+    setSelected({});
+  }, [slug]);
 
   useEffect(() => {
     if (!activePhoto) {
@@ -111,140 +59,59 @@ export default function PhotoEvent() {
   const photos = data?.photos || [];
   const event = data?.event || null;
 
-  const effectiveBib = useCallback(
-    (photo: Photo) => {
-      const live = cache[photo.id];
-      return live && live.bib ? live.bib : '';
-    },
-    [cache]
-  );
-
   const filtered = useMemo(() => {
-    const digits = digitsOnly(query);
+    const needle = normalizeBib(query);
 
-    if (!digits) {
+    if (!needle) {
       return photos;
     }
 
-    return photos.filter((photo) => {
-      const live = cache[photo.id];
-      return photoMatches(photo, digits) || (live ? digitsOnly(live.bib).includes(digits) : false);
-    });
-  }, [photos, query, cache]);
+    return photos.filter((photo) => photoMatches(photo, needle));
+  }, [photos, query]);
 
-  const applyScanResults = (nextCache: Record<string, OcrCacheEntry>) => {
-    setCache(nextCache);
-    writeCache(slug, nextCache);
-  };
+  const selectedIds = useMemo(() => Object.keys(selected).map(Number), [selected]);
+  const allSelected = filtered.length > 0 && filtered.every((photo) => selected[photo.id]);
 
-  const scanAll = async () => {
-    if (scanning || photos.length === 0) {
-      return;
-    }
+  const togglePhoto = (id: number) => {
+    setSelected((previous) => {
+      const next = { ...previous };
 
-    setScanning(true);
-    setProgress({ percent: 2, label: 'Menyiapkan OCR...' });
-    setStatus({ text: 'Mengunduh model OCR dan memindai nomor dada pada foto...', tone: 'is-busy' });
-
-    const nextCache = { ...cache };
-    const total = photos.length;
-    let done = 0;
-    let worker: WorkerLike | null = null;
-
-    try {
-      worker = await createOcrWorker();
-
-      for (const photo of photos) {
-        const src = asset(photo.file);
-        setProgress({ percent: Math.round((done / total) * 100), label: `Memindai foto ${done + 1}/${total}...` });
-
-        try {
-          const result = await worker.recognize(src);
-          const payload = result.data || {};
-          const words = extractWords(payload);
-          const picked = words.length > 0 ? pickBibFromWords(words) : pickBibFromText(String(payload.text || ''));
-
-          if (picked.bib) {
-            nextCache[photo.id] = {
-              bib: picked.bib,
-              text: picked.tokens.join(' '),
-              confidence: Number(payload.confidence || 0),
-              scanned_at: Date.now()
-            };
-          }
-        } catch (scanError) {
-          console.error('OCR gagal untuk foto ' + photo.id, scanError);
-        }
-
-        done += 1;
-        setProgress({ percent: Math.round((done / total) * 100), label: `Selesai ${done}/${total}` });
-      }
-
-      applyScanResults(nextCache);
-      setStatus({ text: `OCR selesai. ${Object.keys(nextCache).length} foto memiliki indeks BIB. Pencarian memakai hasil OCR terbaru.`, tone: 'is-success' });
-    } catch (scanError) {
-      setStatus({
-        text: scanError instanceof Error ? scanError.message : 'OCR gagal dijalankan.',
-        tone: 'is-error'
-      });
-    } finally {
-      if (worker) {
-        await worker.terminate().catch(() => undefined);
-      }
-
-      setScanning(false);
-      setProgress(null);
-    }
-  };
-
-  const readUploadedBib = async (file: File | undefined) => {
-    if (!file) {
-      return;
-    }
-
-    setStatus({ text: 'Membaca nomor dada dari foto BIB...', tone: 'is-busy' });
-    setProgress({ percent: 10, label: 'Membaca foto BIB...' });
-
-    let worker: WorkerLike | null = null;
-
-    try {
-      worker = await createOcrWorker();
-      const result = await worker.recognize(file);
-      const payload = result.data || {};
-      const words = extractWords(payload);
-      const picked = words.length > 0 ? pickBibFromWords(words) : pickBibFromText(String(payload.text || ''));
-
-      if (picked.bib) {
-        setQuery(picked.bib);
-        setStatus({ text: `Nomor dada ${picked.bib} terbaca dari foto.`, tone: 'is-success' });
+      if (next[id]) {
+        delete next[id];
       } else {
-        setStatus({ text: 'Nomor dada tidak terbaca. Coba foto yang lebih jelas atau ketik manual.', tone: 'is-error' });
-      }
-    } catch {
-      setStatus({ text: 'Gagal membaca foto BIB. Coba lagi dengan foto yang lebih jelas.', tone: 'is-error' });
-    } finally {
-      if (worker) {
-        await worker.terminate().catch(() => undefined);
+        next[id] = true;
       }
 
-      setProgress(null);
-
-      if (fileInput.current) {
-        fileInput.current.value = '';
-      }
-    }
+      return next;
+    });
   };
 
-  const reset = () => {
-    setQuery('');
-    setSearchParams({}, { replace: true });
+  const toggleAll = () => {
+    if (allSelected) {
+      setSelected({});
+      return;
+    }
+
+    const next: Record<number, true> = {};
+    filtered.forEach((photo) => {
+      next[photo.id] = true;
+    });
+    setSelected(next);
+  };
+
+  const downloadSelected = () => {
+    if (selectedIds.length === 0) {
+      return;
+    }
+
+    window.location.href = `${APP.apiUrl}/photos/events/${encodeURIComponent(slug)}/download?ids=${selectedIds.join(',')}`;
   };
 
   if (loading && !data) {
     return (
       <section className="section">
         <div className="container">
-          <Loading label="Memuat foto event..." />
+          <Loading label={t('common.loading')} />
         </div>
       </section>
     );
@@ -265,7 +132,7 @@ export default function PhotoEvent() {
   }
 
   const ocrIndexed = event.ocr_indexed;
-  const displayCount = digitsOnly(query) === '' ? photos.length : filtered.length;
+  const displayCount = normalizeBib(query) === '' ? photos.length : filtered.length;
 
   return (
     <>
@@ -273,7 +140,7 @@ export default function PhotoEvent() {
         <div className="container">
           <h1 className="mb-3">{event.name}</h1>
           <div className="breadcrumb-custom">
-            <a href="/v2">Home</a> <span>/</span> <a href="/v2/photos">Photos</a> <span>/</span>
+            <Link to="/">Home</Link> <span>/</span> <Link to="/photos">Photos</Link> <span>/</span>
             <span className="active">{event.name}</span>
           </div>
           <div className="photo-hero-meta">
@@ -281,16 +148,16 @@ export default function PhotoEvent() {
               <i className="bi bi-geo-alt" /> {event.location}
             </span>
             <span className="photo-hero-chip">
-              <i className="bi bi-calendar3" /> {formatDate(event.event_date)}
+              <i className="bi bi-calendar3" /> {formatDate(event.event_date, lang)}
             </span>
             <span className="photo-hero-chip">
-              <i className="bi bi-images" /> {formatNumber(event.photo_count)} Foto
+              <i className="bi bi-images" /> {formatNumber(event.photo_count, lang)} {t('photos.photos')}
             </span>
             <span className="photo-hero-chip">
-              <i className="bi bi-upc-scan" /> {formatNumber(event.bib_count)} BIB
+              <i className="bi bi-upc-scan" /> {formatNumber(event.bib_count, lang)} BIB
             </span>
             <span className="photo-hero-chip">
-              <i className="bi bi-cpu" /> {formatNumber(ocrIndexed)} OCR indexed
+              <i className="bi bi-cpu" /> {formatNumber(ocrIndexed, lang)} {t('photos.ocr')}
             </span>
           </div>
         </div>
@@ -300,84 +167,32 @@ export default function PhotoEvent() {
         <div className="container">
           <div className="photo-toolbar">
             <div className="row g-4 align-items-center">
-              <div className="col-lg-4">
-                <span className="eyebrow">Photo Search</span>
-                <h2 className="section-title h3 mb-2">Cari foto dengan nomor dada</h2>
-                <p className="mb-0 text-slate">
-                  Ketik nomor dada (BIB) atau unggah foto BIB Anda. Sistem mencocokkan nomor hasil OCR dengan indeks foto
-                  event ini.
-                </p>
+              <div className="col-lg-5">
+                <span className="eyebrow">{t('photo.eyebrow')}</span>
+                <h2 className="section-title h3 mb-2">{t('photo.heading')}</h2>
+                <p className="mb-1 text-slate">{t('photo.intro')}</p>
+                <small className="text-slate d-block">
+                  <i className="bi bi-info-circle me-1" /> {t('photo.ocrNote')}
+                </small>
               </div>
-              <div className="col-lg-8">
-                <form
-                  className="photo-search-form"
-                  onSubmit={(submitEvent) => submitEvent.preventDefault()}
-                >
+              <div className="col-lg-7">
+                <form className="photo-search-form" onSubmit={(submitEvent) => submitEvent.preventDefault()}>
                   <div className="photo-search-input">
                     <i className="bi bi-upc-scan" />
                     <input
                       type="search"
-                      inputMode="numeric"
+                      inputMode="text"
                       autoComplete="off"
                       value={query}
-                      placeholder="Masukkan nomor dada, contoh: 1024"
-                      aria-label="Nomor dada"
-                      onChange={(changeEvent) => setQuery(digitsOnly(changeEvent.target.value).slice(0, 12))}
+                      placeholder={t('photo.placeholder')}
+                      aria-label="BIB"
+                      onChange={(changeEvent) => setQuery(normalizeBib(changeEvent.target.value))}
                     />
                   </div>
                   <button className="btn btn-primary" type="submit">
-                    <i className="bi bi-search me-1" /> Cari Foto
-                  </button>
-                  <button className="btn btn-light-custom" type="button" onClick={scanAll} disabled={scanning}>
-                    {scanning ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" /> Memindai...
-                      </>
-                    ) : (
-                      <>
-                        <i className="bi bi-magic me-1" /> Scan OCR
-                      </>
-                    )}
-                  </button>
-                  <button className="btn btn-light-custom" type="button" onClick={() => fileInput.current?.click()}>
-                    <i className="bi bi-camera me-1" /> BIB dari Foto
-                  </button>
-                  <input
-                    ref={fileInput}
-                    type="file"
-                    accept="image/*"
-                    className="d-none"
-                    onChange={(changeEvent) => readUploadedBib(changeEvent.target.files?.[0])}
-                  />
-                  <button className="btn btn-light-custom" type="button" onClick={reset}>
-                    <i className="bi bi-arrow-counterclockwise me-1" /> Reset
+                    <i className="bi bi-search me-1" /> {t('photo.search')}
                   </button>
                 </form>
-
-                <div className="ocr-panel">
-                  <div className="d-flex flex-wrap align-items-center gap-2">
-                    <span className="badge-soft">
-                      <i className="bi bi-cpu me-1" /> OCR Engine: Tesseract.js + Google Vision
-                    </span>
-                    <span className={`ocr-status${status.tone ? ` ${status.tone}` : ''}`}>
-                      {status.text || `Indeks OCR siap untuk ${formatNumber(ocrIndexed)} foto. Klik "Scan OCR" untuk memindai ulang nomor dada di browser.`}
-                    </span>
-                  </div>
-                  {progress && (
-                    <div className="progress ocr-progress mt-2">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        style={{ width: `${progress.percent}%` }}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-valuenow={progress.percent}
-                      >
-                        {progress.label}
-                      </div>
-                    </div>
-                  )}
-                </div>
               </div>
             </div>
           </div>
@@ -388,36 +203,44 @@ export default function PhotoEvent() {
         <div className="container">
           <div className="photo-result-bar">
             <p className="mb-0 text-slate">
-              {digitsOnly(query) === ''
-                ? `Menampilkan ${formatNumber(photos.length)} foto`
+              {normalizeBib(query) === ''
+                ? t('photo.showing', { count: formatNumber(photos.length, lang) })
                 : filtered.length > 0
-                  ? `Ditemukan ${formatNumber(filtered.length)} foto untuk nomor dada ${digitsOnly(query)}`
-                  : `Tidak ada foto untuk nomor dada ${digitsOnly(query)}`}
+                  ? t('photo.found', { count: formatNumber(filtered.length, lang), bib: normalizeBib(query) })
+                  : t('photo.notFound', { bib: normalizeBib(query) })}
             </p>
-            <span className="badge-soft">
-              <i className="bi bi-images me-1" /> {formatNumber(displayCount)} foto <span className="text-slate">/</span>{' '}
-              {formatNumber(event.bib_count)} BIB
-            </span>
+            <div className="photo-bulk">
+              <button type="button" className="btn btn-sm btn-light-custom" onClick={toggleAll} disabled={filtered.length === 0}>
+                <i className="bi bi-check2-square me-1" /> {allSelected ? t('photo.clearSelection') : t('photo.selectAll')}
+              </button>
+              <span className="photo-selected-count">{t('photo.selectedCount', { count: selectedIds.length })}</span>
+              <button className="btn btn-sm btn-primary" type="button" onClick={downloadSelected} disabled={selectedIds.length === 0}>
+                <i className="bi bi-file-zip me-1" /> {t('photo.downloadZip')}
+              </button>
+              <span className="badge-soft">
+                <i className="bi bi-images me-1" /> {formatNumber(displayCount, lang)} {t('photos.photos')}
+              </span>
+            </div>
           </div>
 
           {filtered.length === 0 ? (
-            <EmptyBox
-              icon="bi-search"
-              title="Tidak ada foto yang cocok"
-              description="Coba scan OCR ulang, unggah foto BIB yang lebih jelas, atau pastikan nomor dada yang dimasukkan benar."
-            />
+            <EmptyBox icon="bi-search" title={t('photo.emptyMatchTitle')} description={t('photo.emptyMatchText')} />
           ) : (
             <div className="row g-4">
               {filtered.map((photo) => (
                 <div className="col-sm-6 col-lg-4" key={photo.id}>
-                  <article className="photo-card">
-                    <button type="button" className="photo-thumb" onClick={() => setActivePhoto(photo)}>
-                      <img
-                        src={asset(photo.file)}
-                        alt={`Foto BIB ${photo.bib} - ${event.name}`}
-                        loading="lazy"
+                  <article className={`photo-card${selected[photo.id] ? ' is-selected' : ''}`}>
+                    <label className="photo-select" onClick={(clickEvent) => clickEvent.stopPropagation()}>
+                      <input
+                        type="checkbox"
+                        checked={Boolean(selected[photo.id])}
+                        onChange={() => togglePhoto(photo.id)}
+                        aria-label={`${t('photo.selectAll')} ${photo.bib}`}
                       />
-                      <span className="photo-bib-badge">BIB {photo.bib}</span>
+                    </label>
+                    <button type="button" className="photo-thumb" onClick={() => setActivePhoto(photo)}>
+                      <SafeImage src={asset(photo.file)} alt={`Foto BIB ${photo.bib} - ${event.name}`} loading="lazy" />
+                      <span className="photo-bib-badge">BIB {photo.bib || '-'}</span>
                       <span className="photo-zoom">
                         <i className="bi bi-arrows-fullscreen" />
                       </span>
@@ -425,19 +248,19 @@ export default function PhotoEvent() {
                     <div className="photo-card-body">
                       <div className="photo-card-info">
                         <span className="photo-time">
-                          <i className="bi bi-clock" /> {photo.captured_at}
+                          <i className="bi bi-clock" /> {photo.captured_at || '-'}
                         </span>
                         <span className="photo-cat">{photo.category}</span>
                       </div>
                       <div className="photo-card-footer">
-                        <span className={`ocr-badge${effectiveBib(photo) ? ' is-live' : ''}`}>
+                        <span className={`ocr-badge${photo.ocr_source ? ' is-live' : ''}`}>
                           <i className="bi bi-upc-scan" /> OCR {formatDecimal(photo.ocr_confidence)}%
                         </span>
                         <a
                           className="photo-download"
                           href={asset(photo.file)}
-                          download={`bib-${photo.bib}.jpg`}
-                          title="Download foto"
+                          download={`bib-${photo.bib || photo.id}.jpg`}
+                          title={t('photo.download')}
                         >
                           <i className="bi bi-download" />
                         </a>
@@ -466,12 +289,12 @@ export default function PhotoEvent() {
           <div className="rt-modal">
             <div className="rt-modal-header">
               <h5 className="mb-0">
-                BIB {activePhoto.bib} &mdash; {event.name}
+                BIB {activePhoto.bib || '-'} &mdash; {event.name}
               </h5>
-              <button type="button" className="btn-close" aria-label="Tutup" onClick={() => setActivePhoto(null)} />
+              <button type="button" className="btn-close" aria-label={t('common.close')} onClick={() => setActivePhoto(null)} />
             </div>
             <div className="rt-modal-body">
-              <img src={asset(activePhoto.file)} alt={`Foto BIB ${activePhoto.bib}`} />
+              <SafeImage src={asset(activePhoto.file)} alt={`Foto BIB ${activePhoto.bib}`} />
             </div>
             <div className="rt-modal-footer">
               <span className="text-slate">
@@ -480,9 +303,9 @@ export default function PhotoEvent() {
               <a
                 className="btn btn-primary btn-sm-custom"
                 href={asset(activePhoto.file)}
-                download={`bib-${activePhoto.bib}.jpg`}
+                download={`bib-${activePhoto.bib || activePhoto.id}.jpg`}
               >
-                <i className="bi bi-download me-1" /> Download Foto
+                <i className="bi bi-download me-1" /> {t('photo.download')}
               </a>
             </div>
           </div>

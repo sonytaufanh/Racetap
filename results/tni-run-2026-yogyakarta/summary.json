@@ -1,0 +1,61 @@
+{
+  "slug": "tni-run-2026-yogyakarta",
+  "name": "TNI Run 2026 Yogyakarta",
+  "title": "TNI RUN 2026 YOGYAKARTA",
+  "date": "2026-09-05",
+  "participants": 2409,
+  "finishers": 2030,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "PANDU SUKARYA",
+          "bib": "10357",
+          "netTime": "00:31:20",
+          "gunTime": "00:31:40"
+        },
+        {
+          "name": "IMMANUEL P HUTASOIT",
+          "bib": "10055",
+          "netTime": "00:31:42",
+          "gunTime": "00:32:03"
+        },
+        {
+          "name": "FERY FADRI",
+          "bib": "13020",
+          "netTime": "00:31:48",
+          "gunTime": "00:32:08"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "FIRMAN NOFAL",
+          "bib": "50456",
+          "netTime": "00:15:07",
+          "gunTime": "00:15:07"
+        },
+        {
+          "name": "ALVIN ADHY PRADANA",
+          "bib": "51313",
+          "netTime": "00:15:14",
+          "gunTime": "00:15:17"
+        },
+        {
+          "name": "AZRIEL WAHYU KURNIAWAN",
+          "bib": "50337",
+          "netTime": "00:15:23",
+          "gunTime": "00:15:26"
+        }
+      ]
+    }
+  ]
+}

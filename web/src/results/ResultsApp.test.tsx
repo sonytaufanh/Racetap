@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import ResultsApp, { renderCell } from './ResultsApp';
@@ -106,7 +107,7 @@ describe('ResultsApp', () => {
   it('renders the loading state before the data arrives', () => {
     const html = renderToStaticMarkup(<ResultsApp payload={payload()} />);
 
-    expect(html).toContain('Loading results...');
+    expect(html).toContain('Memuat hasil...');
     expect(html).toContain('hero-badge');
   });
 

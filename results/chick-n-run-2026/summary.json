@@ -1,0 +1,61 @@
+{
+  "slug": "chick-n-run-2026",
+  "name": "Chick n Run 2026",
+  "title": "CHICK AND RUN 2026",
+  "date": "2026-05-09",
+  "participants": 354,
+  "finishers": 313,
+  "categories": [
+    "10K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "ACHMAD BADRIYANTO",
+          "bib": "M3112",
+          "netTime": "00:37:21",
+          "gunTime": "00:37:23"
+        },
+        {
+          "name": "EDI HENDRI PRASETYO",
+          "bib": "M2013",
+          "netTime": "00:38:29",
+          "gunTime": "00:38:31"
+        },
+        {
+          "name": "PANDU JATI P",
+          "bib": "M3027",
+          "netTime": "00:41:10",
+          "gunTime": "00:41:12"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "YAN KURNIAWAN",
+          "bib": "C1125",
+          "netTime": "00:15:32",
+          "gunTime": "00:25:16"
+        },
+        {
+          "name": "JAUHARI FEBRIAN R",
+          "bib": "C3100",
+          "netTime": "00:22:40",
+          "gunTime": "00:22:44"
+        },
+        {
+          "name": "SOLEHUDIN",
+          "bib": "C2079",
+          "netTime": "00:23:35",
+          "gunTime": "00:23:39"
+        }
+      ]
+    }
+  ]
+}

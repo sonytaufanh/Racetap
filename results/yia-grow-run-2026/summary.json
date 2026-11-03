@@ -1,0 +1,85 @@
+{
+  "slug": "yia-grow-run-2026",
+  "name": "YIA Grow Run 2026",
+  "title": "YIA Grow Run 2026",
+  "date": "2026-02-14",
+  "participants": 1691,
+  "finishers": 1450,
+  "categories": [
+    "10K",
+    "2.5K",
+    "5K"
+  ],
+  "distance": "5K & 10K",
+  "podiums": [
+    {
+      "item": "10K",
+      "athletes": [
+        {
+          "name": "NURSHODIQ",
+          "bib": "10219",
+          "netTime": "00:34:09",
+          "gunTime": "00:36:00"
+        },
+        {
+          "name": "TEGAR  PRABAKTI",
+          "bib": "10450",
+          "netTime": "00:36:28",
+          "gunTime": "00:38:18"
+        },
+        {
+          "name": "GANANG RAGIL",
+          "bib": "10290",
+          "netTime": "00:37:21",
+          "gunTime": "00:39:12"
+        }
+      ]
+    },
+    {
+      "item": "2.5K",
+      "athletes": [
+        {
+          "name": "VANIA TSANIA SENA  AZZIZAH",
+          "bib": "20095",
+          "netTime": "00:13:44",
+          "gunTime": "00:14:03"
+        },
+        {
+          "name": "ALTAN PRAYUDHA",
+          "bib": "20017",
+          "netTime": "00:14:37",
+          "gunTime": "00:14:56"
+        },
+        {
+          "name": "KAN DARTO",
+          "bib": "20018",
+          "netTime": "00:14:38",
+          "gunTime": "00:14:57"
+        }
+      ]
+    },
+    {
+      "item": "5K",
+      "athletes": [
+        {
+          "name": "ELISAR GAMASHI",
+          "bib": "50855",
+          "netTime": "00:15:24",
+          "gunTime": "00:16:01"
+        },
+        {
+          "name": "MUHAMMAD AR DANISWARA  BASUNJAYA",
+          "bib": "50867",
+          "netTime": "00:15:33",
+          "gunTime": "00:16:11"
+        },
+        {
+          "name": "ANDI FAJRUL",
+          "bib": "51866",
+          "netTime": "00:16:08",
+          "gunTime": "00:16:46"
+        }
+      ]
+    }
+  ]
+}
