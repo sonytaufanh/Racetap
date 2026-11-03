@@ -11,5 +11,8 @@
     "gen": "npm --prefix web run gen",
     "gen:check": "npm --prefix web run gen:check",
     "install:web": "npm --prefix web install"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
   }
 }
