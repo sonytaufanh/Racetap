@@ -3,9 +3,10 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { ApiError, api, errorMessage } from '../lib/http';
 import { PasswordField } from './AdminUI';
 import { useAdmin } from './AdminContext';
+import { hashPassword, saveLocalAccount } from './localAuth';
 
 export default function Setup() {
-  const { session, loading } = useAdmin();
+  const { session, loading, offline } = useAdmin();
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
@@ -26,6 +27,41 @@ export default function Setup() {
     setFields({});
 
     try {
+      if (offline) {
+        const errors: Record<string, string> = {};
+
+        if (displayName.trim() === '' || displayName.trim().length > 120) {
+          errors.display_name = 'Nama admin wajib diisi (maksimal 120 karakter).';
+        }
+
+        if (!/^[A-Za-z0-9_-]{4,80}$/.test(username)) {
+          errors.username = 'Username 4-80 karakter, hanya huruf, angka, garis bawah, atau strip.';
+        }
+
+        if (password.length < 8) {
+          errors.password = 'Password minimal 8 karakter.';
+        }
+
+        if (password !== confirm) {
+          errors.password_confirm = 'Konfirmasi password tidak sama.';
+        }
+
+        if (Object.keys(errors).length > 0) {
+          setFields(errors);
+          setError('Data belum valid.');
+          return;
+        }
+
+        saveLocalAccount({
+          username,
+          display_name: displayName.trim(),
+          password_hash: await hashPassword(password)
+        });
+
+        navigate('/admin/login', { replace: true });
+        return;
+      }
+
       await api('/auth/setup', {
         method: 'POST',
         body: {
@@ -82,6 +118,13 @@ export default function Setup() {
         <div className="rt-auth-card">
           <h1>Setup Akun Admin</h1>
           <p className="rt-adm-sub">Akun pertama otomatis menjadi superadmin.</p>
+
+          {offline ? (
+            <div className="alert alert-warning py-2 small" role="status">
+              <i className="bi bi-hdd-network me-1" aria-hidden="true" />
+              Mode statis: akun ini disimpan lokal di browser (tanpa backend PHP).
+            </div>
+          ) : null}
 
           {error ? (
             <div className="alert alert-danger py-2 small" role="alert">

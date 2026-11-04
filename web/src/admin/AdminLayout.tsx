@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { api, errorMessage } from '../lib/http';
+import { api, errorMessage, isApiUnavailable } from '../lib/http';
 import { Loading } from '../components/ui';
 import { useConfirm } from './AdminUI';
 import { useAdmin } from './AdminContext';
+import { endLocalSession } from './localAuth';
 
 interface NavItem {
   to: string;
@@ -43,7 +44,7 @@ function currentTitle(pathname: string): string {
 }
 
 export default function AdminLayout() {
-  const { session, loading, setSession, refresh } = useAdmin();
+  const { session, loading, setSession, refresh, offline } = useAdmin();
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState('');
@@ -86,12 +87,25 @@ export default function AdminLayout() {
   const logout = async () => {
     setError('');
 
+    if (offline) {
+      endLocalSession();
+      setSession(null);
+      navigate('/admin/login', { replace: true });
+      return;
+    }
+
     try {
       await api('/auth/logout', { method: 'POST' });
       setSession(null);
       await refresh();
       navigate('/admin/login', { replace: true });
     } catch (logoutError) {
+      if (isApiUnavailable(logoutError)) {
+        setSession(null);
+        navigate('/admin/login', { replace: true });
+        return;
+      }
+
       setError(errorMessage(logoutError));
     }
   };
@@ -198,6 +212,13 @@ export default function AdminLayout() {
 
         <main className="rt-admin-main" id="admin-main">
           <div className="rt-adm-main-inner">
+            {offline ? (
+              <div className="alert alert-warning py-2" role="status">
+                <i className="bi bi-hdd-network me-1" aria-hidden="true" />
+                Mode statis: backend CMS tidak tersedia di deployment ini. Sesi admin diverifikasi lokal; data dari API
+                tidak akan termuat.
+              </div>
+            ) : null}
             {error ? (
               <div className="alert alert-danger py-2" role="alert">
                 {error}

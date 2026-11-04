@@ -1,12 +1,13 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { api, errorMessage } from '../lib/http';
+import { api, errorMessage, isApiUnavailable } from '../lib/http';
 import type { AdminUser } from '../types';
 import { PasswordField } from './AdminUI';
 import { useAdmin } from './AdminContext';
+import { offlineLogin } from './localAuth';
 
 export default function Login() {
-  const { session, loading, setSession } = useAdmin();
+  const { session, loading, setSession, offline } = useAdmin();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +24,21 @@ export default function Login() {
     setError('');
 
     try {
+      if (offline) {
+        const result = await offlineLogin(username, password);
+
+        if (result.ok) {
+          setSession(result.session);
+          navigate('/admin', { replace: true });
+        } else if (result.reason === 'no-account') {
+          setError('Belum ada akun admin lokal. Buat akun pertama lewat halaman setup.');
+        } else {
+          setError('Username atau password salah.');
+        }
+
+        return;
+      }
+
       const data = await api<{ admin: AdminUser; csrf_token: string }>('/auth/login', {
         method: 'POST',
         body: { username, password }
@@ -31,6 +47,23 @@ export default function Login() {
       setSession({ admin: data.admin, has_admin: true, csrf_token: data.csrf_token });
       navigate('/admin', { replace: true });
     } catch (loginError) {
+      if (isApiUnavailable(loginError)) {
+        const result = await offlineLogin(username, password);
+
+        if (result.ok) {
+          setSession(result.session);
+          navigate('/admin', { replace: true });
+          return;
+        }
+
+        setError(
+          result.reason === 'no-account'
+            ? 'Backend API tidak tersedia di deployment ini. Buat akun admin lokal lewat halaman setup.'
+            : 'Backend API tidak tersedia dan kredensial lokal tidak cocok.'
+        );
+        return;
+      }
+
       setError(errorMessage(loginError));
     } finally {
       setBusy(false);
@@ -71,6 +104,13 @@ export default function Login() {
         <div className="rt-auth-card">
           <h1>Login Admin</h1>
           <p className="rt-adm-sub">Masuk untuk mengelola race dan foto.</p>
+
+          {offline ? (
+            <div className="alert alert-warning py-2 small" role="status">
+              <i className="bi bi-hdd-network me-1" aria-hidden="true" />
+              Mode statis: backend CMS tidak terdeteksi di deployment ini. Login diverifikasi lokal di browser.
+            </div>
+          ) : null}
 
           {session && !session.has_admin ? (
             <div className="alert alert-info py-2 small" role="alert">
