@@ -6,13 +6,19 @@ RewriteEngine On
 RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
+
+# Assets moved into web/public (shipped at the root of the Vercel build) are
+# served from the site root here too, so the same absolute paths keep working.
+RewriteRule ^(photos|portfolio)/([^?]*)$ web/public/$1/$2 [L]
+RewriteRule ^(logo-racetap|racetap|favicon-32|favicon-180)\.(png|ico)$ web/public/$1.$2 [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
 
-# Build sources are not part of the public site.
-RedirectMatch 404 ^/web/
+# Build sources are not part of the public site (web/public assets are).
+RedirectMatch 404 ^/web/(?!public/)
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the "ea-php74" package as the default "PHP" programming language.

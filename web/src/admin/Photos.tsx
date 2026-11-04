@@ -4,7 +4,7 @@ import { useToast } from '../components/Toast';
 import { useApi } from '../hooks/useApi';
 import { api, errorMessage } from '../lib/http';
 import { formatDate, formatNumber } from '../lib/format';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import {
   ActionGroup,
   AdminEmpty,
@@ -112,7 +112,7 @@ export default function AdminPhotos() {
       return () => URL.revokeObjectURL(url);
     }
 
-    setCoverPreview(editing?.cover ? asset(editing.cover) : null);
+    setCoverPreview(editing?.cover ? publicUrl(editing.cover) : null);
     return undefined;
   }, [cover, editing]);
 
@@ -500,7 +500,7 @@ export default function AdminPhotos() {
                         <div className="d-flex align-items-center gap-2">
                           {event.cover ? (
                             <img
-                              src={asset(event.cover)}
+                              src={publicUrl(event.cover)}
                               alt=""
                               width={54}
                               height={40}

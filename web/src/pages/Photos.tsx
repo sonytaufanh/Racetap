@@ -5,7 +5,7 @@ import { Reveal } from '../components/Reveal';
 import { EmptyBox, ErrorBox, Loading, PageHeader, SafeImage } from '../components/ui';
 import { useApi } from '../hooks/useApi';
 import { formatDate, formatNumber } from '../lib/format';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import { useI18n } from '../i18n/I18nProvider';
 import type { PhotoListPayload } from '../types';
 
@@ -87,7 +87,7 @@ export default function Photos() {
                 <div className="col-md-6 col-lg-4" key={event.slug}>
                   <Reveal delay={(index % 4) * 0.08}>
                     <Link to={`/photos/${event.slug}`} className="portfolio-card photo-event-card d-block">
-                      <SafeImage src={asset(event.cover)} alt={event.name} loading="lazy" />
+                      <SafeImage src={publicUrl(event.cover)} alt={event.name} loading="lazy" />
                       <div className="photo-event-chip">
                         <i className="bi bi-images" /> {t('photos.count', { count: formatNumber(event.photo_count, lang) })}
                       </div>

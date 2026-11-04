@@ -138,8 +138,8 @@ class Cms_publisher
 <title>' . $this->escape($title) . '</title>
 <meta name="description" content="' . $this->escape($description) . '">
 <link rel="icon" href="../../favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -315,7 +315,7 @@ class Cms_publisher
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>' . $this->escape($kiosk['title']) . '</title>
 <link rel="icon" href="' . $this->escape($site_base) . 'favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" sizes="180x180" href="' . $this->escape($site_base) . 'assets/images/favicon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="' . $this->escape($site_base) . 'favicon-180.png">
 <style>
 ' . $fonts . '
 

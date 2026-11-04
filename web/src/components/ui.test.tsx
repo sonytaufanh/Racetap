@@ -51,11 +51,11 @@ describe('PageHeader', () => {
 describe('SafeImage', () => {
   it('renders a normal image with its attributes', () => {
     const html = renderToStaticMarkup(
-      <SafeImage src="/assets/images/portfolio/ahy-run-2026.webp" alt="AHY Run" loading="lazy" />
+      <SafeImage src="/portfolio/ahy-run-2026.webp" alt="AHY Run" loading="lazy" />
     );
 
     expect(html).toContain('<img');
-    expect(html).toContain('src="/assets/images/portfolio/ahy-run-2026.webp"');
+    expect(html).toContain('src="/portfolio/ahy-run-2026.webp"');
     expect(html).toContain('alt="AHY Run"');
     expect(html).toContain('loading="lazy"');
   });

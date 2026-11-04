@@ -4,7 +4,7 @@ import { EmptyBox, ErrorBox, Loading, SafeImage } from '../components/ui';
 import { useApi } from '../hooks/useApi';
 import { formatDate, formatDecimal, formatNumber, normalizeBib } from '../lib/format';
 import { photoMatches } from '../lib/bib';
-import { APP, asset } from '../payload';
+import { APP, publicUrl } from '../payload';
 import { useI18n } from '../i18n/I18nProvider';
 import type { Photo, PhotoEventPayload } from '../types';
 
@@ -239,7 +239,7 @@ export default function PhotoEvent() {
                       />
                     </label>
                     <button type="button" className="photo-thumb" onClick={() => setActivePhoto(photo)}>
-                      <SafeImage src={asset(photo.file)} alt={`Foto BIB ${photo.bib} - ${event.name}`} loading="lazy" />
+                      <SafeImage src={publicUrl(photo.file)} alt={`Foto BIB ${photo.bib} - ${event.name}`} loading="lazy" />
                       <span className="photo-bib-badge">BIB {photo.bib || '-'}</span>
                       <span className="photo-zoom">
                         <i className="bi bi-arrows-fullscreen" />
@@ -258,7 +258,7 @@ export default function PhotoEvent() {
                         </span>
                         <a
                           className="photo-download"
-                          href={asset(photo.file)}
+                          href={publicUrl(photo.file)}
                           download={`bib-${photo.bib || photo.id}.jpg`}
                           title={t('photo.download')}
                         >
@@ -294,7 +294,7 @@ export default function PhotoEvent() {
               <button type="button" className="btn-close" aria-label={t('common.close')} onClick={() => setActivePhoto(null)} />
             </div>
             <div className="rt-modal-body">
-              <SafeImage src={asset(activePhoto.file)} alt={`Foto BIB ${activePhoto.bib}`} />
+              <SafeImage src={publicUrl(activePhoto.file)} alt={`Foto BIB ${activePhoto.bib}`} />
             </div>
             <div className="rt-modal-footer">
               <span className="text-slate">
@@ -302,7 +302,7 @@ export default function PhotoEvent() {
               </span>
               <a
                 className="btn btn-primary btn-sm-custom"
-                href={asset(activePhoto.file)}
+                href={publicUrl(activePhoto.file)}
                 download={`bib-${activePhoto.bib || activePhoto.id}.jpg`}
               >
                 <i className="bi bi-download me-1" /> {t('photo.download')}

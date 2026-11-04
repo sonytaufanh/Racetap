@@ -29,8 +29,8 @@
   <?php endif; ?>
   <?php $favicon_version = is_file(FCPATH . 'favicon.ico') ? filemtime(FCPATH . 'favicon.ico') : 1; ?>
   <link rel="icon" href="<?= base_url('favicon.ico') ?>?v=<?= $favicon_version ?>" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('assets/images/favicon-32.png') ?>?v=<?= $favicon_version ?>">
-  <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('assets/images/favicon-180.png') ?>?v=<?= $favicon_version ?>">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('favicon-32.png') ?>?v=<?= $favicon_version ?>">
+  <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('favicon-180.png') ?>?v=<?= $favicon_version ?>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">

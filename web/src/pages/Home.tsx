@@ -3,7 +3,7 @@ import { CTASection } from '../components/PublicLayout';
 import { QuickResultSearch } from '../components/QuickResultSearch';
 import { Reveal } from '../components/Reveal';
 import { SafeImage, SectionHeading } from '../components/ui';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import { useSettings, whatsappLink } from '../hooks/useSettings';
 import { useI18n } from '../i18n/I18nProvider';
 
@@ -135,7 +135,7 @@ export default function Home() {
               <div className="col-md-6 col-lg-4" key={event.slug}>
                 <Reveal delay={index * 0.08}>
                   <Link to={`/events/${event.slug}`} className="portfolio-card d-block">
-                    <SafeImage src={asset(event.cover)} alt={event.name} />
+                    <SafeImage src={publicUrl(event.cover)} alt={event.name} />
                     <div className="portfolio-overlay">
                       <span>{event.location}</span>
                       <h5>{event.name}</h5>

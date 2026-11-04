@@ -71,8 +71,8 @@ function shell(config) {
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}">
 <link rel="icon" href="../../favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

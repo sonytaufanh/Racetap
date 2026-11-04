@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CTASection } from '../components/PublicLayout';
 import { Reveal } from '../components/Reveal';
 import { EmptyBox, PageHeader, SafeImage } from '../components/ui';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import { useI18n } from '../i18n/I18nProvider';
 
 type SortKey = 'latest' | 'name';
@@ -68,7 +68,7 @@ export default function Results() {
                   <Reveal delay={(index % 4) * 0.08}>
                     <div className="portfolio-card d-block">
                       <a href={`/results/${event.slug}/`} className="d-block text-reset text-decoration-none">
-                        <SafeImage src={asset(event.cover)} alt={event.name} loading="lazy" />
+                        <SafeImage src={publicUrl(event.cover)} alt={event.name} loading="lazy" />
                         <div className="portfolio-overlay">
                           <span>{event.location}</span>
                           <h5>{event.name}</h5>

@@ -6,7 +6,7 @@ import { useApi } from '../hooks/useApi';
 import { api, errorMessage } from '../lib/http';
 import { formatNumber } from '../lib/format';
 import { DEFAULT_OCR_RULE } from '../lib/bib';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import {
   createPhotoOcrWorker,
   prepareImageForOcr,
@@ -406,7 +406,7 @@ export default function AdminPhotoGallery() {
       await new Promise((resolve) => setTimeout(resolve, 0));
 
       try {
-        const source = await prepareImageForOcr(asset(photo.file));
+        const source = await prepareImageForOcr(publicUrl(photo.file));
         const raw = await worker.recognize(source);
         const result = readPhotoOcrResult(raw.data, ocrRule, knownBibs);
 
@@ -799,7 +799,7 @@ export default function AdminPhotoGallery() {
               return (
                 <div className={`rt-photo-admin${selected[photo.id] ? ' is-selected' : ''}`} key={photo.id}>
                   <button type="button" className="rt-photo-open" onClick={() => openLightbox(photo)} aria-label="Perbesar dan edit BIB">
-                    <img src={asset(photo.file)} alt={`Foto ${photo.bib || photo.id}`} loading="lazy" />
+                    <img src={publicUrl(photo.file)} alt={`Foto ${photo.bib || photo.id}`} loading="lazy" />
                   </button>
                   <label className="rt-adm-photo-select">
                     <input
@@ -867,7 +867,7 @@ export default function AdminPhotoGallery() {
         {lightbox ? (
           <div className="rt-adm-lightbox-editor">
             <div className="rt-adm-lightbox-image">
-              <img src={asset(lightbox.photo.file)} alt={`Foto ${lightbox.photo.bib || lightbox.photo.id}`} />
+              <img src={publicUrl(lightbox.photo.file)} alt={`Foto ${lightbox.photo.bib || lightbox.photo.id}`} />
             </div>
 
             <div className="rt-adm-lightbox-detail">
@@ -925,7 +925,7 @@ export default function AdminPhotoGallery() {
                 </div>
               </div>
 
-              <a className="btn btn-light-custom btn-sm" href={asset(lightbox.photo.file)} download={`bib-${lightbox.photo.bib || lightbox.photo.id}.jpg`}>
+              <a className="btn btn-light-custom btn-sm" href={publicUrl(lightbox.photo.file)} download={`bib-${lightbox.photo.bib || lightbox.photo.id}.jpg`}>
                 <i className="bi bi-download me-1" aria-hidden="true" /> Unduh foto
               </a>
             </div>

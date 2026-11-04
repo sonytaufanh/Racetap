@@ -1,7 +1,6 @@
 import { CTASection } from '../components/PublicLayout';
 import { Reveal } from '../components/Reveal';
 import { PageHeader, SectionHeading } from '../components/ui';
-import { asset } from '../payload';
 import { useI18n } from '../i18n/I18nProvider';
 
 export default function About() {
@@ -21,7 +20,7 @@ export default function About() {
             <div className="col-lg-6">
               <Reveal>
                 <img
-                  src={asset('assets/images/racetap.png')}
+                  src="/racetap.png"
                   className="rounded-img w-100"
                   alt={t('about.imageAlt')}
                   style={{ aspectRatio: '5 / 4', objectFit: 'cover' }}

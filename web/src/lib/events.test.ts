@@ -5,6 +5,7 @@ import { LATEST_EVENTS, PUBLISHED_EVENT_SLUGS, SITE_EVENTS } from './events';
 import manifest from '../results/events.json';
 
 const repoRoot = path.resolve(__dirname, '../../..');
+const publicRoot = path.resolve(__dirname, '../../public');
 
 describe('results manifest', () => {
   it('exposes site metadata for every event', () => {
@@ -15,7 +16,7 @@ describe('results manifest', () => {
       expect(event.slug).toMatch(/^[\w.-]+$/);
       expect(event.name.length).toBeGreaterThan(0);
       expect(event.location.length).toBeGreaterThan(0);
-      expect(event.cover).toMatch(/^assets\/images\/portfolio\//);
+      expect(event.cover).toMatch(/^(?:portfolio|photos)\//);
     }
   });
 
@@ -35,7 +36,7 @@ describe('results manifest', () => {
 
   it('points every cover and banner at a real file', () => {
     for (const event of manifest.events as Array<{ slug: string; cover: string; banner?: string | null }>) {
-      expect(fs.existsSync(path.join(repoRoot, event.cover))).toBe(true);
+      expect(fs.existsSync(path.join(publicRoot, event.cover))).toBe(true);
 
       if (event.banner) {
         expect(fs.existsSync(path.join(repoRoot, 'results', event.slug, event.banner))).toBe(true);

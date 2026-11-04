@@ -4,7 +4,7 @@ import { CTASection } from '../components/PublicLayout';
 import { Reveal } from '../components/Reveal';
 import { Badge, PageHeader, SafeImage } from '../components/ui';
 import { formatDate, formatNumber } from '../lib/format';
-import { asset } from '../payload';
+import { publicUrl } from '../payload';
 import { useSettings, whatsappLink } from '../hooks/useSettings';
 import { useI18n } from '../i18n/I18nProvider';
 
@@ -102,7 +102,7 @@ export default function EventDetail() {
       <section className="section-sm">
         <div className="container">
           <div className="event-hero">
-            <SafeImage src={asset(event.cover)} alt={event.name} />
+            <SafeImage src={publicUrl(event.cover)} alt={event.name} />
             <div className="event-hero-content">
               <div className="d-flex flex-wrap gap-2 mb-3">
                 <Badge tone={state === 'ready' ? 'success' : 'neutral'}>
@@ -289,7 +289,7 @@ export default function EventDetail() {
               <div className="col-md-6 col-lg-4" key={item.slug}>
                 <Reveal delay={index * 0.08}>
                   <Link to={`/events/${item.slug}`} className="portfolio-card d-block">
-                    <SafeImage src={asset(item.cover)} alt={item.name} loading="lazy" />
+                    <SafeImage src={publicUrl(item.cover)} alt={item.name} loading="lazy" />
                     <div className="portfolio-overlay">
                       <span>{item.location}</span>
                       <h5>{item.name}</h5>

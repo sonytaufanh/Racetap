@@ -1,6 +1,5 @@
 import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { asset } from '../payload';
 import { useSettings, whatsappLink } from '../hooks/useSettings';
 import { useI18n } from '../i18n/I18nProvider';
 import { ThemeToggle } from './ThemeToggle';
@@ -66,7 +65,7 @@ function Navbar({ onSearch }: { onSearch: () => void }) {
     <nav className={`navbar navbar-expand-lg navbar-nexora fixed-top${scrolled ? ' scrolled' : ''}${open ? ' menu-open' : ''}`}>
       <div className="container">
         <Link className="navbar-brand navbar-brand-custom d-inline-flex align-items-center" to="/" onClick={closeMenu}>
-          <img src={asset('assets/images/logo-racetap.png')} alt="Logo Racetap" className="logo-racetap" />
+          <img src="/logo-racetap.png" alt="Logo Racetap" className="logo-racetap" />
         </Link>
 
         <button

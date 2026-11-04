@@ -39,7 +39,7 @@ function shell(instance) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>${escapeHtml(instance.title)}</title>
 <link rel="icon" href="${siteBase}favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" sizes="180x180" href="${siteBase}assets/images/favicon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="${siteBase}favicon-180.png">
 <style>
 ${fonts}
 
