@@ -25,6 +25,17 @@ export function isApiUnavailable(error: unknown): error is ApiError {
   return error instanceof ApiError && error.offline;
 }
 
+/**
+ * Single canonical message for the static-deployment state. UI components
+ * compare against it to render the "mode statis" panel instead of a raw error.
+ */
+export const OFFLINE_ERROR_MESSAGE = 'Backend API tidak tersedia di deployment statis ini.';
+
+/** True when a formatted error message represents the static-deployment state. */
+export function isOfflineMessage(message: string | null | undefined): boolean {
+  return typeof message === 'string' && message.startsWith(OFFLINE_ERROR_MESSAGE);
+}
+
 const CSRF_KEY = 'racetap-csrf';
 let csrfToken = '';
 
@@ -96,7 +107,7 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
       throw fetchError;
     }
 
-    throw new ApiError('Backend API tidak terjangkau dari deployment statis ini.', 0, undefined, true);
+    throw new ApiError(`${OFFLINE_ERROR_MESSAGE} (jaringan gagal)`, 0, undefined, true);
   }
 
   let envelope: ApiEnvelope<T> | null = null;
@@ -111,7 +122,7 @@ export async function api<T>(path: string, options: RequestOptions = {}): Promis
   // POSTs get 405, GETs get 200 HTML. Neither carries a JSON envelope, so the
   // caller must treat them as "API unavailable", not as a normal API error.
   if (!envelope) {
-    throw new ApiError(`Backend API tidak tersedia (HTTP ${response.status}).`, response.status, undefined, true);
+    throw new ApiError(`${OFFLINE_ERROR_MESSAGE} (HTTP ${response.status})`, response.status, undefined, true);
   }
 
   if (!response.ok) {

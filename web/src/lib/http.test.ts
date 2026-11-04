@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ApiError, api, isApiUnavailable } from './http';
+import { ApiError, OFFLINE_ERROR_MESSAGE, api, isApiUnavailable } from './http';
 
 function envelopeResponse(body: unknown, status = 200): Response {
   return {
@@ -32,6 +32,7 @@ describe('api() on static hosting', () => {
 
     expect(error).toBeInstanceOf(ApiError);
     expect(isApiUnavailable(error)).toBe(true);
+    expect((error as ApiError).message).toContain(OFFLINE_ERROR_MESSAGE);
   });
 
   it('flags a 405 on POST to the SPA rewrite as API unavailable', async () => {
@@ -43,6 +44,7 @@ describe('api() on static hosting', () => {
 
     expect(isApiUnavailable(error)).toBe(true);
     expect((error as ApiError).status).toBe(405);
+    expect((error as ApiError).message).toContain(OFFLINE_ERROR_MESSAGE);
   });
 
   it('flags network failures as API unavailable', async () => {
@@ -57,6 +59,7 @@ describe('api() on static hosting', () => {
 
     expect(isApiUnavailable(error)).toBe(true);
     expect((error as ApiError).status).toBe(0);
+    expect((error as ApiError).message).toContain(OFFLINE_ERROR_MESSAGE);
   });
 
   it('keeps real JSON errors (401) as normal API errors', async () => {

@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from '../components/Modal';
 import { SkeletonRows } from '../components/Skeleton';
+import { isOfflineMessage } from '../lib/http';
 
 export interface ConfirmOptions {
   title: string;
@@ -134,6 +135,23 @@ export function AdminEmpty({
 }
 
 export function AdminError({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  if (isOfflineMessage(message)) {
+    return (
+      <AdminEmpty
+        icon="bi-hdd-network"
+        title="Mode statis — data CMS tidak tersedia"
+        description="Deployment ini berjalan tanpa backend API. Sesi admin diverifikasi lokal di browser; data race, foto, dan hasil hanya termuat saat API aktif."
+        action={
+          onRetry ? (
+            <button type="button" className="btn btn-primary btn-sm" onClick={onRetry}>
+              <i className="bi bi-arrow-clockwise me-1" aria-hidden="true" /> Coba lagi
+            </button>
+          ) : undefined
+        }
+      />
+    );
+  }
+
   return (
     <AdminEmpty
       icon="bi-exclamation-triangle"

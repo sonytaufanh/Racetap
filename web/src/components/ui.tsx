@@ -1,5 +1,6 @@
 import { useState, type ImgHTMLAttributes, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { isOfflineMessage } from '../lib/http';
 
 interface Crumb {
   label: string;
@@ -88,6 +89,16 @@ export function Loading({ label = 'Memuat data...' }: { label?: string }) {
 }
 
 export function ErrorBox({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  if (isOfflineMessage(message)) {
+    return (
+      <div className="photo-empty">
+        <i className="bi bi-cloud-slash" />
+        <h4>Data belum tersedia</h4>
+        <p className="mb-0">Konten ini dimuat dari server API yang belum aktif di deployment saat ini.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="photo-empty">
       <i className="bi bi-exclamation-triangle" />

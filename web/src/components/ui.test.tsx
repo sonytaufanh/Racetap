@@ -2,7 +2,8 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
-import { PageHeader, SafeImage } from './ui';
+import { ErrorBox, PageHeader, SafeImage } from './ui';
+import { OFFLINE_ERROR_MESSAGE } from '../lib/http';
 
 function render(header: JSX.Element) {
   return renderToStaticMarkup(<MemoryRouter>{header}</MemoryRouter>);
@@ -58,5 +59,22 @@ describe('SafeImage', () => {
     expect(html).toContain('src="/portfolio/ahy-run-2026.webp"');
     expect(html).toContain('alt="AHY Run"');
     expect(html).toContain('loading="lazy"');
+  });
+});
+
+describe('ErrorBox', () => {
+  it('explains the static deployment instead of showing a raw HTTP error', () => {
+    const html = renderToStaticMarkup(<ErrorBox message={OFFLINE_ERROR_MESSAGE} onRetry={() => undefined} />);
+
+    expect(html).toContain('Data belum tersedia');
+    expect(html).not.toContain('Backend API tidak tersedia');
+  });
+
+  it('keeps the retry UI for real API errors', () => {
+    const html = render(<ErrorBox message="Request gagal (HTTP 500)." onRetry={() => undefined} />);
+
+    expect(html).toContain('Data gagal dimuat');
+    expect(html).toContain('Request gagal (HTTP 500).');
+    expect(html).toContain('Coba lagi');
   });
 });
